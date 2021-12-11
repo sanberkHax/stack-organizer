@@ -1,5 +1,4 @@
 import { SignUpForm } from './SignUpForm';
-
 export const SignUp = ({ authSwitch }) => {
   const logInHandler = () => {
     authSwitch();

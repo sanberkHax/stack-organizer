@@ -1,6 +1,6 @@
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
-export const LoginForm = () => {
+export const LogInForm = () => {
   const schema = yup.object().shape({
     email: yup
       .string()

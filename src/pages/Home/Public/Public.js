@@ -1,11 +1,19 @@
 import { Welcome } from './Welcome';
-import { Login } from './Login';
-
+import { LogIn } from './LogIn';
+import { useState } from 'react';
 export const Public = () => {
+  const [authSwitch, setAuthSwitch] = useState('login');
+  const authHandler = () => {
+    setAuthSwitch('signup');
+  };
   return (
     <div>
       <Welcome />
-      <Login />
+      {authSwitch === 'login' ? (
+        <LogIn authSwitch={authHandler} />
+      ) : (
+        <div>Sign Up</div>
+      )}
     </div>
   );
 };

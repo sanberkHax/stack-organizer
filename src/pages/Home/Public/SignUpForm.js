@@ -1,6 +1,6 @@
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
-export const LogInForm = () => {
+export const SignUpForm = () => {
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -26,7 +26,7 @@ export const LogInForm = () => {
             {errors.password && touched.password ? (
               <div>{errors.password}</div>
             ) : undefined}
-            <button type="submit">Log In</button>
+            <button type="submit">Sign Up</button>
           </Form>
         );
       }}

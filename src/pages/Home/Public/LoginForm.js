@@ -15,18 +15,37 @@ export const LogInForm = () => {
     >
       {({ errors, touched }) => {
         return (
-          <Form>
-            <label htmlFor="email">E-Mail</label>
-            <Field name="email" type="email" placeholder="Enter your E-mail" />
-            {errors.email && touched.email ? (
-              <div>{errors.email}</div>
-            ) : undefined}
-            <label htmlFor="password">Password</label>
-            <Field name="password" placeholder="Enter your Password" />
-            {errors.password && touched.password ? (
-              <div>{errors.password}</div>
-            ) : undefined}
-            <button type="submit">Log In</button>
+          <Form className="form">
+            <div className="form__group">
+              <label htmlFor="email" className="form__label">
+                E-Mail
+              </label>
+              <Field
+                name="email"
+                type="email"
+                placeholder="Enter your E-mail"
+                className="form__input"
+              />
+              {errors.email && touched.email ? (
+                <div className="form__error">{errors.email}</div>
+              ) : undefined}
+            </div>
+            <div className="form__group">
+              <label htmlFor="password" className="form__label">
+                Password
+              </label>
+              <Field
+                name="password"
+                placeholder="Enter your Password"
+                className="form__input"
+              />
+              {errors.password && touched.password ? (
+                <div className="form__error">{errors.password}</div>
+              ) : undefined}
+            </div>
+            <button className="btn" type="submit">
+              Log In
+            </button>
           </Form>
         );
       }}

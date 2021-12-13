@@ -1,0 +1,23 @@
+@use '../abstracts/' as *;
+.btn {
+  background-color: $tertiary-blue;
+  border-radius: 10px;
+  color: white;
+  padding: 6px;
+  height: 2.5rem;
+  width: 12rem;
+  cursor: pointer;
+  &:hover {
+    background-color: $tertiary-blue-darker;
+  }
+  margin: 1rem;
+  text-align: center;
+  &__span {
+    font-weight: bold;
+  }
+  @include sm {
+    height: 2.6rem;
+    width: 13rem;
+    font-size: 1.1rem;
+  }
+}

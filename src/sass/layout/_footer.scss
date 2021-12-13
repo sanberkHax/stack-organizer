@@ -1,0 +1,24 @@
+@use '../abstracts/' as *;
+.footer {
+  display: flex;
+  background-color: $tertiary-blue;
+  padding: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  &__text {
+    font-size: 0.7rem;
+    &--bold {
+      font-weight: bold;
+    }
+    color: white;
+  }
+  @include lg {
+    padding: 1rem;
+    &__text {
+      font-size: 1rem;
+    }
+    &__logo {
+      width: 12rem;
+    }
+  }
+}

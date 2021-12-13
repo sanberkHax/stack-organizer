@@ -12,7 +12,7 @@ export const Public = () => {
     }
   };
   return (
-    <div>
+    <div className="public-homepage">
       <Welcome />
       {authSwitch === 'login' ? (
         <LogIn authSwitch={authHandler} />

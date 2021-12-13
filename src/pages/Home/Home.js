@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Public } from './Public/Public';
 export const Home = () => {
   return (
-    <div>
+    <div className="home">
       <Routes>
         <Route path="/" element={<Public />} />
       </Routes>

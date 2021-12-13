@@ -1,0 +1,14 @@
+@use '../abstracts/' as *;
+
+.heading-primary {
+  font-size: 1.5rem;
+  color: $tertiary-blue;
+  padding: 0.5rem;
+  font-weight: bold;
+  @include sm {
+    font-size: 1.6rem;
+  }
+  @include lg {
+    font-size: 1.8rem;
+  }
+}

@@ -4,16 +4,18 @@ export const SignUp = ({ authSwitch }) => {
     authSwitch();
   };
   return (
-    <section>
-      <h2>Sign Up</h2>
+    <section className="auth-section">
+      <h1 className="heading-primary">Sign Up</h1>
       <SignUpForm />
-      <p>
+      <p className="auth-section__text">
         Already have an account?
-        <span onClick={logInHandler}>Log In</span>
+        <span onClick={logInHandler} className="auth-section__text--btn">
+          Log In
+        </span>
       </p>
-      <h2>OR</h2>
-      <button>
-        Continue as <span>Guest</span>
+      <h1 className="heading-primary">OR</h1>
+      <button className="btn">
+        Continue as <span className="btn__span">Guest</span>
       </button>
     </section>
   );

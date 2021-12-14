@@ -1,12 +1,12 @@
-import { Home } from './pages/Home/Home';
-import { Routes, Route } from 'react-router-dom';
+import { Public } from './pages/Public/Public';
+import { Private } from './pages/Private/Private';
 import { Footer } from './components/Footer';
 function App() {
+  const isLoggedIn = true;
+
   return (
     <div className="app">
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-      </Routes>
+      {isLoggedIn ? <Private /> : <Public />}
       <Footer />
     </div>
   );

@@ -1,11 +1,11 @@
-import logo from '../../../assets/homepage-logo.svg';
-import illustration from '../../../assets/illustration.svg';
+import stackOrganizerLogo from '../../assets/homepage-logo.svg';
+import illustration from '../../assets/illustration.svg';
 
 export const Welcome = () => {
   return (
     <section className="welcome-section">
       <img
-        src={logo}
+        src={stackOrganizerLogo}
         alt="stack organizer logo"
         className="welcome-section__logo"
       />

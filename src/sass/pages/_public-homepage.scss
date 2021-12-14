@@ -1,10 +1,5 @@
 @use '../abstracts/' as *;
 
-.home {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
 .public-homepage {
   flex: 1;
   @extend %flex-col;

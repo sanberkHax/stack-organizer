@@ -3,26 +3,40 @@
 .private-homepage {
   background-color: $secondary-blue;
   flex: 1;
+  padding-top: 1rem;
   @extend %flex-col;
-  justify-content: space-around;
   &__main {
     @extend %flex-col;
+    margin-top: 5rem;
     padding: 0.5rem;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
+    gap: 1.5rem;
   }
-}
-.search-bar__input {
-  border: none;
-  -webkit-box-shadow: 0px 6px 9px -3px #000000;
-  box-shadow: 0px 6px 9px -3px #000000;
-  font-size: 0.7rem;
-  padding-left: 2rem;
-}
-.search-bar__icon {
-  position: absolute;
-  width: 1.5rem;
-  top: 10%;
-  left: 5px;
+  &__logo {
+    width: 15rem;
+    @include sm {
+      width: 20rem;
+    }
+    @include md {
+      width: 25rem;
+    }
+    @include xl {
+      width: 30rem;
+    }
+  }
+  &__search {
+    width: 90%;
+    @include sm {
+      width: 80%;
+    }
+    @include md {
+      width: 70%;
+    }
+    @include lg {
+      width: 60%;
+    }
+    @include xl {
+      width: 50%;
+    }
+  }
 }

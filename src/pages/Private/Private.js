@@ -1,30 +1,15 @@
 import React from 'react';
-import stackOrganizerLogo from '../../assets/homepage-logo.svg';
+import { ReactComponent as StackOrganizerLogo } from '../../assets/stack-organizer-logo.svg';
 import { SearchBar } from '../../components/SearchBar';
-import { Formik, Form } from 'formik';
+import { Header } from '../../components/Header';
 
 export const Private = () => {
   return (
     <div className="private-homepage">
+      <Header page="home"></Header>
       <main className="private-homepage__main">
-        <img
-          src={stackOrganizerLogo}
-          alt=""
-          className="private-homepage__logo"
-        />
-        <Formik
-          initialValues={{ searchBar: '' }}
-          onSubmit={(values) => {
-            console.log(values.searchBar);
-          }}
-        >
-          <Form className="form">
-            <SearchBar />
-            <button className="btn btn--search" type="submit">
-              Search
-            </button>
-          </Form>
-        </Formik>
+        <StackOrganizerLogo className="private-homepage__logo" />
+        <SearchBar hasButton={true} className="private-homepage__search" />
       </main>
     </div>
   );

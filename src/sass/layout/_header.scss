@@ -1,0 +1,103 @@
+@use '../abstracts/' as *;
+.header {
+  display: flex;
+  height: 3rem;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1rem;
+  @include sm {
+    padding: 0 2rem;
+  }
+  .logo-ctn {
+    flex-basis: 25%;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+  &__icon {
+    width: 2rem;
+    @include lg {
+      display: none;
+    }
+  }
+  &__logo {
+    display: none;
+    @include lg {
+      display: inline-block;
+      width: 14rem;
+    }
+    @include xl {
+      width: 15rem;
+    }
+  }
+  &__search {
+    flex-basis: 50%;
+    display: none;
+    @include sm {
+      display: inline-block;
+    }
+  }
+
+  &__search--full {
+    flex: 1;
+  }
+  &__search-btn {
+    margin: auto;
+    @include sm {
+      display: none;
+    }
+  }
+}
+.settings {
+  margin-left: auto;
+  &__dropdown {
+    position: absolute;
+    top: 3.5rem;
+    padding: 1rem;
+    right: 0px;
+    background-color: $primary-blue;
+    text-align: center;
+    width: 100px;
+    &:hover {
+      background-color: $tertiary-blue-darker;
+    }
+  }
+}
+.dropdown__item {
+  cursor: pointer;
+  border-radius: 5px;
+  color: white;
+  @include sm {
+    width: 120px;
+  }
+}
+.settings-btn {
+  flex-basis: 25%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  border-radius: 10px;
+  &--open {
+    @extend .settings-btn;
+    background-color: $tertiary-blue;
+  }
+
+  &__icon {
+    width: 2rem;
+    margin: 0.5rem;
+    cursor: pointer;
+    fill: $tertiary-blue;
+    &:hover {
+      fill: $primary-blue;
+    }
+    &--open {
+      @extend .settings-btn__icon;
+      fill: white;
+      &:hover {
+        fill: $secondary-blue;
+      }
+    }
+  }
+}

@@ -2,10 +2,11 @@
 .form {
   justify-content: center;
   align-items: center;
-  width: 80%;
+  width: 100%;
   @extend %flex-col;
+  gap: 1rem;
+
   &__group {
-    margin: 0.5rem 0;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -37,9 +38,5 @@
     &__error {
       font-size: 1rem;
     }
-  }
-  @include sm {
-  }
-  @include lg {
   }
 }

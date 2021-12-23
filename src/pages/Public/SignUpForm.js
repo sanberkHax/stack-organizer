@@ -1,6 +1,9 @@
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { signUp } from '../../slices/authSlice';
 export const SignUpForm = () => {
+  const dispatch = useDispatch();
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -12,6 +15,9 @@ export const SignUpForm = () => {
     <Formik
       initialValues={{ email: '', password: '' }}
       validationSchema={schema}
+      onSubmit={async (values) => {
+        dispatch(signUp(values));
+      }}
     >
       {({ errors, touched }) => {
         return (
@@ -36,6 +42,7 @@ export const SignUpForm = () => {
               </label>
               <Field
                 name="password"
+                type="password"
                 placeholder="Enter your Password"
                 className="form__input"
               />

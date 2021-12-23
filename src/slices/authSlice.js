@@ -1,0 +1,57 @@
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../services/firebase';
+
+const initialState = {
+  isLoggedIn: false,
+  currentUser: null,
+  loading: false,
+  error: null,
+};
+
+// Thunk Creators
+export const signUp = createAsyncThunk(
+  'users/signUp',
+  async ({ email, password }, thunkAPI) => {
+    try {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = response.user.toJSON();
+      return user;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
+
+export const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    resetError(state) {
+      state.error = null;
+    },
+  },
+  extraReducers: {
+    [signUp.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [signUp.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [signUp.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.isLoggedIn = true;
+      state.currentUser = action.payload;
+    },
+  },
+});
+
+// Action creators are generated for each case reducer function
+export const { resetError } = authSlice.actions;
+
+export default authSlice.reducer;

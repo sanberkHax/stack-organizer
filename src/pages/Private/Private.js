@@ -2,7 +2,6 @@ import React from 'react';
 import { ReactComponent as StackOrganizerLogo } from '../../assets/stack-organizer-logo.svg';
 import { SearchBar } from '../../components/SearchBar';
 import { Header } from '../../components/Header';
-
 export const Private = () => {
   return (
     <div className="private-homepage">

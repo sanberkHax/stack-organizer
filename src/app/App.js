@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div className="app">
-      {!isLoggedIn ? <Private /> : <Public />}
+      {isLoggedIn ? <Private /> : <Public />}
       <Footer />
     </div>
   );

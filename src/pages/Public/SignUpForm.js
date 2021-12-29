@@ -15,7 +15,7 @@ export const SignUpForm = () => {
     <Formik
       initialValues={{ email: '', password: '' }}
       validationSchema={schema}
-      onSubmit={async (values) => {
+      onSubmit={(values) => {
         dispatch(signUp(values));
       }}
     >

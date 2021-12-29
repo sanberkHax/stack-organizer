@@ -1,24 +1,13 @@
-import { Welcome } from './Welcome';
-import { LogIn } from './LogIn';
-import { SignUp } from './SignUp';
-import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { NotFound } from '../NotFound';
+import { Home } from './Home';
 export const Public = () => {
-  const [authSwitch, setAuthSwitch] = useState('login');
-  const authHandler = () => {
-    if (authSwitch === 'login') {
-      setAuthSwitch('signup');
-    } else {
-      setAuthSwitch('login');
-    }
-  };
   return (
-    <div className="public-homepage">
-      <Welcome />
-      {authSwitch === 'login' ? (
-        <LogIn authSwitch={authHandler} />
-      ) : (
-        <SignUp authSwitch={authHandler} />
-      )}
-    </div>
+    <>
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 };

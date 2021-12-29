@@ -3,15 +3,12 @@
 .private-homepage {
   background-color: $secondary-blue;
   flex: 1;
-  padding-top: 1rem;
   @extend %flex-col;
-  &__main {
-    @extend %flex-col;
-    margin-top: 5rem;
-    padding: 0.5rem;
-    align-items: center;
-    gap: 1.5rem;
-  }
+  margin-top: 5rem;
+  padding: 0.5rem;
+  align-items: center;
+  gap: 1.5rem;
+
   &__logo {
     width: 15rem;
     @include sm {

@@ -2,6 +2,7 @@
 
 .public-homepage {
   flex: 1;
+  background-color: white;
   @extend %flex-col;
   @include lg {
     flex-direction: row;

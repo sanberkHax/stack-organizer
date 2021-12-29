@@ -43,62 +43,100 @@
     flex: 1;
   }
   &__search-btn {
-    margin: auto;
+    flex-basis: 50%;
     @include sm {
       display: none;
     }
   }
-}
-.settings {
-  margin-left: auto;
-  &__dropdown {
-    position: absolute;
-    top: 3.5rem;
-    padding: 1rem;
-    right: 0px;
-    background-color: $primary-blue;
-    text-align: center;
-    width: 100px;
-    &:hover {
-      background-color: $tertiary-blue-darker;
+  &__buttons {
+    margin-left: auto;
+    flex-basis: 25%;
+    display: none;
+    gap: 1rem;
+    justify-content: space-around;
+    @include sm {
+      display: flex;
     }
   }
 }
-.dropdown__item {
-  cursor: pointer;
-  border-radius: 5px;
-  color: white;
-  @include sm {
-    width: 120px;
-  }
-}
-.settings-btn {
+
+.logout-btn,
+.organize-btn {
+  margin-left: auto;
+  display: none;
   flex-basis: 25%;
   flex-grow: 0;
   flex-shrink: 0;
-  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &__icon {
+    fill: $tertiary-blue;
+    width: 2rem;
+  }
+  &__text {
+    color: $tertiary-blue;
+    font-weight: bold;
+  }
+  &:hover &__icon {
+    fill: $tertiary-blue-darker;
+  }
+  &:hover &__text {
+    color: $tertiary-blue-darker;
+  }
+  @include sm {
+    display: flex;
+  }
+}
+
+.hamburger-menu {
+  margin-left: auto;
   display: flex;
   justify-content: flex-end;
-  border-radius: 10px;
-  &--open {
-    @extend .settings-btn;
-    background-color: $tertiary-blue;
+  flex-basis: 25%;
+  @include sm {
+    display: none;
   }
+  .hamburger-react {
+    z-index: 2;
+    right: 10px;
+  }
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: space-around;
+    background-color: $primary-blue;
+    text-align: center;
+    padding: 2rem;
+    top: 10px;
+    height: 10rem;
+    width: 14rem;
+    right: 20px;
+    border-radius: 20px;
+    border: 2px solid $primary-blue;
+    position: absolute;
+    background-color: white;
+  }
+}
 
-  &__icon {
-    width: 2rem;
-    margin: 0.5rem;
-    cursor: pointer;
+.organize-link,
+.logout-link {
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  font-weight: bold;
+  gap: 1rem;
+  line-height: 4rem;
+  font-size: 1.2rem;
+  color: $primary-blue;
+  svg {
     fill: $tertiary-blue;
-    &:hover {
-      fill: $primary-blue;
-    }
-    &--open {
-      @extend .settings-btn__icon;
-      fill: white;
-      &:hover {
-        fill: $secondary-blue;
-      }
-    }
+    width: 2rem;
+  }
+  &:hover {
+    color: $tertiary-blue-darker;
   }
 }

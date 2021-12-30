@@ -4,7 +4,6 @@ import { Footer } from '../components/Footer';
 import { useSelector } from 'react-redux';
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
   return (
     <div className="app">
       {isLoggedIn ? <Private /> : <Public />}

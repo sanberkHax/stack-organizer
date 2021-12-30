@@ -7,9 +7,16 @@ import { SearchBar } from './SearchBar';
 import { LogoutBtn } from './LogoutBtn';
 import { OrganizeBtn } from './OrganizeBtn';
 import { HamburgerMenu } from './HamburgerMenu';
-
+import { useDispatch } from 'react-redux';
+import { logOut } from '../slices/authSlice';
+import { Link } from 'react-router-dom';
 export const Header = () => {
+  const dispatch = useDispatch();
   const [showSearch, setShowSearch] = useState(false);
+
+  const logOutHandler = () => {
+    dispatch(logOut());
+  };
 
   // Show search bar when clicked on search icon
   const searchBarHandler = () => {
@@ -38,8 +45,12 @@ export const Header = () => {
       <SearchBar className="header__search" />
       <SearchIcon onClick={searchBarHandler} className="header__search-btn" />
       <div className="header__buttons">
-        <OrganizeBtn />
-        <LogoutBtn />
+        <Link to="organize">
+          <OrganizeBtn />
+        </Link>
+        <Link to="/">
+          <LogoutBtn onClick={logOutHandler} />
+        </Link>
       </div>
       <HamburgerMenu />
     </header>

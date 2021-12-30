@@ -42,6 +42,7 @@ export const LogInForm = () => {
               </label>
               <Field
                 name="password"
+                type="password"
                 placeholder="Enter your Password"
                 className="form__input"
               />

@@ -58,6 +58,10 @@ export const authSlice = createSlice({
     resetError(state) {
       state.error = null;
     },
+    logInCurrentUser(state, action) {
+      state.isLoggedIn = true;
+      state.currentUser = action.payload;
+    },
   },
   extraReducers: {
     [signUp.pending]: (state, action) => {
@@ -100,6 +104,6 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { resetError } = authSlice.actions;
+export const { resetError, logInCurrentUser } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -11,13 +11,19 @@ export const HomepageHeader = () => {
   };
   return (
     <header className="header">
-      <nav className="header__buttons">
-        <Link to="organize">
-          <OrganizeBtn />
-        </Link>
-        <Link to="/">
-          <LogoutBtn onClick={logOutHandler} />
-        </Link>
+      <nav className="header__nav">
+        <ul className="header__buttons">
+          <li>
+            <Link to="organize">
+              <OrganizeBtn />
+            </Link>
+          </li>
+          <li>
+            <Link to="/">
+              <LogoutBtn onClick={logOutHandler} />
+            </Link>
+          </li>
+        </ul>
       </nav>
       <HamburgerMenu />
     </header>

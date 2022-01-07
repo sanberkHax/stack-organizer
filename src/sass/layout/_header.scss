@@ -48,8 +48,10 @@
       display: none;
     }
   }
-  &__buttons {
+  &__nav {
     margin-left: auto;
+  }
+  &__buttons {
     flex-basis: 25%;
     display: none;
     gap: 1rem;
@@ -59,7 +61,6 @@
     }
   }
 }
-
 .logout-btn,
 .organize-btn {
   margin-left: auto;

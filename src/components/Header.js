@@ -44,14 +44,20 @@ export const Header = () => {
       </div>
       <SearchBar className="header__search" />
       <SearchIcon onClick={searchBarHandler} className="header__search-btn" />
-      <div className="header__buttons">
-        <Link to="organize">
-          <OrganizeBtn />
-        </Link>
-        <Link to="/">
-          <LogoutBtn onClick={logOutHandler} />
-        </Link>
-      </div>
+      <nav className="header__nav">
+        <ul className="header__buttons">
+          <li>
+            <Link to="organize">
+              <OrganizeBtn />
+            </Link>
+          </li>
+          <li>
+            <Link to="/">
+              <LogoutBtn onClick={logOutHandler} />
+            </Link>
+          </li>
+        </ul>
+      </nav>
       <HamburgerMenu />
     </header>
   );

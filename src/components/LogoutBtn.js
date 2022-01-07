@@ -5,9 +5,13 @@ export const LogoutBtn = ({ onClick }) => {
     onClick();
   };
   return (
-    <div onClick={onClickHandler} className="logout-btn">
+    <button
+      onClick={onClickHandler}
+      data-testid="logout-btn"
+      className="logout-btn"
+    >
       <LogoutIcon className="logout-btn__icon" />
       <p className="logout-btn__text">Logout</p>
-    </div>
+    </button>
   );
 };

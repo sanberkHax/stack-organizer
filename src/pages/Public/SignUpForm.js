@@ -27,6 +27,7 @@ export const SignUpForm = () => {
                 E-Mail
               </label>
               <Field
+                id="email"
                 name="email"
                 type="email"
                 placeholder="Enter your E-mail"
@@ -41,6 +42,7 @@ export const SignUpForm = () => {
                 Password
               </label>
               <Field
+                id="password"
                 name="password"
                 type="password"
                 placeholder="Enter your Password"

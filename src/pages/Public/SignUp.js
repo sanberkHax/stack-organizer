@@ -22,12 +22,12 @@ export const SignUp = ({ authSwitch }) => {
       )}
       {error && <p className="error">{error}</p>}
       <SignUpForm />
-      <p className="auth-section__text">
-        Already have an account?
-        <span onClick={authSwitchHandler} className="auth-section__text--btn">
+      <div className="auth-switch">
+        <p className="auth-switch__text">Already have an account?</p>
+        <button onClick={authSwitchHandler} className="auth-switch__btn">
           Log In
-        </span>
-      </p>
+        </button>
+      </div>
       <h1 className="heading-primary">OR</h1>
       <button className="btn">
         Continue as <span className="btn__span">Guest</span>

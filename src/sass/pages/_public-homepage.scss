@@ -77,19 +77,7 @@
   @extend %flex-col;
   background-color: $secondary-blue;
   &__text__span {
-    margin-left: 0.5rem;
-    color: $tertiary-blue;
-    font-weight: bold;
-    cursor: pointer;
-    &:hover {
-      color: $tertiary-blue-darker;
-    }
-  }
-  &__text {
-    color: $tertiary-blue;
-    padding: 0.5rem;
-  }
-  &__text--btn {
+    background-color: red;
     margin-left: 0.5rem;
     color: $tertiary-blue;
     font-weight: bold;
@@ -100,6 +88,24 @@
   }
   @include lg {
     justify-content: space-evenly;
+  }
+}
+
+.auth-switch {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 5px;
+  &__text {
+    color: $tertiary-blue;
+  }
+  &__btn {
+    color: $tertiary-blue;
+    font-weight: bold;
+    cursor: pointer;
+    &:hover {
+      color: $tertiary-blue-darker;
+    }
   }
   @include xl {
     &__text {

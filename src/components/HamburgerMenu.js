@@ -1,10 +1,13 @@
 import { Divide as Hamburger } from 'hamburger-react';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../slices/authSlice';
 import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion';
 import { Link } from 'react-router-dom';
 import { ReactComponent as OrganizeIcon } from '../assets/organize-button.svg';
 import { ReactComponent as LogoutIcon } from '../assets/logout-button.svg';
 export const HamburgerMenu = () => {
+  const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleHandler = (toggled) => {
     if (toggled) {
@@ -17,6 +20,9 @@ export const HamburgerMenu = () => {
     if (menuOpen) {
       setMenuOpen(false);
     }
+  };
+  const logOutHandler = () => {
+    dispatch(logOut());
   };
   return (
     <div className="hamburger-menu">
@@ -45,7 +51,7 @@ export const HamburgerMenu = () => {
               <OrganizeIcon />
               <p>Organize</p>
             </Link>
-            <Link className="logout-link" onClick={clickHandler} to="/">
+            <Link className="logout-link" onClick={logOutHandler} to="/">
               <LogoutIcon />
               <p>Logout</p>
             </Link>

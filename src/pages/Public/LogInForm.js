@@ -1,9 +1,6 @@
 import { Formik, Form, Field } from 'formik';
-import { logIn } from '../../slices/authSlice';
-import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
-export const LogInForm = () => {
-  const dispatch = useDispatch();
+export const LogInForm = ({ onSubmit }) => {
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -15,8 +12,8 @@ export const LogInForm = () => {
     <Formik
       initialValues={{ email: '', password: '' }}
       validationSchema={schema}
-      onSubmit={(values) => {
-        dispatch(logIn(values));
+      onSubmit={(credentials) => {
+        onSubmit(credentials);
       }}
     >
       {({ errors, touched }) => {
@@ -34,7 +31,7 @@ export const LogInForm = () => {
                 className="form__input"
               />
               {errors.email && touched.email ? (
-                <div className="form__error">{errors.email}</div>
+                <p className="form__error">{errors.email}</p>
               ) : undefined}
             </div>
             <div className="form__group">

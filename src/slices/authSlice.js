@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {
   createUserWithEmailAndPassword,
+  signInAnonymously,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
@@ -35,6 +36,18 @@ export const logIn = createAsyncThunk(
   async ({ email, password }, thunkAPI) => {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
+      const user = response.user.toJSON();
+      return user;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
+export const guestLogIn = createAsyncThunk(
+  'users/guestLogIn',
+  async (_, thunkAPI) => {
+    try {
+      const response = await signInAnonymously(auth);
       const user = response.user.toJSON();
       return user;
     } catch (err) {
@@ -99,6 +112,18 @@ export const authSlice = createSlice({
       state.loading = false;
       state.isLoggedIn = false;
       state.currentUser = '';
+    },
+    [guestLogIn.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [guestLogIn.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [guestLogIn.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.isLoggedIn = true;
+      state.currentUser = action.payload;
     },
   },
 });

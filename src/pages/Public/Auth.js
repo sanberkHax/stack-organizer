@@ -6,6 +6,7 @@ import { SignUpForm } from './SignUpForm';
 import { useState } from 'react';
 import { signUp } from '../../slices/authSlice';
 import { logIn } from '../../slices/authSlice';
+import { guestLogIn } from '../../slices/authSlice';
 
 export const Auth = () => {
   const loading = useSelector((state) => state.auth.loading);
@@ -31,6 +32,9 @@ export const Auth = () => {
   };
   const logInHandler = (credentials) => {
     dispatch(logIn(credentials));
+  };
+  const guestLogInHandler = () => {
+    dispatch(guestLogIn());
   };
 
   const heading = currentSection === 'logIn' ? 'Log In' : 'Sign Up';
@@ -62,7 +66,7 @@ export const Auth = () => {
       </div>
 
       <h1 className="heading-primary">OR</h1>
-      <button className="btn">
+      <button onClick={guestLogInHandler} className="btn">
         Continue as <span className="btn__span">Guest</span>
       </button>
     </section>

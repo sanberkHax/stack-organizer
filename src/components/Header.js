@@ -39,8 +39,12 @@ export const Header = () => {
   return (
     <header className="header">
       <div className="logo-ctn">
-        <StackOrganizerIcon className="header__icon" />
-        <StackOrganizerLogo className="header__logo" />
+        <Link to="/">
+          <StackOrganizerIcon className="header__icon" />
+        </Link>
+        <Link to="/">
+          <StackOrganizerLogo className="header__logo" />
+        </Link>
       </div>
       <SearchBar className="header__search" />
       <SearchIcon onClick={searchBarHandler} className="header__search-btn" />

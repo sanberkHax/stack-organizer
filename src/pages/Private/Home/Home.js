@@ -1,5 +1,5 @@
-import { ReactComponent as StackOrganizerLogo } from '../../assets/stack-organizer-logo.svg';
-import { SearchBar } from '../../components/SearchBar';
+import { ReactComponent as StackOrganizerLogo } from '../../../assets/stack-organizer-logo.svg';
+import { SearchBar } from '../../../components/SearchBar';
 export const Home = () => {
   return (
     <main className="private-homepage">

@@ -1,4 +1,4 @@
-import { Auth } from '../Auth';
+import { Auth } from '../components/Auth';
 import { render, screen } from '../../../utils/test-utils';
 import userEvent from '@testing-library/user-event';
 

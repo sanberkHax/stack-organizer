@@ -1,15 +1,26 @@
 @use '../abstracts/' as *;
 
 .heading-primary {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: $tertiary-blue;
-  padding: 0.5rem;
   font-weight: bold;
   @include sm {
     font-size: 1.6rem;
   }
   @include lg {
     font-size: 1.8rem;
+  }
+}
+.heading-secondary {
+  font-size: 1.1rem;
+  color: $tertiary-blue;
+  padding: 0.5rem;
+  font-weight: bold;
+  @include sm {
+    font-size: 1.3rem;
+  }
+  @include lg {
+    font-size: 1.4rem;
   }
 }
 

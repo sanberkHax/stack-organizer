@@ -1,0 +1,78 @@
+@use '../abstracts/' as *;
+.search-page {
+  display: flex;
+  flex: 1;
+  margin-top: 2rem;
+  flex-direction: column;
+  text-align: center;
+  &__ctn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  &__results {
+    @include sm {
+      padding: 0 2rem;
+    }
+    @include md {
+      padding: 0 4rem;
+    }
+    @include lg {
+      padding: 0 6rem;
+    }
+
+    @include xl {
+      padding: 0 12rem;
+    }
+  }
+}
+
+.question {
+  margin: 2rem auto;
+  padding: 1.5rem;
+  width: 80%;
+  border-radius: 1rem;
+  color: white;
+  background-color: $primary-blue;
+  display: flex;
+  text-align: start;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 1rem;
+
+  &__title {
+    color: white;
+  }
+  &__owner,
+  .comment__owner {
+    font-weight: bold;
+    align-self: flex-end;
+  }
+  &__comment {
+    display: flex;
+    // flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: $tertiary-blue;
+  }
+  &__details-btn {
+    align-self: center;
+    background-color: $tertiary-blue;
+    border-radius: 10px;
+    height: 2.5rem;
+    width: 6rem;
+    text-align: center;
+    cursor: pointer;
+    &:hover {
+      background-color: $tertiary-blue-darker;
+    }
+  }
+}
+.interaction-ctn {
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}

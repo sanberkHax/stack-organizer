@@ -1,12 +1,14 @@
 import { LogInForm } from './LogInForm';
 import { DualRing } from 'react-awesome-spinners';
 import { useSelector, useDispatch } from 'react-redux';
-import { resetError } from '../../slices/authSlice';
+import {
+  resetError,
+  signUp,
+  logIn,
+  guestLogIn,
+} from '../../../slices/authSlice';
 import { SignUpForm } from './SignUpForm';
 import { useState } from 'react';
-import { signUp } from '../../slices/authSlice';
-import { logIn } from '../../slices/authSlice';
-import { guestLogIn } from '../../slices/authSlice';
 
 export const Auth = () => {
   const loading = useSelector((state) => state.auth.loading);

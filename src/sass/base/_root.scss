@@ -1,6 +1,9 @@
+@use '../abstracts/' as *;
 html {
   width: 100%;
   height: 100%;
+  scrollbar-width: 10px;
+  scrollbar-color: $tertiary-blue-darker #3da2c0ad;
 }
 
 body {
@@ -11,4 +14,26 @@ html,
 body {
   margin: 0;
   padding: 0;
+}
+
+// Scrollbar for webkit browsers
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #3da2c0ad;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $tertiary-blue-darker;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $primary-blue;
 }

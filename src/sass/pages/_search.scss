@@ -33,7 +33,7 @@
   width: 80%;
   border-radius: 1rem;
   color: white;
-  background-color: $primary-blue;
+  background-color: $tertiary-blue;
   display: flex;
   text-align: start;
   flex-direction: column;
@@ -45,6 +45,7 @@
   }
   &__owner,
   .comment__owner {
+    color: rgb(2, 196, 255);
     font-weight: bold;
     align-self: flex-end;
   }
@@ -58,17 +59,64 @@
     padding: 1rem;
     background-color: $tertiary-blue;
   }
-  &__details-btn {
-    align-self: center;
-    background-color: $tertiary-blue;
+  &__btn {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    &-icon {
+      width: 2rem;
+      fill: white;
+    }
+    align-self: flex-end;
+    background-color: $tertiary-blue-darker;
     border-radius: 10px;
-    height: 2.5rem;
-    width: 6rem;
+    height: 3rem;
+    width: 8rem;
+    margin-top: 1rem;
     text-align: center;
     cursor: pointer;
     &:hover {
-      background-color: $tertiary-blue-darker;
+      background-color: $secondary-blue;
+      color: $tertiary-blue-darker;
     }
+    &:hover &-icon {
+      fill: $tertiary-blue-darker;
+    }
+  }
+  &__body {
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.5rem;
+    }
+    a {
+      cursor: pointer;
+      color: rgb(0, 204, 255);
+      text-decoration: underline;
+      &:hover {
+        color: rgb(0, 0, 0);
+      }
+    }
+    ul {
+      list-style: disc;
+    }
+  }
+  &__details {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+  &__tag {
+    border-radius: 10px;
+    padding: 7px;
+    // color: $tertiary-blue-darker;
+    // background-color: $primary-black;
+    color: white;
+    background-color: $primary-blue;
   }
 }
 .interaction-ctn {

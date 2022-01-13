@@ -35,11 +35,16 @@
     flex-basis: 50%;
     display: none;
     @include sm {
-      display: inline-block;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 
   &__search--full {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex: 1;
   }
   &__search-btn {

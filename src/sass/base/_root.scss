@@ -9,6 +9,48 @@ html {
 body {
   width: 100%;
 }
+strong {
+  font-weight: bold;
+}
+pre code {
+  background: none;
+}
+pre {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: normal;
+  margin: 1rem 0rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background: #1c1b1b;
+  box-shadow: 0px 7px 12px 0px $tertiary-blue-darker;
+  font-family: Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console',
+    'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono',
+    'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier,
+    monospace;
+}
+blockquote {
+  background: $tertiary-blue-darker;
+  border-left: 10px solid $primary-blue;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: '\201C''\201D''\2018''\2019';
+}
+code {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  font-size: 14px;
+  padding: 2px;
+  background-color: $tertiary-blue-darker;
+  font-family: Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console',
+    'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono',
+    'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier,
+    monospace;
+}
+blockquote p {
+  display: inline;
+}
 
 html,
 body {
@@ -16,6 +58,9 @@ body {
   padding: 0;
 }
 
+ul {
+  padding: 0rem 1rem;
+}
 // Scrollbar for webkit browsers
 
 /* width */

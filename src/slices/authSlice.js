@@ -6,7 +6,6 @@ import {
   signOut,
 } from 'firebase/auth';
 import { auth } from '../services/firebase';
-
 const initialState = {
   isLoggedIn: false,
   currentUser: null,

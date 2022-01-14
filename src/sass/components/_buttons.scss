@@ -24,3 +24,28 @@
     width: 8rem;
   }
 }
+
+.back-btn {
+  cursor: pointer;
+  width: 3rem;
+  fill: $tertiary-blue;
+  &:hover {
+    fill: $tertiary-blue-darker;
+  }
+}
+
+.stack-overflow-btn {
+  display: flex;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: flex-end;
+  color: $tertiary-blue;
+  font-weight: bold;
+  &:hover {
+    color: $tertiary-blue-darker;
+  }
+  svg {
+    fill: $tertiary-blue;
+    width: 3rem;
+  }
+}

@@ -1,9 +1,22 @@
-export const Question = ({ voteCount, answerCount, tags, title, creation }) => {
+import { useNavigate } from 'react-router-dom';
+export const Question = ({
+  voteCount,
+  answerCount,
+  tags,
+  title,
+  creation,
+  id,
+  comments,
+}) => {
+  const navigate = useNavigate();
   const creationDate = new Date(creation * 1000).toLocaleDateString('en-US', {
     month: 'long',
     year: 'numeric',
     day: 'numeric',
   });
+  const detailsHandler = () => {
+    navigate(`/questions/${id}`);
+  };
   return (
     <li className="question">
       <div className="interaction-ctn">
@@ -26,7 +39,7 @@ export const Question = ({ voteCount, answerCount, tags, title, creation }) => {
         </div>
         <p>{creationDate}</p>
       </div>
-      <button className="question__btn">
+      <button onClick={detailsHandler} className="question__btn">
         <p>Details</p>
         <svg
           className="question__btn-icon"

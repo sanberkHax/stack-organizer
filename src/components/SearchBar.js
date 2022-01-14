@@ -23,8 +23,9 @@ export const SearchBar = ({ hasButton, className }) => {
           onSubmit={async (values) => {
             try {
               await dispatch(getSearchResults(values)).unwrap();
-              navigate(`../search?=${values.searchBar}`, { replace: true });
+              navigate(`/search?q=${values.searchBar}`, { replace: true });
             } catch (err) {
+              navigate(`/search?q=${values.searchBar}`, { replace: true });
               console.log(err);
             }
           }}

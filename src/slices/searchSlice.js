@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
-  searchResults: null,
+  searchResults: [],
   loading: false,
   error: null,
 };
@@ -13,7 +13,7 @@ export const getSearchResults = createAsyncThunk(
   async ({ searchBar }, thunkAPI) => {
     try {
       const response = await axios(
-        `https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q=${searchBar}&site=stackoverflow&filter=!))2QeIa(yBgFYvi4eAzUTUKLNyodgdxL_(X)NUwjc**muejK2b1ci&key=${process.env.REACT_APP_STACK_EXCHANGE_API_KEY}`
+        `https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q=${searchBar}&site=stackoverflow&filter=!sR(bXF4sEaztLIZ4lk62zXM(U-sPSKFvelsQbp7tDKBPizPQa.Abp403_M3zdXZLHyj5iq9Rchz8i&key=${process.env.REACT_APP_STACK_EXCHANGE_API_KEY}`
       );
       const results = response.data.items;
       console.log(results);

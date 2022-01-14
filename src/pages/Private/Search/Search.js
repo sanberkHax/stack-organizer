@@ -4,10 +4,11 @@ import { useSearchParams } from 'react-router-dom';
 export const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const questions = useSelector((state) => state.search.searchResults);
+
   return (
     <main className="search-page">
       <h1 className="heading-primary">Search Results</h1>
-      <h2 className="heading-secondary">for "{searchParams}"</h2>
+      <h2 className="heading-secondary">for "{searchParams.get('q')}"</h2>
       <section>
         <ul className="search-page__results">
           {questions.map((question) => (
@@ -20,6 +21,7 @@ export const Search = () => {
               body={question.body}
               tags={question.tags}
               creation={question.creation_date}
+              id={question.question_id}
             />
           ))}
         </ul>

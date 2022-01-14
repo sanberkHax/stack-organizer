@@ -1,5 +1,6 @@
 @use '../abstracts/' as *;
-.search-page {
+.search-page,
+.question-details {
   display: flex;
   flex: 1;
   margin-top: 2rem;
@@ -37,9 +38,17 @@
   display: flex;
   text-align: start;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   gap: 1rem;
 
+  &__nav {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  &__heading {
+    margin-left: 5rem;
+  }
   &__title {
     color: white;
   }
@@ -51,13 +60,13 @@
   }
   &__comment {
     display: flex;
-    // flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     gap: 1rem;
+    margin: 1rem;
     border-radius: 1rem;
     padding: 1rem;
-    background-color: $tertiary-blue;
+    background-color: $tertiary-blue-darker;
   }
   &__btn {
     display: flex;
@@ -102,6 +111,7 @@
   }
   &__details {
     display: flex;
+    gap: 1rem;
     justify-content: space-between;
   }
   &__tags {
@@ -113,8 +123,6 @@
   &__tag {
     border-radius: 10px;
     padding: 7px;
-    // color: $tertiary-blue-darker;
-    // background-color: $primary-black;
     color: white;
     background-color: $primary-blue;
   }

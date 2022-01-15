@@ -49,3 +49,27 @@
     width: 3rem;
   }
 }
+
+.save-btn {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  svg {
+    width: 2rem;
+    fill: white;
+  }
+  align-self: center;
+  background-color: $tertiary-blue-darker;
+  border-radius: 10px;
+  padding: 0 1rem;
+  height: 3rem;
+  width: 8rem;
+  cursor: pointer;
+  &:hover {
+    background-color: $secondary-blue;
+    color: $tertiary-blue-darker;
+  }
+  &:hover svg {
+    fill: $tertiary-blue-darker;
+  }
+}

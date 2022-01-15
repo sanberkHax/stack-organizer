@@ -1,6 +1,5 @@
 @use '../abstracts/' as *;
-.search-page,
-.question-details {
+.search-page {
   display: flex;
   flex: 1;
   margin-top: 2rem;
@@ -13,22 +12,23 @@
   }
   &__results {
     @include sm {
-      padding: 0 2rem;
+      padding: 0 0;
     }
     @include md {
-      padding: 0 4rem;
+      padding: 0 2%;
     }
     @include lg {
-      padding: 0 6rem;
+      padding: 0 10%;
     }
 
     @include xl {
-      padding: 0 12rem;
+      padding: 0 20%;
     }
   }
 }
 
-.question {
+.question,
+.answer {
   margin: 2rem auto;
   padding: 1.5rem;
   width: 80%;
@@ -54,7 +54,7 @@
   }
   &__owner,
   .comment__owner {
-    color: rgb(2, 196, 255);
+    color: rgb(108, 255, 199);
     font-weight: bold;
     align-self: flex-end;
   }
@@ -62,8 +62,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 1rem;
-    margin: 1rem;
+    margin: 0.5rem 0;
     border-radius: 1rem;
     padding: 1rem;
     background-color: $tertiary-blue-darker;
@@ -93,6 +92,9 @@
     }
   }
   &__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     p {
       margin-bottom: 1rem;
       line-height: 1.5rem;

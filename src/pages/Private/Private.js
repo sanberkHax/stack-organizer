@@ -4,7 +4,7 @@ import { Search } from './Search/Search';
 import { NotFound } from '../NotFound';
 import { Header } from '../../components/Header';
 import { HomepageHeader } from '../../components/HomepageHeader';
-import { QuestionDetails } from './Search/components/QuestionDetails';
+import { QuestionDetails } from './QuestionDetails/QuestionDetails';
 export const Private = () => {
   return (
     <>

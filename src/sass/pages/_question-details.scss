@@ -1,0 +1,21 @@
+@use '../abstracts/' as *;
+.question-details {
+  display: flex;
+  flex: 1;
+  margin-top: 2rem;
+  flex-direction: column;
+  text-align: center;
+  @include sm {
+    padding: 0 0;
+  }
+  @include md {
+    padding: 0 2%;
+  }
+  @include lg {
+    padding: 0 10%;
+  }
+
+  @include xl {
+    padding: 0 20%;
+  }
+}

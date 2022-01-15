@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
 import Highlight from 'react-highlight';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Comment } from './Comment';
+import { Comment } from '../Search/components/Comment';
+import { Answer } from './components/Answer';
+import { SaveAsButton } from '../../../components/SaveAsButton';
 export const QuestionDetails = () => {
   const navigate = useNavigate();
   const { questionId } = useParams();
   const questions = useSelector((state) => state.search.searchResults);
-  console.log(questions);
   let question = questions.find((q) => q.question_id == questionId);
-  console.log(question);
   return (
     <main className="question-details">
       <div className="question__nav">
@@ -57,7 +56,23 @@ export const QuestionDetails = () => {
             </ul>
           </>
         )}
+        <SaveAsButton />
       </div>
+      <h2 className="heading-primary">Answers</h2>
+      <ul className="question-details__answers">
+        {question.answers.map((answer) => (
+          <Answer
+            comments={answer.comments}
+            key={answer.answer_id}
+            title={answer.title}
+            owner={answer.owner.display_name}
+            voteCount={answer.score}
+            body={answer.body}
+            creation={answer.creation_date}
+            id={answer.answer_id}
+          />
+        ))}
+      </ul>
     </main>
   );
 };

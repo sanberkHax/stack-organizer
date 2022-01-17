@@ -1,11 +1,13 @@
-export const Comment = ({ owner, body, votes }) => {
+import { toLocaleDate } from '../../../../utils/toLocaleDate';
+export const Comment = ({ owner, body, votes, date }) => {
+  const creationDate = toLocaleDate(date);
   return (
-    <li className="question__comment">
+    <li className="question-details__comment">
       <p className="comment__vote-count">{votes}</p>
       <p
         className="comment__text"
         dangerouslySetInnerHTML={{
-          __html: `${body} <span class="comment__owner">- ${owner}</span>`,
+          __html: `${body} <span class="comment__owner">- ${owner}</span> <span class="comment__date">${creationDate}</span>`,
         }}
       ></p>
     </li>

@@ -18,4 +18,88 @@
   @include xl {
     padding: 0 20%;
   }
+  &__owner {
+    color: white;
+    font-weight: bold;
+    @include sm {
+      align-self: flex-end;
+    }
+  }
+  &__comment {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: $tertiary-blue-darker;
+  }
+  &__body,
+  .answer__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    sub {
+      vertical-align: sub;
+      font-size: smaller;
+    }
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.5rem;
+    }
+    a {
+      cursor: pointer;
+      color: rgb(0, 204, 255);
+      text-decoration: underline;
+      &:hover {
+        color: rgb(0, 0, 0);
+      }
+    }
+    ul {
+      list-style: disc;
+      padding: 0rem 1rem;
+    }
+    li {
+      margin: 1rem 0;
+    }
+  }
+  &__nav {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  &__heading {
+    margin-left: 5rem;
+  }
+  &__stats {
+    display: flex;
+    padding: 2rem;
+    border-radius: 10px;
+    background-color: $primary-blue;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    @include sm {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+    }
+  }
+  &creation_date,
+  &__edit-date {
+    font-size: 1rem;
+  }
+}
+
+.comment__owner {
+  color: $bright-blue;
+  font-weight: bold;
+  border-radius: 10px;
+  margin: 0 0.5rem;
+}
+.comment__date {
+  color: rgba(72, 217, 243, 0.658);
 }

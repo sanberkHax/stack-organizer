@@ -1,12 +1,12 @@
-import Highlight from 'react-highlight';
 import { Comment } from '../../Search/components/Comment';
 import { SaveAsButton } from '../../../../components/SaveAsButton';
-export const Answer = ({ voteCount, comments, creation, body, owner }) => {
-  const creationDate = new Date(creation * 1000).toLocaleDateString('en-US', {
-    month: 'long',
-    year: 'numeric',
-    day: 'numeric',
-  });
+import { useState } from 'react';
+import { CommentsButton } from '../../../../components/CommentsButton';
+export const Answer = ({ voteCount, comments, date, body, owner }) => {
+  const [showComments, setShowComments] = useState(false);
+  const commentDisplayHandler = () => {
+    setShowComments((prev) => !prev);
+  };
   return (
     <li className="answer">
       <div className="interaction-ctn">
@@ -14,27 +14,33 @@ export const Answer = ({ voteCount, comments, creation, body, owner }) => {
           {voteCount > 1 ? `${voteCount} votes` : `${voteCount} vote`}
         </p>
       </div>
-
-      <Highlight
+      <p
         className="answer__body"
-        innerHTML={true}
-      >{`${body}`}</Highlight>
-      <div className="answer__details">
-        <p className="answer__owner">{owner}</p>
-        <p>{creationDate}</p>
+        dangerouslySetInnerHTML={{ __html: `${body}` }}
+      ></p>
+      <div className="question-details__stats">
+        <p className="question-details__creation-date">answered {date}</p>
+        <p className="question-details__owner">{owner}</p>
       </div>
       {comments && (
         <>
-          <h2 className="question__title heading-primary">Comments</h2>
-          <ul>
-            {comments.map((comment) => (
-              <Comment
-                key={comment.comment_id}
-                body={comment.body}
-                owner={comment.owner.display_name}
-              />
-            ))}
-          </ul>
+          <CommentsButton
+            showComments={showComments}
+            onClick={commentDisplayHandler}
+          />
+          {showComments && (
+            <ul>
+              {comments.map((comment) => (
+                <Comment
+                  key={comment.comment_id}
+                  body={comment.body}
+                  owner={comment.owner.display_name}
+                  date={comment.creation_date}
+                  votes={comment.score}
+                />
+              ))}
+            </ul>
+          )}
         </>
       )}
       <SaveAsButton />

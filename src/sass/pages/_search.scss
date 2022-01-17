@@ -41,32 +41,10 @@
   justify-content: space-evenly;
   gap: 1rem;
 
-  &__nav {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-  }
-  &__heading {
-    margin-left: 5rem;
-  }
   &__title {
     color: white;
   }
-  &__owner,
-  .comment__owner {
-    color: rgb(108, 255, 199);
-    font-weight: bold;
-    align-self: flex-end;
-  }
-  &__comment {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin: 0.5rem 0;
-    border-radius: 1rem;
-    padding: 1rem;
-    background-color: $tertiary-blue-darker;
-  }
+
   &__btn {
     display: flex;
     justify-content: space-around;
@@ -91,26 +69,7 @@
       fill: $tertiary-blue-darker;
     }
   }
-  &__body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    p {
-      margin-bottom: 1rem;
-      line-height: 1.5rem;
-    }
-    a {
-      cursor: pointer;
-      color: rgb(0, 204, 255);
-      text-decoration: underline;
-      &:hover {
-        color: rgb(0, 0, 0);
-      }
-    }
-    ul {
-      list-style: disc;
-    }
-  }
+
   &__details {
     display: flex;
     gap: 1rem;

@@ -12,4 +12,9 @@ export const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-connectAuthEmulator(auth, 'http://localhost:9099');
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  // dev code
+  connectAuthEmulator(auth, 'http://localhost:9099');
+} else {
+  // production code
+}

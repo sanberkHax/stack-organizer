@@ -73,3 +73,26 @@
     fill: $tertiary-blue-darker;
   }
 }
+
+.comments-btn {
+  cursor: pointer;
+  display: flex;
+  align-self: flex-start;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  &:hover &__icon {
+    fill: $bright-blue;
+  }
+  &__icon-ctn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__icon {
+    fill: white;
+  }
+  &__text {
+    font-size: 1.3rem;
+  }
+}

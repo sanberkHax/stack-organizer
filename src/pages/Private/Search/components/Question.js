@@ -6,7 +6,6 @@ export const Question = ({
   title,
   creation,
   id,
-  comments,
 }) => {
   const navigate = useNavigate();
   const creationDate = new Date(creation * 1000).toLocaleDateString('en-US', {

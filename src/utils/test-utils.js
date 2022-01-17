@@ -4,12 +4,16 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import authReducer from '../slices/authSlice';
+import searchReducer from '../slices/searchSlice';
 
 function render(
   ui,
   {
     preloadedState,
-    store = configureStore({ reducer: { auth: authReducer }, preloadedState }),
+    store = configureStore({
+      reducer: { auth: authReducer, search: searchReducer },
+      preloadedState,
+    }),
     ...renderOptions
   } = {}
 ) {

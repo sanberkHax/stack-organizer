@@ -73,7 +73,18 @@
   &__details {
     display: flex;
     gap: 1rem;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    @include sm {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+  &__vote-count,
+  &__answer-count {
+    background-color: $primary-black;
+    padding: 0.5rem;
+    border-radius: 5px;
   }
   &__tags {
     display: flex;

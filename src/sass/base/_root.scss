@@ -18,11 +18,10 @@ pre code {
 pre {
   overflow-x: auto;
   white-space: pre-wrap;
-  word-wrap: normal;
   margin: 1rem 0rem;
   padding: 1rem;
   border-radius: 10px;
-  background: #1c1b1b;
+  background: $tertiary-blue-darker;
   box-shadow: 0px 7px 12px 0px $tertiary-blue-darker;
   font-family: Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console',
     'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono',
@@ -37,8 +36,6 @@ blockquote {
   quotes: '\201C''\201D''\2018''\2019';
 }
 code {
-  overflow-wrap: break-word;
-  word-wrap: break-word;
   white-space: pre-wrap;
   font-size: 14px;
   padding: 2px;
@@ -51,7 +48,18 @@ code {
 blockquote p {
   display: inline;
 }
-
+table {
+  border: 2px solid white;
+  width: 100%;
+}
+tr {
+  border-bottom: 1px solid #ccc;
+}
+th,
+td {
+  text-align: left;
+  padding: 4px;
+}
 html,
 body {
   margin: 0;

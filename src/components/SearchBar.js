@@ -1,6 +1,6 @@
 import React from 'react';
 import { ReactComponent as StackOverflowIcon } from '../assets/stack-overflow-icon.svg';
-import { ReactComponent as SearchIcon } from '../assets/search-icon.svg';
+import { SearchButton } from './SearchButton';
 import { Form, Formik, Field } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSearchResults } from '../slices/searchSlice';
@@ -24,7 +24,7 @@ export const SearchBar = ({ hasButton, className }) => {
           {error && <p className="error">{error}</p>}
           <div className="search-bar">
             <StackOverflowIcon className="search-bar__icon--left" />
-            <SearchIcon className="search-bar__icon--right" />
+            {!hasButton && <SearchButton />}
             <Field
               type="search"
               name="searchBar"

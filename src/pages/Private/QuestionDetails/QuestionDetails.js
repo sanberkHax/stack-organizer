@@ -32,14 +32,18 @@ export const QuestionDetails = () => {
         <h1 className="heading-primary question-details__heading">DETAILS</h1>
         <button className="stack-overflow-btn">
           <svg
+            className="stack-overflow-btn__icon"
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
             viewBox="0 0 24 24"
           >
             <path d="M14 18l10-7.088-10-6.912v3.042s-11.618 2.583-14 12.958c5.072-5.431 14-5.218 14-5.218v3.218z" />
           </svg>
-          <a href={question?.link} rel="noreferrer" target="_blank">
+          <a
+            href={question?.link}
+            className="stack-overflow-btn__link"
+            rel="noreferrer"
+            target="_blank"
+          >
             See on Stack Overflow
           </a>
         </button>

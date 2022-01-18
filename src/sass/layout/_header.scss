@@ -23,6 +23,7 @@
   }
   &__logo {
     display: none;
+
     @include lg {
       display: inline-block;
       width: 14rem;
@@ -49,6 +50,7 @@
   }
   &__search-btn {
     flex-basis: 50%;
+    fill: $tertiary-blue-darker;
     @include sm {
       display: none;
     }
@@ -117,8 +119,8 @@
     text-align: center;
     padding: 2rem;
     top: 10px;
-    height: 10rem;
-    width: 14rem;
+    height: 8rem;
+    width: 13rem;
     right: 20px;
     border-radius: 20px;
     border: 2px solid $primary-blue;
@@ -135,8 +137,8 @@
   align-content: center;
   font-weight: bold;
   gap: 1rem;
-  line-height: 4rem;
-  font-size: 1.2rem;
+  line-height: 3rem;
+  font-size: 1rem;
   color: $primary-blue;
   svg {
     fill: $tertiary-blue;

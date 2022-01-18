@@ -27,7 +27,7 @@
   }
   &__comment {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     gap: 1rem;
     margin: 0.5rem 0;
@@ -56,22 +56,25 @@
         color: rgb(0, 0, 0);
       }
     }
-    ul {
+    ul,
+    li {
       list-style: disc;
       padding: 0rem 1rem;
-    }
-    li {
       margin: 1rem 0;
     }
   }
   &__nav {
+    margin: auto;
     display: flex;
-    justify-content: space-evenly;
+    width: 90%;
     align-items: center;
+    @include sm {
+      width: 80%;
+    }
   }
 
   &__heading {
-    margin-left: 5rem;
+    flex-basis: 50%;
   }
   &__stats {
     display: flex;
@@ -101,5 +104,94 @@
   margin: 0 0.5rem;
 }
 .comment__date {
-  color: rgba(72, 217, 243, 0.658);
+  color: rgb(73, 132, 180);
+  font-weight: bold;
+}
+
+.back-btn {
+  flex-basis: 25%;
+  display: flex;
+  cursor: pointer;
+  justify-content: flex-start;
+  svg {
+    width: 3rem;
+  }
+  fill: $tertiary-blue;
+  &:hover {
+    fill: $tertiary-blue-darker;
+  }
+}
+
+.stack-overflow-btn {
+  display: flex;
+  cursor: pointer;
+  flex-basis: 25%;
+  flex-direction: column;
+  align-items: flex-end;
+  color: $tertiary-blue;
+  font-weight: bold;
+  &:hover {
+    color: $tertiary-blue-darker;
+  }
+  &__icon {
+    fill: $tertiary-blue;
+    width: 3rem;
+    @include sm {
+      width: 2rem;
+    }
+  }
+
+  &__link {
+    display: none;
+    @include sm {
+      display: block;
+    }
+  }
+}
+
+.save-btn {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  svg {
+    width: 2rem;
+    fill: white;
+  }
+  align-self: center;
+  background-color: $tertiary-blue-darker;
+  border-radius: 10px;
+  padding: 0 1rem;
+  height: 3rem;
+  width: 8rem;
+  cursor: pointer;
+  &:hover {
+    background-color: $secondary-blue;
+    color: $tertiary-blue-darker;
+  }
+  &:hover svg {
+    fill: $tertiary-blue-darker;
+  }
+}
+
+.comments-btn {
+  cursor: pointer;
+  display: flex;
+  align-self: flex-start;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  &:hover &__icon {
+    fill: $bright-blue;
+  }
+  &__icon-ctn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__icon {
+    fill: white;
+  }
+  &__text {
+    font-size: 1.3rem;
+  }
 }

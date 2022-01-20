@@ -4,9 +4,33 @@ import { useState } from 'react';
 import { CommentsButton } from '../../../../components/CommentsButton';
 export const Answer = ({ voteCount, comments, date, body, owner }) => {
   const [showComments, setShowComments] = useState(false);
+
   const commentDisplayHandler = () => {
     setShowComments((prev) => !prev);
   };
+
+  const commentsContent = comments && (
+    <>
+      <CommentsButton
+        showComments={showComments}
+        onClick={commentDisplayHandler}
+      />
+      {showComments && (
+        <ul>
+          {comments.map((comment) => (
+            <Comment
+              key={comment.comment_id}
+              body={comment.body}
+              owner={comment.owner.display_name}
+              date={comment.creation_date}
+              votes={comment.score}
+            />
+          ))}
+        </ul>
+      )}
+    </>
+  );
+
   return (
     <li className="answer">
       <div className="interaction-ctn">
@@ -22,27 +46,7 @@ export const Answer = ({ voteCount, comments, date, body, owner }) => {
         <p className="question-details__creation-date">answered {date}</p>
         <p className="question-details__owner">{owner}</p>
       </div>
-      {comments && (
-        <>
-          <CommentsButton
-            showComments={showComments}
-            onClick={commentDisplayHandler}
-          />
-          {showComments && (
-            <ul>
-              {comments.map((comment) => (
-                <Comment
-                  key={comment.comment_id}
-                  body={comment.body}
-                  owner={comment.owner.display_name}
-                  date={comment.creation_date}
-                  votes={comment.score}
-                />
-              ))}
-            </ul>
-          )}
-        </>
-      )}
+      {commentsContent}
       <SaveAsButton />
     </li>
   );

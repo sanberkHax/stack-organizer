@@ -16,7 +16,9 @@ pre code {
   background: none;
 }
 pre {
+  max-height: 600px;
   overflow-x: auto;
+  overflow-y: auto;
   white-space: pre-wrap;
   margin: 1rem 0rem;
   padding: 1rem;

@@ -1,6 +1,9 @@
 import { toLocaleDate } from '../../../../utils/toLocaleDate';
+
 export const Comment = ({ owner, body, votes, date }) => {
+  // Convert unix date format to Month/Day/Year
   const creationDate = toLocaleDate(date);
+
   return (
     <li className="question-details__comment">
       <p className="comment__vote-count">{votes}</p>

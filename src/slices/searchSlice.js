@@ -16,7 +16,6 @@ export const getSearchResults = createAsyncThunk(
         `https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q=${searchBar}&site=stackoverflow&filter=!sR(bXF4sEaztLIZ4lk62zXM(U-sPSKFvelsQbp7tDKBPizPQa.Abp403_M3zdXZLHyj5iq9Rchz8i&key=${process.env.REACT_APP_STACK_EXCHANGE_API_KEY}`
       );
       const results = response.data.items;
-      console.log(results);
       return results;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);

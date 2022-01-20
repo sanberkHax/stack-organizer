@@ -1,27 +1,29 @@
 import { useNavigate } from 'react-router-dom';
-export const Question = ({
-  voteCount,
-  answerCount,
-  tags,
-  title,
-  creation,
-  id,
-}) => {
+import { toLocaleDate } from '../../../../utils/toLocaleDate';
+
+export const Question = ({ voteCount, answerCount, tags, title, date, id }) => {
   const navigate = useNavigate();
-  const creationDate = new Date(creation * 1000).toLocaleDateString('en-US', {
-    month: 'long',
-    year: 'numeric',
-    day: 'numeric',
-  });
+
+  // Convert unix date format to Month/Day/Year
+  const creationDate = toLocaleDate(date);
+
   const detailsHandler = () => {
     navigate(`/questions/${id}`);
   };
+
+  const tagsContent = tags.map((tag, index) => (
+    <p key={index} className="question__tag">
+      {tag}
+    </p>
+  ));
+
+  const voteContent =
+    voteCount > 1 ? `${voteCount} votes` : `${voteCount} vote`;
+
   return (
     <li className="question">
       <div className="interaction-ctn">
-        <p className="question__vote-count">
-          {voteCount > 1 ? `${voteCount} votes` : `${voteCount} vote`}
-        </p>
+        <p className="question__vote-count">{voteContent}</p>
         <p className="question__answer-count">{answerCount} Answers</p>
       </div>
       <h2
@@ -29,13 +31,7 @@ export const Question = ({
         dangerouslySetInnerHTML={{ __html: title }}
       ></h2>
       <div className="question__details">
-        <div className="question__tags">
-          {tags.map((tag, index) => (
-            <p key={index} className="question__tag">
-              {tag}
-            </p>
-          ))}
-        </div>
+        <div className="question__tags">{tagsContent}</div>
         <p>{creationDate}</p>
       </div>
       <button onClick={detailsHandler} className="question__btn">

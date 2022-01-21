@@ -2,7 +2,14 @@ import { Comment } from '../../Search/components/Comment';
 import { SaveAsButton } from '../../../../components/SaveAsButton';
 import { useState } from 'react';
 import { CommentsButton } from '../../../../components/CommentsButton';
-export const Answer = ({ voteCount, comments, date, body, owner }) => {
+export const Answer = ({
+  voteCount,
+  comments,
+  date,
+  body,
+  owner,
+  modalHandler,
+}) => {
   const [showComments, setShowComments] = useState(false);
 
   const commentDisplayHandler = () => {
@@ -47,7 +54,7 @@ export const Answer = ({ voteCount, comments, date, body, owner }) => {
         <p className="question-details__owner">{owner}</p>
       </div>
       {commentsContent}
-      <SaveAsButton />
+      <SaveAsButton onClick={modalHandler} />
     </li>
   );
 };

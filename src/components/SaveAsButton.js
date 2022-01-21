@@ -1,6 +1,9 @@
-export const SaveAsButton = () => {
+export const SaveAsButton = ({ onClick }) => {
+  const onClickHandler = () => {
+    onClick();
+  };
   return (
-    <button className="save-btn">
+    <button onClick={onClickHandler} className="save-btn">
       <p>Save As</p>
       <svg
         xmlns="http://www.w3.org/2000/svg"

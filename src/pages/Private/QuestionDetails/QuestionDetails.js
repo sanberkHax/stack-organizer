@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Comment } from '../Search/components/Comment';
 import { Answer } from './components/Answer';
+import { SaveModal } from './components/SaveModal';
+import { Backdrop } from './components/Backdrop';
 import { SaveAsButton } from '../../../components/SaveAsButton';
 import { CommentsButton } from '../../../components/CommentsButton';
 import { toLocaleDate } from '../../../utils/toLocaleDate';
@@ -10,7 +12,10 @@ import { DualRing } from 'react-awesome-spinners';
 
 export const QuestionDetails = () => {
   const navigate = useNavigate();
+
   const [showComments, setShowComments] = useState(false);
+  const [modal, setModal] = useState(false);
+
   const questions = useSelector((state) => state.search.searchResults);
   const loading = useSelector((state) => state.search.loading);
 
@@ -29,6 +34,12 @@ export const QuestionDetails = () => {
     setShowComments((prev) => !prev);
   };
 
+  const saveModalHandler = () => {
+    setModal(true);
+  };
+  const backdropHandler = () => {
+    setModal(false);
+  };
   const commentsContent = question?.comment_count > 0 && (
     <>
       {showComments && (
@@ -55,6 +66,7 @@ export const QuestionDetails = () => {
       voteCount={answer.score}
       body={answer.body}
       date={toLocaleDate(answer.creation_date)}
+      modalHandler={saveModalHandler}
     />
   ));
 
@@ -64,6 +76,12 @@ export const QuestionDetails = () => {
         <DualRing size="60" color="#1C5274" />
       ) : (
         <>
+          {modal && (
+            <>
+              <SaveModal />
+              <Backdrop onClick={backdropHandler} />
+            </>
+          )}
           <div className="question-details__nav">
             <button onClick={() => navigate(-1)} className="back-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -111,7 +129,7 @@ export const QuestionDetails = () => {
               onClick={commentDisplayHandler}
             />
             {commentsContent}
-            <SaveAsButton />
+            <SaveAsButton onClick={saveModalHandler} />
           </div>
           <h2 className="heading-primary">Answers</h2>
           <ul className="question-details__answers">{answersContent}</ul>

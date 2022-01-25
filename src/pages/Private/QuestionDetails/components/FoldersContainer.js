@@ -32,13 +32,12 @@ export const FoldersContainer = ({
       newProjectFolder.push({
         id: uuidv4(),
         name: folderName,
-        isActive: false,
-        className: 'file-container__btn',
         folders: [],
       });
 
       // Update active projects folders with new array
       setActiveProject({ ...activeProject, folders: newProjectFolder });
+      console.log(activeProject);
     }
 
     // Create a new copy of folders array

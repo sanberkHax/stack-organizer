@@ -9,7 +9,7 @@ const initialState = {
 
 // Thunk Creators
 export const getSearchResults = createAsyncThunk(
-  'posts/getSearchResults',
+  'search/getSearchResults',
   async ({ searchBar }, thunkAPI) => {
     try {
       const response = await axios(

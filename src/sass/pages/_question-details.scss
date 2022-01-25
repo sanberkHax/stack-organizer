@@ -262,10 +262,10 @@
   &__btn {
     cursor: pointer;
     &:hover {
-      color: $bright-blue;
+      color: $secondary-blue;
     }
     &:hover svg {
-      fill: $bright-blue;
+      fill: $secondary-blue;
     }
     &--active {
       color: $bright-blue;

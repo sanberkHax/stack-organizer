@@ -2,17 +2,42 @@ import { ProjectsContainer } from './ProjectsContainer';
 import { FoldersContainer } from './FoldersContainer';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateProjects } from '../../../../services/firebase';
-import { selectAllProjects } from '../../../../slices/projectsSlice';
+import {
+  updateProjectsData,
+  writeFoldersData,
+} from '../../../../services/firebase';
+import {
+  projectUpdated,
+  selectAllProjects,
+} from '../../../../slices/projectsSlice';
+import {
+  selectAllFolders,
+  folderUpdated,
+} from '../../../../slices/foldersSlice';
+import { useEffect } from 'react';
 export const SaveModal = () => {
   const [activeProject, setActiveProject] = useState(null);
   const [activeFolder, setActiveFolder] = useState(null);
   const projects = useSelector(selectAllProjects);
-  const uid = useSelector((state) => state.auth.currentUser);
-
+  const folders = useSelector(selectAllFolders);
+  const dispatch = useDispatch();
+  const uid = useSelector((state) => state.auth.currentUser.uid);
+  useEffect(() => {
+    // Reset active project and folder on unmount
+    return () => {
+      dispatch(projectUpdated({ id: activeProject?.id, isActive: false }));
+      updateProjectsData(uid, projects);
+      dispatch(folderUpdated({ id: activeFolder?.id, isActive: false }));
+      writeFoldersData(uid, folders);
+    };
+  }, []);
   const saveHandler = async () => {
+    console.log('Selected:');
+    console.log(activeProject);
+    console.log(activeFolder);
     // Update database
-    updateProjects(uid, projects);
+    updateProjectsData(uid, projects);
+    writeFoldersData(uid, folders);
   };
   return (
     <div className="save-modal">

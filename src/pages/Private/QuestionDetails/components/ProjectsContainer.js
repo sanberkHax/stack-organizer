@@ -5,7 +5,12 @@ import {
   projectAdded,
   projectUpdated,
 } from '../../../../slices/projectsSlice';
-export const ProjectsContainer = ({ setActiveProject }) => {
+import { folderUpdated } from '../../../../slices/foldersSlice';
+export const ProjectsContainer = ({
+  setActiveProject,
+  setActiveFolder,
+  activeFolder,
+}) => {
   const projects = useSelector(selectAllProjects);
   const dispatch = useDispatch();
   // Add new project on click
@@ -18,7 +23,11 @@ export const ProjectsContainer = ({ setActiveProject }) => {
       return;
     }
     dispatch(
-      projectAdded({ id: uuidv4(), title: projectName, isActive: false })
+      projectAdded({
+        id: uuidv4(),
+        title: projectName,
+        isActive: false,
+      })
     );
   };
 
@@ -33,7 +42,13 @@ export const ProjectsContainer = ({ setActiveProject }) => {
         isActive: !selectedProject.isActive,
       })
     );
-    setActiveProject(selectedProject);
+    if (selectedProject.isActive) {
+      setActiveProject(null);
+    } else {
+      dispatch(folderUpdated({ id: activeFolder?.id, isActive: false }));
+      setActiveFolder(null);
+      setActiveProject(selectedProject);
+    }
   };
   return (
     <div className="file-container">

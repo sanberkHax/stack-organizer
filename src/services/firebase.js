@@ -23,12 +23,19 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const database = getDatabase(app);
 
-export const updateProjects = (userId, data) => {
+export const updateProjectsData = (userId, data) => {
   const projectsMetadata = data.map((p) => p.id);
   const updates = {};
   updates['projects/' + userId] = data;
   updates['users/' + userId + '/projects'] = projectsMetadata;
   update(ref(database), updates);
+};
+
+export const writeFoldersData = (userId, data) => {
+  set(ref(database, 'folders/' + userId), data);
+};
+export const writeUsersData = (userId, data) => {
+  set(ref(database, 'users/' + userId), data);
 };
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   // dev code

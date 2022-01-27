@@ -7,6 +7,7 @@ export const foldersSlice = createSlice({
   name: 'folders',
   initialState,
   reducers: {
+    foldersRemoved: foldersAdapter.removeAll,
     foldersFetched: foldersAdapter.setAll,
     folderAdded: foldersAdapter.addOne,
     folderUpdated(state, action) {
@@ -30,7 +31,7 @@ export const foldersSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { folderAdded, folderUpdated, foldersFetched } =
+export const { folderAdded, folderUpdated, foldersFetched, foldersRemoved } =
   foldersSlice.actions;
 
 // Export the customized selectors for this adapter using `getSelectors`

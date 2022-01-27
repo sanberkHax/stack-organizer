@@ -79,50 +79,57 @@ export const authSlice = createSlice({
     [signUp.pending]: (state, action) => {
       state.loading = true;
     },
-    [signUp.rejected]: (state, action) => {
+    [signUp.rejected]: (state, { payload }) => {
+      const error = payload;
       state.loading = false;
-      state.error = action.payload;
+      state.error = error;
     },
-    [signUp.fulfilled]: (state, action) => {
+    [signUp.fulfilled]: (state, { payload }) => {
+      const userId = payload.uid;
       state.loading = false;
       state.isLoggedIn = true;
-      state.currentUser = action.payload;
+      state.currentUser = userId;
     },
     [logIn.pending]: (state, action) => {
       state.loading = true;
     },
-    [logIn.rejected]: (state, action) => {
+    [logIn.rejected]: (state, { payload }) => {
+      const error = payload;
       state.loading = false;
-      state.error = action.payload;
+      state.error = error;
     },
-    [logIn.fulfilled]: (state, action) => {
+    [logIn.fulfilled]: (state, { payload }) => {
+      const userId = payload.uid;
       state.loading = false;
       state.isLoggedIn = true;
-      state.currentUser = action.payload;
+      state.currentUser = userId;
     },
     [logOut.pending]: (state, action) => {
       state.loading = true;
     },
-    [logOut.rejected]: (state, action) => {
+    [logOut.rejected]: (state, { payload }) => {
+      const error = payload;
       state.loading = false;
-      state.error = action.payload;
+      state.error = error;
     },
     [logOut.fulfilled]: (state, action) => {
       state.loading = false;
       state.isLoggedIn = false;
-      state.currentUser = '';
+      state.currentUser = null;
     },
     [guestLogIn.pending]: (state, action) => {
       state.loading = true;
     },
-    [guestLogIn.rejected]: (state, action) => {
+    [guestLogIn.rejected]: (state, { payload }) => {
+      const error = payload;
       state.loading = false;
-      state.error = action.payload;
+      state.error = error;
     },
-    [guestLogIn.fulfilled]: (state, action) => {
+    [guestLogIn.fulfilled]: (state, { payload }) => {
+      const userId = payload.uid;
       state.loading = false;
       state.isLoggedIn = true;
-      state.currentUser = action.payload;
+      state.currentUser = userId;
     },
   },
 });

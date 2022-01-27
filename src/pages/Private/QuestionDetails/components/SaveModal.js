@@ -21,7 +21,7 @@ export const SaveModal = () => {
   const projects = useSelector(selectAllProjects);
   const folders = useSelector(selectAllFolders);
   const dispatch = useDispatch();
-  const uid = useSelector((state) => state.auth.currentUser.uid);
+  const uid = useSelector((state) => state.auth.currentUser);
   useEffect(() => {
     // Reset active project and folder on unmount
     return () => {
@@ -32,9 +32,6 @@ export const SaveModal = () => {
     };
   }, []);
   const saveHandler = async () => {
-    console.log('Selected:');
-    console.log(activeProject);
-    console.log(activeFolder);
     // Update database
     updateProjectsData(uid, projects);
     writeFoldersData(uid, folders);

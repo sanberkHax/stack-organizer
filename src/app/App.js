@@ -7,8 +7,8 @@ import { auth, database, writeUsersData } from '../services/firebase';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { logInCurrentUser } from '../slices/authSlice';
-import { projectsFetched } from '../slices/projectsSlice';
-import { foldersFetched } from '../slices/foldersSlice';
+import { projectsFetched, projectsRemoved } from '../slices/projectsSlice';
+import { foldersFetched, foldersRemoved } from '../slices/foldersSlice';
 import { ref, onValue } from 'firebase/database';
 
 function App() {
@@ -45,6 +45,9 @@ function App() {
             dispatch(foldersFetched(data));
           }
         });
+      } else {
+        dispatch(projectsRemoved());
+        dispatch(foldersRemoved());
       }
       // Remove listener
       return () => unsubscribe();

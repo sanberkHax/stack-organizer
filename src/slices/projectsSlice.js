@@ -8,6 +8,7 @@ export const projectsSlice = createSlice({
   initialState,
   reducers: {
     projectsFetched: projectsAdapter.setAll,
+    projectsRemoved: projectsAdapter.removeAll,
     projectAdded: projectsAdapter.addOne,
     projectUpdated(state, action) {
       const { id, title, isActive } = action.payload;
@@ -30,8 +31,12 @@ export const projectsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { projectAdded, projectUpdated, projectsFetched } =
-  projectsSlice.actions;
+export const {
+  projectAdded,
+  projectUpdated,
+  projectsFetched,
+  projectsRemoved,
+} = projectsSlice.actions;
 
 // Export the customized selectors for this adapter using `getSelectors`
 export const {

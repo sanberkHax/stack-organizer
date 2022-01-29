@@ -11,7 +11,7 @@ export const projectsSlice = createSlice({
     projectsRemoved: projectsAdapter.removeAll,
     projectAdded: projectsAdapter.addOne,
     projectUpdated(state, action) {
-      const { id, title, isActive } = action.payload;
+      const { id, title, isActive, folders } = action.payload;
       const existingProject = state.entities[id];
       const values = Object.values(current(state.entities));
       const actives = values.filter((p) => p.isActive);
@@ -24,6 +24,9 @@ export const projectsSlice = createSlice({
       }
       if (title) {
         existingProject.title = title;
+      }
+      if (folders) {
+        existingProject.folders.push(folders);
       }
     },
   },

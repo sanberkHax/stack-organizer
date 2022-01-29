@@ -21,30 +21,44 @@ function App() {
       if (user) {
         const userId = user.uid;
         dispatch(logInCurrentUser(userId));
-        // Write user data to firebase
-        writeUsersData(userId, { uid: userId });
-
         // Read and fetch projects from firebase
         const projectsRef = ref(database, 'projects/' + userId);
-        onValue(projectsRef, (snapshot) => {
-          const data = snapshot.val();
-
-          // Store fetched projects in redux
-          if (data) {
-            dispatch(projectsFetched(data));
+        onValue(
+          projectsRef,
+          (snapshot) => {
+            const data = snapshot.val();
+            // Store fetched projects in redux
+            if (data) {
+              const projectsMetadata = data.map((p) => p.id);
+              dispatch(projectsFetched(data));
+              writeUsersData(userId, {
+                uid: userId,
+                projects: projectsMetadata,
+              });
+            } else {
+              writeUsersData(userId, { uid: userId });
+            }
+          },
+          {
+            onlyOnce: true,
           }
-        });
+        );
 
         // Read and fetch folders from firebase
         const foldersRef = ref(database, 'folders/' + userId);
-        onValue(foldersRef, (snapshot) => {
-          const data = snapshot.val();
-
-          // Store fetched folders in redux
-          if (data) {
-            dispatch(foldersFetched(data));
+        onValue(
+          foldersRef,
+          (snapshot) => {
+            const data = snapshot.val();
+            // Store fetched folders in redux
+            if (data) {
+              dispatch(foldersFetched(data));
+            }
+          },
+          {
+            onlyOnce: true,
           }
-        });
+        );
       } else {
         dispatch(projectsRemoved());
         dispatch(foldersRemoved());

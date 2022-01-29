@@ -5,15 +5,23 @@ import {
   projectAdded,
   projectUpdated,
 } from '../../../../slices/projectsSlice';
+import { updateProjectsData } from '../../../../services/firebase';
 import { folderUpdated } from '../../../../slices/foldersSlice';
+import { useEffect } from 'react';
 export const ProjectsContainer = ({
-  setActiveProject,
-  setActiveFolder,
-  activeFolder,
+  setSelectedProject,
+  setSelectedFolder,
+  selectedFolder,
 }) => {
   const projects = useSelector(selectAllProjects);
   const dispatch = useDispatch();
+  const uid = useSelector((state) => state.auth.currentUser);
   // Add new project on click
+
+  useEffect(() => {
+    updateProjectsData(uid, projects);
+  }, [projects, uid]);
+
   const addHandler = () => {
     // Prompt user for project name
     const projectName = prompt('Project Name:');
@@ -22,32 +30,33 @@ export const ProjectsContainer = ({
     if (!projectName) {
       return;
     }
-    dispatch(
-      projectAdded({
-        id: uuidv4(),
-        title: projectName,
-        isActive: false,
-      })
-    );
+    const newProject = {
+      id: uuidv4(),
+      title: projectName,
+      isActive: false,
+      folders: [],
+    };
+    dispatch(projectAdded(newProject));
   };
 
   //  Toggle project on click
   const clickHandler = (e) => {
-    const selectedProject = projects.find(
+    const clickedProject = projects.find(
       (p) => p.title === e.target.textContent
     );
+
     dispatch(
       projectUpdated({
-        id: selectedProject.id,
-        isActive: !selectedProject.isActive,
+        id: clickedProject.id,
+        isActive: !clickedProject.isActive,
       })
     );
-    if (selectedProject.isActive) {
-      setActiveProject(null);
+    if (clickedProject.isActive) {
+      setSelectedProject(null);
     } else {
-      dispatch(folderUpdated({ id: activeFolder?.id, isActive: false }));
-      setActiveFolder(null);
-      setActiveProject(selectedProject);
+      dispatch(folderUpdated({ id: selectedFolder?.id, isActive: false }));
+      setSelectedFolder(null);
+      setSelectedProject(clickedProject);
     }
   };
   return (

@@ -11,7 +11,7 @@ export const foldersSlice = createSlice({
     foldersFetched: foldersAdapter.setAll,
     folderAdded: foldersAdapter.addOne,
     folderUpdated(state, action) {
-      const { id, title, isActive } = action.payload;
+      const { id, title, isActive, folders } = action.payload;
       const existingFolder = state.entities[id];
       const values = Object.values(current(state.entities));
       const actives = values.filter((p) => p.isActive);
@@ -24,6 +24,9 @@ export const foldersSlice = createSlice({
       }
       if (title) {
         existingFolder.title = title;
+      }
+      if (folders) {
+        existingFolder.folders = folders;
       }
     },
   },

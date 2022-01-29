@@ -78,7 +78,7 @@ export const QuestionDetails = () => {
         <>
           {modal && (
             <>
-              <SaveModal />
+              <SaveModal setModal={setModal} />
               <Backdrop onClick={backdropHandler} />
             </>
           )}

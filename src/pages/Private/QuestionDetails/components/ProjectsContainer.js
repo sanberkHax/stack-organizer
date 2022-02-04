@@ -6,22 +6,37 @@ import {
   projectUpdated,
 } from '../../../../slices/projectsSlice';
 import { updateProjectsData } from '../../../../services/firebase';
-import { folderUpdated } from '../../../../slices/foldersSlice';
+import {
+  folderUpdated,
+  currentFoldersUpdated,
+} from '../../../../slices/foldersSlice';
 import { useEffect } from 'react';
+import { useProjectFolders } from '../../../../hooks/useProjectFolders';
+
 export const ProjectsContainer = ({
   setSelectedProject,
   setSelectedFolder,
   selectedFolder,
+  selectedProject,
 }) => {
   const projects = useSelector(selectAllProjects);
   const dispatch = useDispatch();
   const uid = useSelector((state) => state.auth.currentUser);
   // Add new project on click
 
+  const [projectFolders, setProject] = useProjectFolders();
+
+  useEffect(() => {
+    setProject(selectedProject);
+    dispatch(currentFoldersUpdated(projectFolders));
+  }, [selectedProject, setProject, dispatch, projectFolders]);
+
   useEffect(() => {
     updateProjectsData(uid, projects);
   }, [projects, uid]);
 
+  console.log('projectFolders');
+  console.log(projectFolders);
   const addHandler = () => {
     // Prompt user for project name
     const projectName = prompt('Project Name:');
@@ -44,7 +59,8 @@ export const ProjectsContainer = ({
     const clickedProject = projects.find(
       (p) => p.title === e.target.textContent
     );
-
+    console.log('clickedProject');
+    console.log(clickedProject);
     dispatch(
       projectUpdated({
         id: clickedProject.id,

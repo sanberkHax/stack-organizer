@@ -15,22 +15,29 @@ import {
   folderUpdated,
 } from '../../../../slices/foldersSlice';
 import { useEffect } from 'react';
+
 export const SaveModal = ({ setModal }) => {
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [selectedFolder, setSelectedFolder] = useState(null);
   const projects = useSelector(selectAllProjects);
   const folders = useSelector(selectAllFolders);
-  const dispatch = useDispatch();
   const uid = useSelector((state) => state.auth.currentUser);
+
+  const dispatch = useDispatch();
+
+  const activeProject = projects.find((p) => p.isActive);
+  const activeFolder = folders.find((f) => f.isActive);
+
+  const [selectedProject, setSelectedProject] = useState(activeProject);
+  const [selectedFolder, setSelectedFolder] = useState(activeFolder);
+
+  console.log('-----------------------------------------------');
+  console.log('activeProject');
+  console.log(activeProject);
+
   useEffect(() => {
-    const activeProject = projects.filter((p) => p.isActive);
-    const activeFolder = folders.filter((f) => f.isActive);
-    if (activeProject) {
-      setSelectedProject(activeProject);
-    }
     // Reset active project and folder on unmount
     writeFoldersData(uid, folders);
     updateProjectsData(uid, projects);
+
     return () => {
       if (activeProject) {
         dispatch(projectUpdated({ id: activeProject.id, isActive: false }));
@@ -44,11 +51,9 @@ export const SaveModal = ({ setModal }) => {
   }, [dispatch, uid]);
 
   const saveHandler = () => {
-    // Update database
-    console.log(selectedProject);
-    console.log(selectedFolder);
     setModal(false);
   };
+
   return (
     <div className="save-modal">
       <h1 className="heading-primary">Save As</h1>
@@ -56,6 +61,7 @@ export const SaveModal = ({ setModal }) => {
       <ProjectsContainer
         setSelectedProject={setSelectedProject}
         setSelectedFolder={setSelectedFolder}
+        selectedProject={selectedProject}
       />
       <h2 className="heading-secondary">Folder:</h2>
       <FoldersContainer

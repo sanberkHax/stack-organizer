@@ -1,4 +1,4 @@
-import { createSlice, createEntityAdapter, current } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 const projectsAdapter = createEntityAdapter();
 
 const initialState = projectsAdapter.getInitialState();
@@ -12,21 +12,38 @@ export const projectsSlice = createSlice({
     projectAdded: projectsAdapter.addOne,
     projectUpdated(state, action) {
       const { id, title, isActive, folders } = action.payload;
+
+      // Get the project with matching id
       const existingProject = state.entities[id];
-      const values = Object.values(current(state.entities));
-      const actives = values.filter((p) => p.isActive);
-      if (actives.length > 0) {
-        const index = actives[0].id;
+
+      // Get active projects
+      const activeProjects = Object.values(state.entities).filter(
+        (p) => p.isActive
+      );
+
+      // Set any active projects' isActive property to false
+      if (activeProjects.length > 0) {
+        const index = activeProjects[0].id;
         state.entities[index].isActive = false;
       }
+
       if (existingProject) {
-        existingProject.isActive = isActive;
-      }
-      if (title) {
-        existingProject.title = title;
-      }
-      if (folders) {
-        existingProject.folders.push(folders);
+        if (isActive) {
+          // Update project's isActive property
+          existingProject.isActive = isActive;
+        }
+        if (title) {
+          // Update project's title
+          existingProject.title = title;
+        }
+        if (folders) {
+          // If project doesn't have a folders property, initialize it
+          if (!existingProject.folders) {
+            existingProject.folders = [];
+          }
+          // Update folders property
+          existingProject.folders.push(folders);
+        }
       }
     },
   },

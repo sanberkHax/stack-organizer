@@ -7,12 +7,14 @@ import {
   writeFoldersData,
 } from '../../../../services/firebase';
 import {
+  projectReset,
   projectUpdated,
   selectAllProjects,
 } from '../../../../slices/projectsSlice';
 import {
   selectAllFolders,
   folderUpdated,
+  folderReset,
 } from '../../../../slices/foldersSlice';
 import { useEffect } from 'react';
 
@@ -23,28 +25,14 @@ export const SaveModal = ({ setModal }) => {
 
   const dispatch = useDispatch();
 
-  const activeProject = projects.find((p) => p.isActive);
-  const activeFolder = folders.find((f) => f.isActive);
-
-  const [selectedProject, setSelectedProject] = useState(activeProject);
-  const [selectedFolder, setSelectedFolder] = useState(activeFolder);
-
-  console.log('-----------------------------------------------');
-  console.log('activeProject');
-  console.log(activeProject);
+  const [selectedProject, setSelectedProject] = useState();
+  const [selectedFolder, setSelectedFolder] = useState();
 
   useEffect(() => {
     // Reset active project and folder on unmount
-    writeFoldersData(uid, folders);
-    updateProjectsData(uid, projects);
-
     return () => {
-      if (activeProject) {
-        dispatch(projectUpdated({ id: activeProject.id, isActive: false }));
-      }
-      if (activeFolder) {
-        dispatch(folderUpdated({ id: activeFolder.id, isActive: false }));
-      }
+      dispatch(folderReset());
+      dispatch(projectReset());
       writeFoldersData(uid, folders);
       updateProjectsData(uid, projects);
     };
@@ -62,13 +50,12 @@ export const SaveModal = ({ setModal }) => {
         setSelectedProject={setSelectedProject}
         setSelectedFolder={setSelectedFolder}
         selectedProject={selectedProject}
+        selectedFolder={selectedFolder}
       />
       <h2 className="heading-secondary">Folder:</h2>
       <FoldersContainer
         setSelectedFolder={setSelectedFolder}
         selectedProject={selectedProject}
-        selectedFolder={selectedFolder}
-        setSelectedProject={setSelectedProject}
       />
       <label htmlFor="title" className="heading-secondary">
         Title

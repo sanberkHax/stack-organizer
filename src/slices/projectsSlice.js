@@ -10,6 +10,15 @@ export const projectsSlice = createSlice({
     projectsFetched: projectsAdapter.setAll,
     projectsRemoved: projectsAdapter.removeAll,
     projectAdded: projectsAdapter.addOne,
+    projectReset(state, action) {
+      const activeProjects = Object.values(state.entities).filter(
+        (p) => p.isActive
+      );
+      if (activeProjects.length > 0) {
+        const index = activeProjects[0].id;
+        state.entities[index].isActive = false;
+      }
+    },
     projectUpdated(state, action) {
       const { id, title, isActive, folders } = action.payload;
 
@@ -56,6 +65,7 @@ export const {
   projectUpdated,
   projectsFetched,
   projectsRemoved,
+  projectReset,
 } = projectsSlice.actions;
 
 // Export the customized selectors for this adapter using `getSelectors`

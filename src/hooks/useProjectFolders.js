@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectAllFolders } from '../slices/foldersSlice';
 
-export const useProjectFolders = () => {
+export const useProjectFolders = (selectedProject) => {
   const [projectFolders, setProjectFolders] = useState();
-  const [project, setProject] = useState();
+  const [project, setProject] = useState(selectedProject);
   const folders = useSelector(selectAllFolders);
-  console.log('PROJECT HOOK');
+
   useEffect(() => {
     const projectChildren = folders.filter((f) => f.project === project?.id);
 

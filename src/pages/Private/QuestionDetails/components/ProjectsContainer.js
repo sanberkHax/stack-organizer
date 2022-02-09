@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+
 import {
   selectAllProjects,
   projectAdded,
@@ -9,8 +11,8 @@ import { updateProjectsData } from '../../../../services/firebase';
 import {
   folderUpdated,
   currentFoldersUpdated,
+  previousFoldersReset,
 } from '../../../../slices/foldersSlice';
-import { useEffect } from 'react';
 import { useProjectFolders } from '../../../../hooks/useProjectFolders';
 
 export const ProjectsContainer = ({
@@ -35,8 +37,6 @@ export const ProjectsContainer = ({
     updateProjectsData(uid, projects);
   }, [projects, uid]);
 
-  console.log('projectFolders');
-  console.log(projectFolders);
   const addHandler = () => {
     // Prompt user for project name
     const projectName = prompt('Project Name:');
@@ -59,8 +59,6 @@ export const ProjectsContainer = ({
     const clickedProject = projects.find(
       (p) => p.title === e.target.textContent
     );
-    console.log('clickedProject');
-    console.log(clickedProject);
     dispatch(
       projectUpdated({
         id: clickedProject.id,
@@ -74,6 +72,7 @@ export const ProjectsContainer = ({
       setSelectedFolder(null);
       setSelectedProject(clickedProject);
     }
+    dispatch(previousFoldersReset());
   };
   return (
     <div className="file-container">

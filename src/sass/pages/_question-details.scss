@@ -96,6 +96,10 @@
   &__edit-date {
     font-size: 1rem;
   }
+
+  &__back-btn {
+    flex-basis: 25%;
+  }
 }
 
 .comment__owner {
@@ -107,20 +111,6 @@
 .comment__date {
   color: rgb(73, 132, 180);
   font-weight: bold;
-}
-
-.back-btn {
-  flex-basis: 25%;
-  display: flex;
-  cursor: pointer;
-  justify-content: flex-start;
-  svg {
-    width: 3rem;
-  }
-  fill: $tertiary-blue;
-  &:hover {
-    fill: $tertiary-blue-darker;
-  }
 }
 
 .stack-overflow-btn {

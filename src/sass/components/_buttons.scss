@@ -24,3 +24,16 @@
     width: 8rem;
   }
 }
+
+.back-btn {
+  display: flex;
+  cursor: pointer;
+  justify-content: flex-start;
+  svg {
+    width: 3rem;
+  }
+  fill: $tertiary-blue;
+  &:hover {
+    fill: $tertiary-blue-darker;
+  }
+}

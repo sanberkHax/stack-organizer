@@ -7,6 +7,7 @@ import { SaveModal } from './components/SaveModal';
 import { Backdrop } from './components/Backdrop';
 import { SaveAsButton } from '../../../components/SaveAsButton';
 import { CommentsButton } from '../../../components/CommentsButton';
+import { BackButton } from '../../../components/BackButton';
 import { toLocaleDate } from '../../../utils/toLocaleDate';
 import { DualRing } from 'react-awesome-spinners';
 
@@ -83,11 +84,10 @@ export const QuestionDetails = () => {
             </>
           )}
           <div className="question-details__nav">
-            <button onClick={() => navigate(-1)} className="back-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
-              </svg>
-            </button>
+            <BackButton
+              className="back-btn question-details__back-btn"
+              onClick={() => navigate(-1)}
+            />
             <h1 className="heading-primary question-details__heading">
               DETAILS
             </h1>

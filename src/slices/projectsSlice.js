@@ -1,13 +1,17 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 const projectsAdapter = createEntityAdapter();
 
-const initialState = projectsAdapter.getInitialState();
+const initialState = projectsAdapter.getInitialState({
+  loading: true,
+  error: null,
+});
 
 export const projectsSlice = createSlice({
   name: 'projects',
   initialState,
   reducers: {
     projectsFetched: projectsAdapter.setAll,
+    projectRemoved: projectsAdapter.removeOne,
     projectsRemoved: projectsAdapter.removeAll,
     projectAdded: projectsAdapter.addOne,
     projectReset(state, action) {
@@ -20,7 +24,8 @@ export const projectsSlice = createSlice({
       }
     },
     projectUpdated(state, action) {
-      const { id, title, isActive, folders } = action.payload;
+      state.error = null;
+      const { id, name, isActive, folders } = action.payload;
 
       // Get the project with matching id
       const existingProject = state.entities[id];
@@ -41,9 +46,9 @@ export const projectsSlice = createSlice({
           // Update project's isActive property
           existingProject.isActive = isActive;
         }
-        if (title) {
-          // Update project's title
-          existingProject.title = title;
+        if (name) {
+          // Update project's name
+          existingProject.name = name;
         }
         if (folders) {
           // If project doesn't have a folders property, initialize it
@@ -55,7 +60,14 @@ export const projectsSlice = createSlice({
         }
       }
     },
+    projectsLoadingUpdated(state, action) {
+      state.loading = action.payload;
+    },
+    projectsErrorUpdated(state, action) {
+      state.error = action.payload;
+    },
   },
+
   extraReducers: {},
 });
 
@@ -64,8 +76,11 @@ export const {
   projectAdded,
   projectUpdated,
   projectsFetched,
+  projectRemoved,
   projectsRemoved,
   projectReset,
+  projectsLoadingUpdated,
+  projectsErrorUpdated,
 } = projectsSlice.actions;
 
 // Export the customized selectors for this adapter using `getSelectors`

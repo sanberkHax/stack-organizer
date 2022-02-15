@@ -1,26 +1,26 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   selectAllFolders,
   folderAdded,
   folderUpdated,
   currentFoldersUpdated,
-  previousFoldersUpdated,
-  previousFoldersAdded,
   previousFoldersRemoved,
   parentFolderSet,
+  foldersErrorUpdated,
 } from '../../../../slices/foldersSlice';
-import {
-  projectUpdated,
-  selectAllProjects,
-} from '../../../../slices/projectsSlice';
+import { selectAllProjects } from '../../../../slices/projectsSlice';
 import { writeFoldersData } from '../../../../services/firebase';
 import { FolderButton } from '../../../../components/FolderButton';
 import { BackButton } from '../../../../components/BackButton';
 
-export const FoldersContainer = ({ setSelectedFolder, selectedProject }) => {
+export const FoldersContainer = ({
+  setSelectedFolder,
+  selectedProject,
+  selectedFolder,
+}) => {
   const folders = useSelector(selectAllFolders);
   const projects = useSelector(selectAllProjects);
 
@@ -29,112 +29,51 @@ export const FoldersContainer = ({ setSelectedFolder, selectedProject }) => {
   const uid = useSelector((state) => state.auth.currentUser);
   const currentFolders = useSelector((state) => state.folders.currentFolders);
   const previousFolders = useSelector((state) => state.folders.previousFolders);
-  const parentFolder = useSelector((state) => state.folders.parentFolder);
+  const loading = useSelector((state) => state.folders.loading);
 
+  const [newFolderId, setNewFolderId] = useState();
+
+  // Update folders database
   useEffect(() => {
-    writeFoldersData(uid, folders);
-  }, [folders, uid]);
+    if (!loading) {
+      writeFoldersData(uid, folders);
+    }
+  }, [loading, folders, uid]);
 
+  // Reset parent folder when folders container is on the base level
   useEffect(() => {
     if (previousFolders.length === 0) {
       dispatch(parentFolderSet({}));
     }
   }, [dispatch, previousFolders]);
 
+  // Go one level back inside the nested folder
   const backHandler = () => {
     const lastItem = previousFolders[previousFolders.length - 1];
+
     dispatch(currentFoldersUpdated(lastItem));
     dispatch(previousFoldersRemoved());
+    dispatch(folderUpdated({ id: selectedFolder?.id, isActive: false }));
+
+    setSelectedFolder(null);
   };
 
-  // Add folder on click1
+  // Add empty folder to active project
   const addHandler = () => {
     const activeProject = projects.find((p) => p.isActive);
-    // Prompt for folder name
-    const folderName = prompt('Folder Name:');
+    const newFolderId = uuidv4();
 
-    const existingFolder = currentFolders.find((f) => f.title === folderName);
-
-    if (existingFolder) {
-      alert('FOLDER NAME EXISTS, SELECT DIFFERENT NAME');
-      return;
-    } else if (folderName === null) {
-      return;
-    } else if (folderName === '') {
-      alert(`CAN'T ADD FOLDER WITHOUT A NAME`);
-    } else {
-      // When there is an active project, add a folder inside it
-      if (activeProject) {
-        const newFolderId = uuidv4();
-        dispatch(
-          folderAdded({
-            id: newFolderId,
-            title: folderName,
-            isActive: false,
-            project: activeProject.id,
-            children: [],
-          })
-        );
-        dispatch(
-          projectUpdated({
-            id: activeProject.id,
-            isActive: true,
-            folders: newFolderId,
-          })
-        );
-
-        if (Object.keys(parentFolder).length !== 0) {
-          dispatch(
-            folderUpdated({
-              id: parentFolder.id,
-              isActive: false,
-              children: newFolderId,
-            })
-          );
-          if (previousFolders.length > 0) {
-            dispatch(
-              previousFoldersUpdated({
-                id: parentFolder.id,
-                children: newFolderId,
-              })
-            );
-          }
-        }
-      }
-    }
-  };
-
-  // Single click on folder
-  const singleClickHandler = (e) => {
-    const clickedFolder = currentFolders.find(
-      (p) => p.title === e.target.textContent
-    );
+    dispatch(foldersErrorUpdated(null));
     dispatch(
-      folderUpdated({
-        id: clickedFolder.id,
-        isActive: !clickedFolder.isActive,
+      folderAdded({
+        id: newFolderId,
+        isActive: false,
+        project: activeProject.id,
+        children: [],
       })
     );
-    if (clickedFolder.isActive) {
-      setSelectedFolder(null);
-    } else {
-      setSelectedFolder(clickedFolder);
-    }
-  };
 
-  // Double click on folder
-  const doubleClickHandler = (e) => {
-    const clickedFolder = currentFolders.find(
-      (p) => p.title === e.target.textContent
-    );
-
-    const clickedFolderChildren = folders.filter((f) =>
-      clickedFolder.children?.includes(f.id)
-    );
-    dispatch(currentFoldersUpdated(clickedFolderChildren));
-    dispatch(previousFoldersAdded(currentFolders));
-    dispatch(parentFolderSet(clickedFolder));
-    setSelectedFolder(clickedFolder);
+    setNewFolderId(newFolderId);
   };
 
   return (
@@ -155,14 +94,16 @@ export const FoldersContainer = ({ setSelectedFolder, selectedProject }) => {
           {currentFolders?.map((f) => (
             <FolderButton
               key={f.id}
-              onSingleClick={singleClickHandler}
-              onDoubleClick={doubleClickHandler}
-              title={f.title}
+              setSelectedFolder={setSelectedFolder}
+              selectedProject={selectedProject}
+              selectedFolder={selectedFolder}
+              name={f.name}
               className={
                 f.isActive
                   ? 'file-container__btn--active'
                   : 'file-container__btn'
               }
+              newFolderId={newFolderId}
             />
           ))}
         </>

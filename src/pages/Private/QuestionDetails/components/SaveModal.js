@@ -2,72 +2,94 @@ import { ProjectsContainer } from './ProjectsContainer';
 import { FoldersContainer } from './FoldersContainer';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  updateProjectsData,
-  writeFoldersData,
-} from '../../../../services/firebase';
+import { Formik, Form, Field } from 'formik';
+
 import {
   projectReset,
-  projectUpdated,
-  selectAllProjects,
+  projectsErrorUpdated,
 } from '../../../../slices/projectsSlice';
 import {
-  selectAllFolders,
-  folderUpdated,
-  folderReset,
+  foldersErrorUpdated,
+  foldersReset,
 } from '../../../../slices/foldersSlice';
 import { useEffect } from 'react';
 
-export const SaveModal = ({ setModal }) => {
-  const projects = useSelector(selectAllProjects);
-  const folders = useSelector(selectAllFolders);
+export const SaveModal = ({ setModal, question }) => {
   const uid = useSelector((state) => state.auth.currentUser);
+  const projectsError = useSelector((state) => state.projects.error);
+  const foldersError = useSelector((state) => state.folders.error);
 
   const dispatch = useDispatch();
 
   const [selectedProject, setSelectedProject] = useState();
   const [selectedFolder, setSelectedFolder] = useState();
 
+  // Reset folders,projects and error mesages on unmount
   useEffect(() => {
-    // Reset active project and folder on unmount
     return () => {
-      dispatch(folderReset());
+      dispatch(foldersReset());
       dispatch(projectReset());
-      writeFoldersData(uid, folders);
-      updateProjectsData(uid, projects);
+      dispatch(foldersErrorUpdated(null));
+      dispatch(projectsErrorUpdated(null));
     };
-  }, [dispatch, uid]);
+  }, [uid, dispatch]);
 
-  const saveHandler = () => {
+  const saveHandler = (f) => {
+    const savedData = {
+      name: f.name,
+      note: f.note,
+      project: selectedProject,
+      folder: selectedFolder,
+      question: question,
+    };
+    console.log(savedData);
     setModal(false);
   };
 
   return (
     <div className="save-modal">
       <h1 className="heading-primary">Save As</h1>
-      <h2 className="heading-secondary">Project:</h2>
+      <h2 className="heading-secondary">Select Project:</h2>
+      {projectsError && <p className="error">{projectsError}</p>}
       <ProjectsContainer
         setSelectedProject={setSelectedProject}
         setSelectedFolder={setSelectedFolder}
         selectedProject={selectedProject}
         selectedFolder={selectedFolder}
       />
-      <h2 className="heading-secondary">Folder:</h2>
+      <h2 className="heading-secondary">Select Folder:</h2>
+      {foldersError && <p className="error">{foldersError}</p>}
       <FoldersContainer
+        selectedFolder={selectedFolder}
         setSelectedFolder={setSelectedFolder}
         selectedProject={selectedProject}
       />
-      <label htmlFor="title" className="heading-secondary">
-        Title
-      </label>
-      <input className="save-modal__input" type="text" name="title" />
-      <label htmlFor="note" className="heading-secondary">
-        Note
-      </label>
-      <textarea className="save-modal__textarea" type="text" name="note" />
-      <button className="btn" onClick={saveHandler}>
-        Save
-      </button>
+      <Formik initialValues={{ name: '', note: '' }} onSubmit={saveHandler}>
+        <Form className="save-modal__form">
+          <label htmlFor="name" className="heading-secondary">
+            Name:
+          </label>
+          <Field
+            id="name"
+            className="save-modal__input"
+            type="text"
+            name="name"
+          />
+          <label htmlFor="note" className="heading-secondary">
+            Note:
+          </label>
+          <Field
+            id="note"
+            className="save-modal__textarea"
+            type="text"
+            name="note"
+            as="textarea"
+          />
+          <button type="submit" className="btn">
+            Save
+          </button>
+        </Form>
+      </Formik>
     </div>
   );
 };

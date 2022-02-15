@@ -5,39 +5,48 @@ const initialState = foldersAdapter.getInitialState({
   previousFolders: [],
   currentFolders: [],
   parentFolder: {},
+  loading: true,
+  error: null,
 });
 
 export const foldersSlice = createSlice({
   name: 'folders',
   initialState,
   reducers: {
+    folderRemoved: foldersAdapter.removeOne,
     foldersRemoved: foldersAdapter.removeAll,
     foldersFetched: foldersAdapter.setAll,
-    folderReset(state, action) {
-      const activeFolders = Object.values(current(state.entities)).filter(
+    foldersReset(state, action) {
+      const activeFolders = Object.values(state.entities).filter(
         (p) => p.isActive
       );
       if (activeFolders.length > 0) {
         const index = activeFolders[0].id;
         state.entities[index].isActive = false;
-        const currentIndex = state.currentFolders.findIndex(
-          (f) => f.id === index
-        );
-        const currentActive = state.currentFolders[currentIndex];
-        if (currentActive) {
-          currentActive.isActive = false;
+        if (state.currentFolders?.length > 0) {
+          const currentIndex = state.currentFolders.findIndex(
+            (f) => f.id === index
+          );
+          const currentActive = state.currentFolders[currentIndex];
+          if (currentActive) {
+            currentActive.isActive = false;
+          }
         }
       }
+
+      state.previousFolders = [];
     },
-    // folderAdded: foldersAdapter.addOne,
+
     folderAdded(state, action) {
       const newFolder = action.payload;
       state.ids.push(newFolder.id);
       state.entities = { ...state.entities, [newFolder.id]: newFolder };
       state.currentFolders.push(newFolder);
     },
+
     folderUpdated(state, action) {
-      const { id, title, isActive, children } = action.payload;
+      state.error = null;
+      const { id, name, isActive, children } = action.payload;
       // Get the folder with matching id
       const existingFolder = state.entities[id];
 
@@ -74,9 +83,9 @@ export const foldersSlice = createSlice({
           // Update folder's isActive property
           existingFolder.isActive = isActive;
         }
-        if (title) {
-          // Update folder's title
-          existingFolder.title = title;
+        if (name) {
+          // Update folder's name
+          existingFolder.name = name;
         }
         if (children) {
           // If the folder doesn't have a children property, initialize it
@@ -88,35 +97,73 @@ export const foldersSlice = createSlice({
         }
       }
     },
+
+    currentFolderRemoved(state, action) {
+      const removedFolderId = action.payload;
+      const filteredCurrentFolders = state.currentFolders.filter(
+        (f) => f.id !== removedFolderId
+      );
+      state.currentFolders = filteredCurrentFolders;
+    },
     currentFoldersUpdated(state, action) {
       const folders = action.payload;
 
       state.currentFolders = folders;
     },
+    currentFolderUpdated(state, action) {
+      const { id, name } = action.payload;
+
+      const existingFolder = state.currentFolders.find((f) => f.id === id);
+      if (name) {
+        existingFolder.name = name;
+      }
+    },
+
     previousFoldersAdded(state, action) {
       const folders = action.payload;
 
       state.previousFolders.push(folders);
     },
+
     previousFoldersRemoved(state, action) {
       state.previousFolders.pop();
     },
+
     previousFoldersUpdated(state, action) {
-      const { id, children } = action.payload;
+      const { id, children, isActive } = action.payload;
 
       const lastParent =
         state.previousFolders[state.previousFolders.length - 1];
 
-      const updatedFolder = lastParent.find((f) => f.id === id);
+      const updatedFolder = lastParent.findIndex((f) => f.id === id);
 
-      updatedFolder.children.push(children);
+      const existingFolder = lastParent[updatedFolder];
+
+      if (existingFolder) {
+        existingFolder.isActive = isActive;
+
+        if (children) {
+          if (!existingFolder.children) {
+            existingFolder.children = [];
+          }
+          existingFolder.children.push(children);
+        }
+      }
     },
+
     previousFoldersReset(state, action) {
       state.previousFolders = [];
     },
+
     parentFolderSet(state, action) {
       const parentFolder = action.payload;
       state.parentFolder = parentFolder;
+    },
+    foldersLoadingUpdated(state, action) {
+      state.loading = action.payload;
+    },
+    foldersErrorUpdated(state, action) {
+      state.error = action.payload;
     },
   },
   extraReducers: {},
@@ -127,14 +174,19 @@ export const {
   folderAdded,
   folderUpdated,
   foldersFetched,
+  folderRemoved,
   foldersRemoved,
-  folderReset,
+  foldersReset,
   currentFoldersUpdated,
+  currentFolderUpdated,
+  currentFolderRemoved,
   previousFoldersUpdated,
   previousFoldersRemoved,
   previousFoldersAdded,
   previousFoldersReset,
   parentFolderSet,
+  foldersLoadingUpdated,
+  foldersErrorUpdated,
 } = foldersSlice.actions;
 
 // Export the customized selectors for this adapter using `getSelectors`

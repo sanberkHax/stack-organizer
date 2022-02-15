@@ -5,13 +5,20 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import authReducer from '../slices/authSlice';
 import searchReducer from '../slices/searchSlice';
+import projectsReducer from '../slices/projectsSlice';
+import foldersReducer from '../slices/foldersSlice';
 
 function render(
   ui,
   {
     preloadedState,
     store = configureStore({
-      reducer: { auth: authReducer, search: searchReducer },
+      reducer: {
+        auth: authReducer,
+        search: searchReducer,
+        projects: projectsReducer,
+        folders: foldersReducer,
+      },
       preloadedState,
     }),
     ...renderOptions

@@ -35,12 +35,16 @@ export const QuestionDetails = () => {
     setShowComments((prev) => !prev);
   };
 
+  // Open save modal
   const saveModalHandler = () => {
     setModal(true);
   };
+
+  // Close save modal
   const backdropHandler = () => {
     setModal(false);
   };
+
   const commentsContent = question?.comment_count > 0 && (
     <>
       {showComments && (
@@ -79,7 +83,7 @@ export const QuestionDetails = () => {
         <>
           {modal && (
             <>
-              <SaveModal setModal={setModal} />
+              <SaveModal question={question} setModal={setModal} />
               <Backdrop onClick={backdropHandler} />
             </>
           )}

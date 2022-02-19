@@ -117,7 +117,6 @@ export const FolderButton = ({
     } else {
       if (activeProject) {
         // Update empty folder's name
-        console.log(lastFolder.id);
         dispatch(
           folderUpdated({
             id: lastFolder.id,

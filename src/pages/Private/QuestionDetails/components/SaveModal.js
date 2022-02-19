@@ -18,13 +18,19 @@ import {
   questionAdded,
   selectAllQuestions,
 } from '../../../../slices/questionsSlice';
-import { writeQuestionsData } from '../../../../services/firebase';
+import {
+  writeQuestionsData,
+  writeAnswersData,
+} from '../../../../services/firebase';
+import { selectAllAnswers, answerAdded } from '../../../../slices/answersSlice';
 
 export const SaveModal = ({ setModal, question, answer }) => {
   const uid = useSelector((state) => state.auth.currentUser);
   const projectsError = useSelector((state) => state.projects.error);
   const foldersError = useSelector((state) => state.folders.error);
   const questions = useSelector(selectAllQuestions);
+  const answers = useSelector(selectAllAnswers);
+
   const dispatch = useDispatch();
 
   const [selectedProject, setSelectedProject] = useState();
@@ -48,6 +54,10 @@ export const SaveModal = ({ setModal, question, answer }) => {
     writeQuestionsData(uid, questions);
   }, [questions, uid]);
 
+  useEffect(() => {
+    writeAnswersData(uid, answers);
+  }, [answers, uid]);
+
   const saveHandler = (formData) => {
     const { name, note } = formData;
 
@@ -59,6 +69,19 @@ export const SaveModal = ({ setModal, question, answer }) => {
           name: name,
           note: note,
           data: question,
+          project: selectedProject.id,
+          folder: selectedFolder.id,
+        })
+      );
+    }
+    if (answer) {
+      const answerId = uuidv4();
+      dispatch(
+        answerAdded({
+          id: answerId,
+          name: name,
+          note: note,
+          data: answer,
           project: selectedProject.id,
           folder: selectedFolder.id,
         })

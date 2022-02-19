@@ -39,7 +39,6 @@ export const writeUsersData = (userId, data) => {
 };
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   // dev code
-  // connectDatabaseEmulator(database, 'localhost', 9000);
 } else if (process.env.NODE_ENV === 'test') {
   // test code
   connectAuthEmulator(auth, 'http://localhost:9099');

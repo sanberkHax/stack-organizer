@@ -17,12 +17,14 @@ export const foldersSlice = createSlice({
     foldersRemoved: foldersAdapter.removeAll,
     foldersFetched: foldersAdapter.setAll,
     foldersReset(state, action) {
-      const activeFolders = Object.values(state.entities).filter(
-        (p) => p.isActive
-      );
+      const foldersArray = Object.values(state.entities);
+      const activeFolders = foldersArray.filter((p) => p.isActive);
+
       if (activeFolders.length > 0) {
         const index = activeFolders[0].id;
+
         state.entities[index].isActive = false;
+
         if (state.currentFolders?.length > 0) {
           const currentIndex = state.currentFolders.findIndex(
             (f) => f.id === index
@@ -35,6 +37,13 @@ export const foldersSlice = createSlice({
       }
 
       state.previousFolders = [];
+
+      // Remove the new folder without a name
+      const lastFolder = foldersArray[foldersArray.length - 1];
+
+      if (lastFolder && !lastFolder.name) {
+        foldersAdapter.removeOne(state, lastFolder.id);
+      }
     },
 
     folderAdded(state, action) {

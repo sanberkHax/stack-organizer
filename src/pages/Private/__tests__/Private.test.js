@@ -27,7 +27,7 @@ describe('<Private />', () => {
     expect(searchBar.value).toBe('');
     userEvent.click(searchButton);
     expect(
-      await screen.findByText(/please enter a valid keyword/i)
+      await screen.findByText(/please enter a keyword/i)
     ).toBeInTheDocument();
   });
 });

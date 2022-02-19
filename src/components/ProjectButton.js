@@ -8,7 +8,7 @@ import {
   projectsErrorUpdated,
 } from '../slices/projectsSlice';
 import { folderUpdated, foldersReset } from '../slices/foldersSlice';
-import { ReactComponent as ProjectIcon } from '../assets/project-button.svg';
+import { ProjectIcon } from './ProjectIcon';
 
 export const ProjectButton = ({
   newProjectId,
@@ -28,11 +28,11 @@ export const ProjectButton = ({
     );
     dispatch(
       projectUpdated({
-        id: clickedProject.id,
-        isActive: !clickedProject.isActive,
+        id: clickedProject?.id,
+        isActive: !clickedProject?.isActive,
       })
     );
-    if (clickedProject.isActive) {
+    if (clickedProject?.isActive) {
       setSelectedProject(null);
     } else {
       dispatch(folderUpdated({ id: selectedFolder?.id, isActive: false }));
@@ -47,6 +47,8 @@ export const ProjectButton = ({
     const projectName = p.name;
 
     const existingProject = projects.find((f) => f.name === projectName);
+    const lastProject = projects[projects.length - 1];
+
     if (existingProject) {
       dispatch(
         projectsErrorUpdated('PROJECT NAME EXISTS, SELECT DIFFERENT NAME')
@@ -60,7 +62,7 @@ export const ProjectButton = ({
       dispatch(projectsErrorUpdated(`CAN'T ADD PROJECT WITHOUT A NAME`));
       dispatch(projectRemoved(newProjectId));
     } else {
-      dispatch(projectUpdated({ id: newProjectId, name: projectName }));
+      dispatch(projectUpdated({ id: lastProject.id, name: projectName }));
     }
   };
   return (

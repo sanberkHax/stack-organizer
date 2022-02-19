@@ -14,7 +14,7 @@ import {
   currentFolderRemoved,
   foldersErrorUpdated,
 } from '../slices/foldersSlice';
-import { ReactComponent as FolderIcon } from '../assets/folder-button.svg';
+import { FolderIcon } from './FolderIcon';
 
 export const FolderButton = ({
   className,
@@ -93,8 +93,10 @@ export const FolderButton = ({
   // Add a name to empty folder
   const addNameHandler = (f) => {
     const folderName = f.name;
+
     const activeProject = projects.find((p) => p.isActive);
     const existingFolder = currentFolders.find((f) => f.name === folderName);
+    const lastFolder = folders[folders.length - 1];
 
     if (existingFolder) {
       dispatch(
@@ -115,21 +117,22 @@ export const FolderButton = ({
     } else {
       if (activeProject) {
         // Update empty folder's name
+        console.log(lastFolder.id);
         dispatch(
           folderUpdated({
-            id: newFolderId,
+            id: lastFolder.id,
             name: folderName,
           })
         );
         // Update empty folder inside currentFolders
-        dispatch(currentFolderUpdated({ id: newFolderId, name: folderName }));
+        dispatch(currentFolderUpdated({ id: lastFolder.id, name: folderName }));
 
         // Add the folder inside active project
         dispatch(
           projectUpdated({
             id: activeProject.id,
             isActive: true,
-            folders: newFolderId,
+            folders: lastFolder.id,
           })
         );
 
@@ -139,7 +142,7 @@ export const FolderButton = ({
             folderUpdated({
               id: parentFolder.id,
               isActive: false,
-              children: newFolderId,
+              children: lastFolder.id,
             })
           );
           // If there are multiple previous folders, update them
@@ -147,7 +150,7 @@ export const FolderButton = ({
             dispatch(
               previousFoldersUpdated({
                 id: parentFolder.id,
-                children: newFolderId,
+                children: lastFolder.id,
               })
             );
           }
@@ -165,6 +168,7 @@ export const FolderButton = ({
               return (
                 <Form className="file-container__btn__form">
                   <Field
+                    data-testid="folder-btn-input"
                     id="name"
                     name="name"
                     autoFocus={true}

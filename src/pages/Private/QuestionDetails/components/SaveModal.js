@@ -2,7 +2,6 @@ import { ProjectsContainer } from './ProjectsContainer';
 import { FoldersContainer } from './FoldersContainer';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form, Field } from 'formik';
 
 import {
   projectReset,
@@ -13,6 +12,7 @@ import {
   foldersReset,
 } from '../../../../slices/foldersSlice';
 import { useEffect } from 'react';
+import { SaveModalForm } from './SaveModalForm';
 
 export const SaveModal = ({ setModal, question }) => {
   const uid = useSelector((state) => state.auth.currentUser);
@@ -26,7 +26,11 @@ export const SaveModal = ({ setModal, question }) => {
 
   // Reset folders,projects and error mesages on unmount
   useEffect(() => {
+    dispatch(foldersReset());
+    dispatch(projectReset());
     return () => {
+      setSelectedFolder(null);
+      setSelectedProject(null);
       dispatch(foldersReset());
       dispatch(projectReset());
       dispatch(foldersErrorUpdated(null));
@@ -64,32 +68,7 @@ export const SaveModal = ({ setModal, question }) => {
         setSelectedFolder={setSelectedFolder}
         selectedProject={selectedProject}
       />
-      <Formik initialValues={{ name: '', note: '' }} onSubmit={saveHandler}>
-        <Form className="save-modal__form">
-          <label htmlFor="name" className="heading-secondary">
-            Name:
-          </label>
-          <Field
-            id="name"
-            className="save-modal__input"
-            type="text"
-            name="name"
-          />
-          <label htmlFor="note" className="heading-secondary">
-            Note:
-          </label>
-          <Field
-            id="note"
-            className="save-modal__textarea"
-            type="text"
-            name="note"
-            as="textarea"
-          />
-          <button type="submit" className="btn">
-            Save
-          </button>
-        </Form>
-      </Formik>
+      <SaveModalForm onSubmit={saveHandler} />
     </div>
   );
 };

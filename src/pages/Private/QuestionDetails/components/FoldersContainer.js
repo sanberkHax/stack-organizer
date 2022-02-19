@@ -15,6 +15,7 @@ import { selectAllProjects } from '../../../../slices/projectsSlice';
 import { writeFoldersData } from '../../../../services/firebase';
 import { FolderButton } from '../../../../components/FolderButton';
 import { BackButton } from '../../../../components/BackButton';
+import { AddButton } from '../../../../components/AddButton';
 
 export const FoldersContainer = ({
   setSelectedFolder,
@@ -32,7 +33,6 @@ export const FoldersContainer = ({
   const loading = useSelector((state) => state.folders.loading);
 
   const [newFolderId, setNewFolderId] = useState();
-
   // Update folders database
   useEffect(() => {
     if (!loading) {
@@ -80,17 +80,10 @@ export const FoldersContainer = ({
     <div className="file-container">
       {selectedProject && (
         <>
-          {previousFolders.length > 0 && <BackButton onClick={backHandler} />}
-          <button className="file-container__btn" onClick={addHandler}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z" />
-            </svg>
-          </button>
+          {previousFolders?.length > 0 && (
+            <BackButton ariaLabel="back-button" onClick={backHandler} />
+          )}
+          <AddButton ariaLabel="add-folder" onClick={addHandler} />
           {currentFolders?.map((f) => (
             <FolderButton
               key={f.id}

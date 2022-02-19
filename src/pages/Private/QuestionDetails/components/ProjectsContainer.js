@@ -11,6 +11,7 @@ import { updateProjectsData } from '../../../../services/firebase';
 import { currentFoldersUpdated } from '../../../../slices/foldersSlice';
 import { useProjectFolders } from '../../../../hooks/useProjectFolders';
 import { ProjectButton } from '../../../../components/ProjectButton';
+import { AddButton } from '../../../../components/AddButton';
 
 export const ProjectsContainer = ({
   setSelectedProject,
@@ -59,20 +60,7 @@ export const ProjectsContainer = ({
 
   return (
     <div className="file-container">
-      <button
-        aria-label="add"
-        className="file-container__btn"
-        onClick={addHandler}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-        >
-          <path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z" />
-        </svg>
-      </button>
+      <AddButton ariaLabel="add-project" onClick={addHandler} />
       {projects?.map((p) => (
         <ProjectButton
           key={p.id}

@@ -36,8 +36,11 @@ export const searchSlice = createSlice({
       state.error = action.payload;
     },
     [getSearchResults.fulfilled]: (state, action) => {
+      const searchResults = action.payload;
+
       state.loading = false;
-      state.searchResults = action.payload;
+      state.searchResults = searchResults;
+      localStorage.setItem('searchResults', JSON.stringify(searchResults));
     },
   },
 });

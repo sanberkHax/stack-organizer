@@ -9,6 +9,7 @@ export const Answer = ({
   body,
   owner,
   modalHandler,
+  answer,
 }) => {
   const [showComments, setShowComments] = useState(false);
 
@@ -54,7 +55,7 @@ export const Answer = ({
         <p className="question-details__owner">{owner}</p>
       </div>
       {commentsContent}
-      <SaveAsButton onClick={modalHandler} />
+      <SaveAsButton answer={answer} onClick={modalHandler} />
     </li>
   );
 };

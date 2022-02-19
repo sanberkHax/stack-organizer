@@ -10,6 +10,7 @@ import { CommentsButton } from '../../../components/CommentsButton';
 import { BackButton } from '../../../components/BackButton';
 import { toLocaleDate } from '../../../utils/toLocaleDate';
 import { DualRing } from 'react-awesome-spinners';
+import { useEffect } from 'react';
 
 export const QuestionDetails = () => {
   const navigate = useNavigate();
@@ -20,11 +21,18 @@ export const QuestionDetails = () => {
   const questions = useSelector((state) => state.search.searchResults);
   const loading = useSelector((state) => state.search.loading);
 
+  const [results, setResults] = useState(questions);
+
+  useEffect(() => {
+    const searchResults = JSON.parse(localStorage.getItem('searchResults'));
+    setResults(searchResults);
+  }, []);
+
   // Get the current question id from URL
   const { questionId } = useParams();
 
   // Find the current question from search results
-  const question = questions.find((q) => q.question_id == questionId);
+  const question = results.find((q) => q.question_id == questionId);
 
   // Convert unix date format to Month/Day/Year
   const creationDate = toLocaleDate(question?.creation_date);
@@ -63,8 +71,9 @@ export const QuestionDetails = () => {
     </>
   );
 
-  const answersContent = question?.answers.map((answer) => (
+  const answersContent = question?.answers?.map((answer) => (
     <Answer
+      answer={answer}
       comments={answer.comments}
       key={answer.answer_id}
       owner={answer.owner.display_name}

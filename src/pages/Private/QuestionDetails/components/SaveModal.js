@@ -14,7 +14,7 @@ import {
 import { useEffect } from 'react';
 import { SaveModalForm } from './SaveModalForm';
 
-export const SaveModal = ({ setModal, question }) => {
+export const SaveModal = ({ setModal, question, answer }) => {
   const uid = useSelector((state) => state.auth.currentUser);
   const projectsError = useSelector((state) => state.projects.error);
   const foldersError = useSelector((state) => state.folders.error);
@@ -39,14 +39,25 @@ export const SaveModal = ({ setModal, question }) => {
   }, [uid, dispatch]);
 
   const saveHandler = (f) => {
-    const savedData = {
-      name: f.name,
-      note: f.note,
-      project: selectedProject,
-      folder: selectedFolder,
-      question: question,
-    };
-    console.log(savedData);
+    if (question) {
+      const savedData = {
+        name: f.name,
+        note: f.note,
+        project: selectedProject,
+        folder: selectedFolder,
+        question: question,
+      };
+      console.log(savedData);
+    } else if (answer) {
+      const savedData = {
+        name: f.name,
+        note: f.note,
+        project: selectedProject,
+        folder: selectedFolder,
+        answer: answer,
+      };
+      console.log(savedData);
+    }
     setModal(false);
   };
 

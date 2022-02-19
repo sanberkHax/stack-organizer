@@ -17,6 +17,11 @@ import {
   foldersRemoved,
   foldersLoadingUpdated,
 } from '../slices/foldersSlice';
+import {
+  questionsFetched,
+  questionsRemoved,
+  questionsLoadingUpdated,
+} from '../slices/questionsSlice';
 import { ref, get, child } from 'firebase/database';
 
 function App() {
@@ -69,9 +74,26 @@ function App() {
           .catch((error) => {
             console.error(error);
           });
+
+        // Read and set questions from firebase
+        get(child(ref(database), `questions/${userId}`))
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const data = snapshot.val();
+
+              dispatch(questionsFetched(data));
+              dispatch(questionsLoadingUpdated(false));
+            } else {
+              dispatch(questionsLoadingUpdated(false));
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       } else {
         dispatch(projectsRemoved());
         dispatch(foldersRemoved());
+        dispatch(questionsRemoved());
       }
       // Remove listener
       return () => unsubscribe();

@@ -21,6 +21,7 @@ export const QuestionDetails = () => {
   const questions = useSelector((state) => state.search.searchResults);
   const loading = useSelector((state) => state.search.loading);
 
+  const [answer, setAnswer] = useState();
   const [results, setResults] = useState(questions);
 
   useEffect(() => {
@@ -42,9 +43,9 @@ export const QuestionDetails = () => {
   const commentDisplayHandler = () => {
     setShowComments((prev) => !prev);
   };
-
   // Open save modal
-  const saveModalHandler = () => {
+  const saveModalHandler = (data) => {
+    setAnswer(data);
     setModal(true);
   };
 
@@ -80,7 +81,7 @@ export const QuestionDetails = () => {
       voteCount={answer.score}
       body={answer.body}
       date={toLocaleDate(answer.creation_date)}
-      modalHandler={saveModalHandler}
+      saveModalHandler={saveModalHandler}
     />
   ));
 
@@ -92,7 +93,11 @@ export const QuestionDetails = () => {
         <>
           {modal && (
             <>
-              <SaveModal question={question} setModal={setModal} />
+              <SaveModal
+                question={question}
+                answer={answer}
+                setModal={setModal}
+              />
               <Backdrop onClick={backdropHandler} />
             </>
           )}

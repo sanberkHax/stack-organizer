@@ -8,11 +8,15 @@ export const Answer = ({
   date,
   body,
   owner,
-  modalHandler,
+  saveModalHandler,
   answer,
+  setSaveModalData,
 }) => {
   const [showComments, setShowComments] = useState(false);
 
+  const saveModalDataHandler = () => {
+    saveModalHandler(answer);
+  };
   const commentDisplayHandler = () => {
     setShowComments((prev) => !prev);
   };
@@ -55,7 +59,7 @@ export const Answer = ({
         <p className="question-details__owner">{owner}</p>
       </div>
       {commentsContent}
-      <SaveAsButton answer={answer} onClick={modalHandler} />
+      <SaveAsButton onClick={saveModalDataHandler} />
     </li>
   );
 };

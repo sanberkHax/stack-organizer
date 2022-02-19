@@ -2,6 +2,7 @@ import { ProjectsContainer } from './ProjectsContainer';
 import { FoldersContainer } from './FoldersContainer';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   projectReset,
@@ -13,12 +14,17 @@ import {
 } from '../../../../slices/foldersSlice';
 import { useEffect } from 'react';
 import { SaveModalForm } from './SaveModalForm';
+import {
+  questionAdded,
+  selectAllQuestions,
+} from '../../../../slices/questionsSlice';
+import { writeQuestionsData } from '../../../../services/firebase';
 
 export const SaveModal = ({ setModal, question, answer }) => {
   const uid = useSelector((state) => state.auth.currentUser);
   const projectsError = useSelector((state) => state.projects.error);
   const foldersError = useSelector((state) => state.folders.error);
-
+  const questions = useSelector(selectAllQuestions);
   const dispatch = useDispatch();
 
   const [selectedProject, setSelectedProject] = useState();
@@ -38,25 +44,25 @@ export const SaveModal = ({ setModal, question, answer }) => {
     };
   }, [uid, dispatch]);
 
-  const saveHandler = (f) => {
+  useEffect(() => {
+    writeQuestionsData(uid, questions);
+  }, [questions, uid]);
+
+  const saveHandler = (formData) => {
+    const { name, note } = formData;
+
     if (question) {
-      const savedData = {
-        name: f.name,
-        note: f.note,
-        project: selectedProject,
-        folder: selectedFolder,
-        question: question,
-      };
-      console.log(savedData);
-    } else if (answer) {
-      const savedData = {
-        name: f.name,
-        note: f.note,
-        project: selectedProject,
-        folder: selectedFolder,
-        answer: answer,
-      };
-      console.log(savedData);
+      const questionId = uuidv4();
+      dispatch(
+        questionAdded({
+          id: questionId,
+          name: name,
+          note: note,
+          data: question,
+          project: selectedProject.id,
+          folder: selectedFolder.id,
+        })
+      );
     }
     setModal(false);
   };

@@ -37,6 +37,9 @@ export const writeFoldersData = (userId, data) => {
 export const writeUsersData = (userId, data) => {
   set(ref(database, 'users/' + userId), data);
 };
+export const writeQuestionsData = (userId, data) => {
+  set(ref(database, 'questions/' + userId), data);
+};
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   // dev code
 } else if (process.env.NODE_ENV === 'test') {

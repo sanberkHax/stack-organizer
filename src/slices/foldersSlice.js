@@ -1,4 +1,4 @@
-import { createSlice, createEntityAdapter, current } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 const foldersAdapter = createEntityAdapter();
 
 const initialState = foldersAdapter.getInitialState({
@@ -13,8 +13,41 @@ export const foldersSlice = createSlice({
   name: 'folders',
   initialState,
   reducers: {
-    folderRemoved: foldersAdapter.removeOne,
-    foldersRemoved: foldersAdapter.removeAll,
+    folderRemoved(state, action) {
+      const foldersArray = Object.values(state.entities);
+      const removedFolderId = action.payload;
+      const removedFolder = state.entities[removedFolderId];
+
+      // Find and remove all children of folder
+      const removeAllChildren = (folder) => {
+        if (folder.hasOwnProperty('children')) {
+          folder.children.forEach((f) => {
+            const removedChild = foldersArray.find((s) => s.id === f);
+            if (removedChild) {
+              foldersAdapter.removeOne(state, removedChild.id);
+              removeAllChildren(removedChild);
+            }
+          });
+        }
+      };
+
+      removeAllChildren(removedFolder);
+
+      // Remove folder itself after removing its children
+      foldersAdapter.removeOne(state, removedFolderId);
+    },
+    foldersRemoved(state, action) {
+      const removedFolders = action.payload;
+
+      // When there is a folder array given, remove only those folders
+      if (removedFolders.length > 0) {
+        removedFolders.forEach((f) => {
+          foldersAdapter.removeOne(state, f.id);
+        });
+      } else {
+        foldersAdapter.removeAll();
+      }
+    },
     foldersFetched: foldersAdapter.setAll,
     foldersReset(state, action) {
       const foldersArray = Object.values(state.entities);
@@ -60,7 +93,7 @@ export const foldersSlice = createSlice({
       const existingFolder = state.entities[id];
 
       // Get active folders
-      const activeFolders = Object.values(current(state.entities)).filter(
+      const activeFolders = Object.values(state.entities).filter(
         (p) => p.isActive
       );
 
@@ -96,6 +129,9 @@ export const foldersSlice = createSlice({
           // Update folder's name
           existingFolder.name = name;
         }
+        if (name === null) {
+          existingFolder.name = null;
+        }
         if (children) {
           // If the folder doesn't have a children property, initialize it
           if (!existingFolder.children) {
@@ -125,6 +161,9 @@ export const foldersSlice = createSlice({
       const existingFolder = state.currentFolders.find((f) => f.id === id);
       if (name) {
         existingFolder.name = name;
+      }
+      if (name === null) {
+        existingFolder.name = null;
       }
     },
 

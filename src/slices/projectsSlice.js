@@ -50,6 +50,9 @@ export const projectsSlice = createSlice({
           // Update project's name
           existingProject.name = name;
         }
+        if (name === null) {
+          existingProject.name = null;
+        }
         if (folders) {
           // If project doesn't have a folders property, initialize it
           if (!existingProject.folders) {

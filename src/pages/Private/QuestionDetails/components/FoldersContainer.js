@@ -21,6 +21,8 @@ export const FoldersContainer = ({
   setSelectedFolder,
   selectedProject,
   selectedFolder,
+  className,
+  buttonClassName,
 }) => {
   const folders = useSelector(selectAllFolders);
   const projects = useSelector(selectAllProjects);
@@ -77,7 +79,7 @@ export const FoldersContainer = ({
   };
 
   return (
-    <div className="file-container">
+    <div className={className}>
       {selectedProject && (
         <>
           {previousFolders?.length > 0 && (
@@ -92,9 +94,7 @@ export const FoldersContainer = ({
               selectedFolder={selectedFolder}
               name={f.name}
               className={
-                f.isActive
-                  ? 'file-container__btn--active'
-                  : 'file-container__btn'
+                f.isActive ? `${buttonClassName}--active` : `${buttonClassName}`
               }
               newFolderId={newFolderId}
             />

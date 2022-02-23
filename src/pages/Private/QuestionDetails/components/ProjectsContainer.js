@@ -14,10 +14,13 @@ import { ProjectButton } from '../../../../components/ProjectButton';
 import { AddButton } from '../../../../components/AddButton';
 
 export const ProjectsContainer = ({
+  className,
+  buttonClassName,
   setSelectedProject,
   setSelectedFolder,
   selectedFolder,
   selectedProject,
+  mode,
 }) => {
   const projects = useSelector(selectAllProjects);
   const dispatch = useDispatch();
@@ -59,8 +62,9 @@ export const ProjectsContainer = ({
   };
 
   return (
-    <div className="file-container">
+    <div className={className}>
       <AddButton ariaLabel="add-project" onClick={addHandler} />
+
       {projects?.map((p) => (
         <ProjectButton
           key={p.id}
@@ -69,7 +73,7 @@ export const ProjectsContainer = ({
           setSelectedProject={setSelectedProject}
           selectedFolder={selectedFolder}
           className={
-            p.isActive ? 'file-container__btn--active' : 'file-container__btn'
+            p.isActive ? `${buttonClassName}--active` : `${buttonClassName}`
           }
           name={p.name}
         />

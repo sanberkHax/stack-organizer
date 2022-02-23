@@ -96,6 +96,8 @@ export const SaveModal = ({ setModal, question, answer }) => {
       <h2 className="heading-secondary">Select Project:</h2>
       {projectsError && <p className="error">{projectsError}</p>}
       <ProjectsContainer
+        className="file-container"
+        buttonClassName="file-container__btn"
         setSelectedProject={setSelectedProject}
         setSelectedFolder={setSelectedFolder}
         selectedProject={selectedProject}
@@ -104,6 +106,8 @@ export const SaveModal = ({ setModal, question, answer }) => {
       <h2 className="heading-secondary">Select Folder:</h2>
       {foldersError && <p className="error">{foldersError}</p>}
       <FoldersContainer
+        className="file-container"
+        buttonClassName="file-container__btn"
         selectedFolder={selectedFolder}
         setSelectedFolder={setSelectedFolder}
         selectedProject={selectedProject}

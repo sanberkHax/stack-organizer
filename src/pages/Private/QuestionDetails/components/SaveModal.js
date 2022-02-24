@@ -60,29 +60,39 @@ export const SaveModal = ({ setModal, question, answer }) => {
 
   const saveHandler = (formData) => {
     const { name, note } = formData;
-
-    if (question) {
+    const questionData = {
+      title: question?.title,
+      body: question?.body,
+      ...(question?.answers && { answers: question.answers }),
+      link: question?.link,
+    };
+    const answerData = {
+      body: answer?.body,
+      link: question?.link,
+      questionTitle: question?.title,
+      questionBody: question?.body,
+    };
+    if (question && !answer) {
       const questionId = uuidv4();
       dispatch(
         questionAdded({
           id: questionId,
           name: name,
           note: note,
-          data: question,
+          data: questionData,
           ...(selectedFolder
             ? { folder: selectedFolder.id }
             : { project: selectedProject.id }),
         })
       );
-    }
-    if (answer) {
+    } else if (question && answer) {
       const answerId = uuidv4();
       dispatch(
         answerAdded({
           id: answerId,
           name: name,
           note: note,
-          data: answer,
+          data: answerData,
           ...(selectedFolder
             ? { folder: selectedFolder.id }
             : { project: selectedProject.id }),

@@ -12,11 +12,42 @@ export const answersSlice = createSlice({
   initialState,
   reducers: {
     answerRemoved: answersAdapter.removeOne,
-    answersRemoved: answersAdapter.removeAll,
+    answersRemoved(state, action) {
+      const removedAnswers = action.payload;
+
+      // Remove given array of answers
+      if (removedAnswers) {
+        removedAnswers.forEach((q) => {
+          answersAdapter.removeOne(state, q.id);
+        });
+      }
+      // Remove all answers
+      else {
+        answersAdapter.removeAll();
+      }
+    },
     answersFetched: answersAdapter.setAll,
     answerAdded: answersAdapter.addOne,
     answersLoadingUpdated(state, action) {
       state.loading = action.payload;
+    },
+    answersErrorUpdated(state, action) {
+      state.error = action.payload;
+    },
+    answerUpdated(state, action) {
+      const { id, name } = action.payload;
+      const existingAnswer = state.entities[id];
+      if (existingAnswer) {
+        if (name) {
+          existingAnswer.name = name;
+        }
+        if (name === null) {
+          existingAnswer.name = null;
+        }
+      }
+    },
+    answersUpdated(state, action) {
+      state.entities = action.payload;
     },
   },
   extraReducers: {},
@@ -29,6 +60,8 @@ export const {
   answersLoadingUpdated,
   answersRemoved,
   answerRemoved,
+  answerUpdated,
+  answersErrorUpdated,
 } = answersSlice.actions;
 
 // Export the customized selectors for this adapter using `getSelectors`

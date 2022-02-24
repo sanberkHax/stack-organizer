@@ -288,7 +288,6 @@
   }
   &__title {
     word-break: break-all;
-    flex-basis: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -299,6 +298,15 @@
       flex-shrink: 0;
     }
   }
+  &__back-btn {
+    flex-basis: 25%;
+    svg {
+      width: 2rem;
+    }
+    @include md {
+      width: 3rem;
+    }
+  }
   &__delete {
     flex: 1;
     display: flex;
@@ -307,15 +315,6 @@
     svg {
       width: 2rem;
       fill: $tertiary-blue-darker;
-    }
-  }
-  &__back-btn {
-    flex: 1;
-    svg {
-      width: 2rem;
-    }
-    @include md {
-      width: 3rem;
     }
   }
   &__browser {
@@ -363,10 +362,15 @@
     @include md {
       padding: 2px 10px;
     }
+    &-item {
+      display: flex;
+      gap: 10px;
+    }
   }
 }
 
-.question-info {
+.question-info,
+.answer-info {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -374,15 +378,15 @@
   justify-content: flex-start;
   align-items: center;
   border-radius: 20px;
-  max-height: 39rem;
-  min-height: 39rem;
+  max-height: 38rem;
+  min-height: 38rem;
   color: white;
   padding: 1rem;
 
   &__container {
     background-color: $tertiary-blue;
     border-radius: 1rem;
-    padding: 2rem 1rem;
+    padding: 2rem 2rem;
     width: 100%;
     color: white;
     display: flex;
@@ -391,5 +395,33 @@
   }
   &__title {
     color: white;
+  }
+  &__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: start;
+    sub {
+      vertical-align: sub;
+      font-size: smaller;
+    }
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.5rem;
+    }
+    a {
+      cursor: pointer;
+      color: rgb(0, 204, 255);
+      text-decoration: underline;
+      &:hover {
+        color: rgb(0, 0, 0);
+      }
+    }
+    ul,
+    li {
+      list-style: disc;
+      padding: 0rem 1rem;
+      margin: 1rem 0;
+    }
   }
 }

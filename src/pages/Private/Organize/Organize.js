@@ -18,14 +18,17 @@ import {
 } from '../../../slices/projectsSlice';
 import { FileBrowser } from './components/FileBrowser';
 import { BackButton } from '../../../components/BackButton';
+import { StackOverflowButton } from '../../../components/StackOverflowButton';
 import { NewFolderButton } from './components/NewFolderButton';
 import { ProjectsSidebar } from './components/ProjectsSidebar';
 import { NewProjectButton } from './components/NewProjectButton';
 import { QuestionInfo } from './components/QuestionInfo';
+import { AnswerInfo } from './components/AnswerInfo';
 
 export const Organize = () => {
   const [selectedProject, setSelectedProject] = useState();
   const [selectedFolder, setSelectedFolder] = useState();
+  const [selectedAnswer, setSelectedAnswer] = useState();
   const [selectedQuestion, setSelectedQuestion] = useState();
   const [newFolderId, setNewFolderId] = useState();
   const [newProjectId, setNewProjectId] = useState();
@@ -71,6 +74,9 @@ export const Organize = () => {
 
     if (selectedQuestion) {
       setSelectedQuestion(null);
+    }
+    if (selectedAnswer) {
+      setSelectedAnswer(null);
     }
   };
 
@@ -148,18 +154,26 @@ export const Organize = () => {
               </h1>
               {!selectedFolder ? <ProjectIcon /> : <FolderIcon />}
             </div>
+            {selectedAnswer && (
+              <StackOverflowButton link={selectedAnswer.data.link} />
+            )}
+            {selectedQuestion && (
+              <StackOverflowButton link={selectedQuestion.data.link} />
+            )}
           </div>
           <div className="file__path">
-            {currentFileArray.map((f) => (
-              <>
+            {currentFileArray.map((f, i) => (
+              <div key={i} className="file__path-item">
                 <p>{f.name}</p>
                 <p>/</p>
-              </>
+              </div>
             ))}
           </div>
 
           {selectedQuestion ? (
             <QuestionInfo selectedQuestion={selectedQuestion} />
+          ) : selectedAnswer ? (
+            <AnswerInfo selectedAnswer={selectedAnswer} />
           ) : (
             <>
               <NewFolderButton
@@ -170,6 +184,7 @@ export const Organize = () => {
                 selectedFolder={selectedFolder}
                 setSelectedFolder={setSelectedFolder}
                 setSelectedQuestion={setSelectedQuestion}
+                setSelectedAnswer={setSelectedAnswer}
                 selectedProject={selectedProject}
                 newFolderId={newFolderId}
                 setCurrentFileArray={setCurrentFileArray}

@@ -6,6 +6,7 @@ import { Answer } from './components/Answer';
 import { SaveModal } from './components/SaveModal';
 import { Backdrop } from './components/Backdrop';
 import { SaveAsButton } from '../../../components/SaveAsButton';
+import { StackOverflowButton } from '../../../components/StackOverflowButton';
 import { CommentsButton } from '../../../components/CommentsButton';
 import { BackButton } from '../../../components/BackButton';
 import { toLocaleDate } from '../../../utils/toLocaleDate';
@@ -109,20 +110,10 @@ export const QuestionDetails = () => {
             <h1 className="heading-primary question-details__heading">
               DETAILS
             </h1>
-            <button className="stack-overflow-btn">
-              <a href={question?.link} rel="noreferrer" target="_blank">
-                <svg
-                  className="stack-overflow-btn__icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M14 18l10-7.088-10-6.912v3.042s-11.618 2.583-14 12.958c5.072-5.431 14-5.218 14-5.218v3.218z" />
-                </svg>
-                <p className="stack-overflow-btn__link">
-                  See on Stack Overflow
-                </p>
-              </a>
-            </button>
+            <StackOverflowButton
+              className="stack-overflow-btn"
+              link={question?.link}
+            />
           </div>
           <div className="question">
             <h2

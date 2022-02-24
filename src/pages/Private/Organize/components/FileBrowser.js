@@ -16,8 +16,11 @@ import {
   selectAllQuestions,
 } from '../../../../slices/questionsSlice';
 import { selectAllProjects } from '../../../../slices/projectsSlice';
+import { selectAllAnswers } from '../../../../slices/answersSlice';
+import { AnswerFile } from './AnswerFile';
 
 export const FileBrowser = ({
+  setSelectedAnswer,
   setSelectedQuestion,
   setSelectedFolder,
   selectedProject,
@@ -35,12 +38,17 @@ export const FileBrowser = ({
   const previousFolders = useSelector((state) => state.folders.previousFolders);
   const loading = useSelector((state) => state.folders.loading);
   const error = useSelector((state) => state.folders.error);
-
+  const answers = useSelector(selectAllAnswers);
   const questions = useSelector(selectAllQuestions);
+
   const folderQuestions = questions.filter(
     (q) => q.folder === selectedFolder?.id
   );
   const projectQuestions = questions.filter(
+    (q) => q.project === selectedProject?.id
+  );
+  const folderAnswers = answers.filter((q) => q.folder === selectedFolder?.id);
+  const projectAnswers = answers.filter(
     (q) => q.project === selectedProject?.id
   );
 
@@ -120,6 +128,23 @@ export const FileBrowser = ({
                   key={q.id}
                   name={q.name}
                   setSelectedQuestion={setSelectedQuestion}
+                  setCurrentFileArray={setCurrentFileArray}
+                />
+              ))}
+          {selectedFolder
+            ? folderAnswers?.map((a) => (
+                <AnswerFile
+                  key={a.id}
+                  name={a.name}
+                  setSelectedAnswer={setSelectedAnswer}
+                  setCurrentFileArray={setCurrentFileArray}
+                />
+              ))
+            : projectAnswers?.map((a) => (
+                <AnswerFile
+                  key={a.id}
+                  name={a.name}
+                  setSelectedAnswer={setSelectedAnswer}
                   setCurrentFileArray={setCurrentFileArray}
                 />
               ))}

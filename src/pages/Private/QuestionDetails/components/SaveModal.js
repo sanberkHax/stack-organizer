@@ -69,8 +69,9 @@ export const SaveModal = ({ setModal, question, answer }) => {
           name: name,
           note: note,
           data: question,
-          project: selectedProject.id,
-          folder: selectedFolder.id,
+          ...(selectedFolder
+            ? { folder: selectedFolder.id }
+            : { project: selectedProject.id }),
         })
       );
     }
@@ -82,8 +83,9 @@ export const SaveModal = ({ setModal, question, answer }) => {
           name: name,
           note: note,
           data: answer,
-          project: selectedProject.id,
-          folder: selectedFolder.id,
+          ...(selectedFolder
+            ? { folder: selectedFolder.id }
+            : { project: selectedProject.id }),
         })
       );
     }

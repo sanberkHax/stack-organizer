@@ -34,14 +34,7 @@ export const Project = ({
   const projectRef = useRef();
 
   const [editableProject, setEditableProject] = useState();
-  const [mouseOver, setMouseOver] = useState(false);
 
-  const mouseEnterHandler = () => {
-    setMouseOver(true);
-  };
-  const mouseLeaveHandler = () => {
-    setMouseOver(false);
-  };
   // Reset active project
   useEffect(() => {
     dispatch(projectReset());
@@ -70,7 +63,8 @@ export const Project = ({
     }
     dispatch(foldersReset());
   };
-  const editHandler = () => {
+  const editHandler = (e) => {
+    e.stopPropagation();
     const clickedProject = projects.find(
       (p) => p.name === projectRef.current.textContent
     );
@@ -80,7 +74,8 @@ export const Project = ({
     }
   };
 
-  const deleteHandler = () => {
+  const deleteHandler = (e) => {
+    e.stopPropagation();
     const clickedProject = projects.find(
       (p) => p.name === projectRef.current.textContent
     );
@@ -130,11 +125,7 @@ export const Project = ({
   };
   return (
     <>
-      <div
-        onMouseEnter={mouseEnterHandler}
-        onMouseLeave={mouseLeaveHandler}
-        className={className}
-      >
+      <div className={className}>
         <div
           onClick={clickHandler}
           ref={projectRef}
@@ -163,9 +154,6 @@ export const Project = ({
           ) : (
             <p>{name}</p>
           )}
-        </div>
-
-        {mouseOver && (
           <div className="project__btn-container">
             <EditButton onClick={editHandler} className="project__edit-btn" />
             <DeleteButton
@@ -173,7 +161,7 @@ export const Project = ({
               className="project__delete-btn"
             />
           </div>
-        )}
+        </div>
       </div>
     </>
   );

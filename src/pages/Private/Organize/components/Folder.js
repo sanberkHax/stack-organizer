@@ -21,6 +21,11 @@ import {
 import { FolderIcon } from '../../../../components/FolderIcon';
 import { EditButton } from './EditButton';
 import { DeleteButton } from './DeleteButton';
+import {
+  questionsRemoved,
+  selectAllQuestions,
+} from '../../../../slices/questionsSlice';
+import { useEffect } from 'react';
 
 export const Folder = ({
   className,
@@ -28,6 +33,7 @@ export const Folder = ({
   newFolderId,
   selectedFolder,
   setSelectedFolder,
+  currentFileArray,
   setCurrentFileArray,
 }) => {
   const previousFolders = useSelector((state) => state.folders.previousFolders);
@@ -36,20 +42,12 @@ export const Folder = ({
   const folders = useSelector(selectAllFolders);
   const currentFolders = useSelector((state) => state.folders.currentFolders);
 
-  const [mouseOver, setMouseOver] = useState(false);
   const [editableFolder, setEditableFolder] = useState();
 
   const dispatch = useDispatch();
   const folderRef = useRef();
 
-  const mouseEnterHandler = () => {
-    setMouseOver(true);
-  };
-  const mouseLeaveHandler = () => {
-    setMouseOver(false);
-  };
-
-  // Open clicked folder on double click
+  // Open folder on click
   const clickHandler = (e) => {
     const clickedFolder = currentFolders.find(
       (p) => p.name === e.target.textContent
@@ -74,7 +72,8 @@ export const Folder = ({
     }
   };
 
-  const editHandler = () => {
+  const editHandler = (e) => {
+    e.stopPropagation();
     const clickedFolder = currentFolders.find(
       (p) => p.name === folderRef.current.textContent
     );
@@ -87,14 +86,18 @@ export const Folder = ({
     }
   };
 
-  const deleteHandler = () => {
+  const deleteHandler = (e) => {
+    e.stopPropagation();
+
     const clickedFolder = currentFolders.find(
       (p) => p.name === folderRef.current.textContent
     );
+
     if (clickedFolder) {
       dispatch(folderRemoved(clickedFolder.id));
       dispatch(currentFolderRemoved(clickedFolder.id));
       dispatch(foldersErrorUpdated(null));
+      dispatch(questionsRemoved(folders));
     }
   };
   // Add a name to empty folder
@@ -178,11 +181,7 @@ export const Folder = ({
   };
   return (
     <>
-      <div
-        onMouseEnter={mouseEnterHandler}
-        onMouseLeave={mouseLeaveHandler}
-        className={className}
-      >
+      <div className={className}>
         <div ref={folderRef} onClick={clickHandler} className="folder__details">
           <FolderIcon />
           {!name ? (
@@ -208,8 +207,6 @@ export const Folder = ({
           ) : (
             <p>{name}</p>
           )}
-        </div>
-        {mouseOver && (
           <div className="folder__btn-container">
             <EditButton onClick={editHandler} className="folder__edit-btn" />
             <DeleteButton
@@ -217,7 +214,7 @@ export const Folder = ({
               className="folder__delete-btn"
             />
           </div>
-        )}
+        </div>
       </div>
     </>
   );

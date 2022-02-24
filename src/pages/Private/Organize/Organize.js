@@ -14,46 +14,64 @@ import {
   selectAllProjects,
   projectsErrorUpdated,
   projectAdded,
+  projectReset,
 } from '../../../slices/projectsSlice';
 import { FileBrowser } from './components/FileBrowser';
 import { BackButton } from '../../../components/BackButton';
 import { NewFolderButton } from './components/NewFolderButton';
 import { ProjectsSidebar } from './components/ProjectsSidebar';
 import { NewProjectButton } from './components/NewProjectButton';
+import { QuestionInfo } from './components/QuestionInfo';
 
 export const Organize = () => {
   const [selectedProject, setSelectedProject] = useState();
   const [selectedFolder, setSelectedFolder] = useState();
+  const [selectedQuestion, setSelectedQuestion] = useState();
   const [newFolderId, setNewFolderId] = useState();
   const [newProjectId, setNewProjectId] = useState();
   const [currentFileArray, setCurrentFileArray] = useState([]);
 
   const projects = useSelector(selectAllProjects);
   const previousFolders = useSelector((state) => state.folders.previousFolders);
-  const parentFolder = useSelector((state) => state.folders.parentFolder);
   const dispatch = useDispatch();
   const error = useSelector((state) => state.projects.error);
 
   // When file browser at the base level, set selected folder to null
   useEffect(() => {
-    if (Object.keys(parentFolder).length === 0) {
+    if (currentFileArray.length === 1) {
       setSelectedFolder(null);
     }
-  }, [parentFolder]);
+  }, [currentFileArray]);
 
   useEffect(() => {
     if (selectedProject) {
+      setSelectedQuestion(null);
       setCurrentFileArray([selectedProject]);
     }
   }, [selectedProject]);
 
   // Go one level back inside the nested folder
   const backHandler = () => {
-    const lastItem = previousFolders[previousFolders.length - 1];
+    // Get the last set of previous folders
+    const lastFolders = previousFolders[previousFolders.length - 1];
 
-    dispatch(currentFoldersUpdated(lastItem));
+    // Get the parent folder
+    const lastFolder = currentFileArray[currentFileArray.length - 2];
+
+    // Remove last set of folders
     dispatch(previousFoldersRemoved());
+
+    // Set last set of folders as current folders
+    dispatch(currentFoldersUpdated(lastFolders));
+
+    // Remove latest file from currentFileArray
     setCurrentFileArray((prev) => [...prev.slice(0, -1)]);
+
+    setSelectedFolder(lastFolder);
+
+    if (selectedQuestion) {
+      setSelectedQuestion(null);
+    }
   };
 
   // Add empty folder to active project
@@ -117,7 +135,7 @@ export const Organize = () => {
       {selectedProject ? (
         <div className="organize__file">
           <div className="file__details">
-            {previousFolders?.length > 0 && (
+            {currentFileArray?.length > 1 && (
               <BackButton
                 ariaLabel="back-button"
                 className="file__back-btn"
@@ -139,14 +157,25 @@ export const Organize = () => {
               </>
             ))}
           </div>
-          <NewFolderButton ariaLabel="add-folder" onClick={addFolderHandler} />
-          <FileBrowser
-            selectedFolder={selectedFolder}
-            setSelectedFolder={setSelectedFolder}
-            selectedProject={selectedProject}
-            newFolderId={newFolderId}
-            setCurrentFileArray={setCurrentFileArray}
-          />
+
+          {selectedQuestion ? (
+            <QuestionInfo selectedQuestion={selectedQuestion} />
+          ) : (
+            <>
+              <NewFolderButton
+                ariaLabel="add-folder"
+                onClick={addFolderHandler}
+              />
+              <FileBrowser
+                selectedFolder={selectedFolder}
+                setSelectedFolder={setSelectedFolder}
+                setSelectedQuestion={setSelectedQuestion}
+                selectedProject={selectedProject}
+                newFolderId={newFolderId}
+                setCurrentFileArray={setCurrentFileArray}
+              />
+            </>
+          )}
         </div>
       ) : (
         browserPlaceholder

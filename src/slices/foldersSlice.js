@@ -23,6 +23,7 @@ export const foldersSlice = createSlice({
         if (folder.hasOwnProperty('children')) {
           folder.children.forEach((f) => {
             const removedChild = foldersArray.find((s) => s.id === f);
+
             if (removedChild) {
               foldersAdapter.removeOne(state, removedChild.id);
               removeAllChildren(removedChild);
@@ -33,7 +34,7 @@ export const foldersSlice = createSlice({
 
       removeAllChildren(removedFolder);
 
-      // Remove folder itself after removing its children
+      // Remove folder itself
       foldersAdapter.removeOne(state, removedFolderId);
     },
     foldersRemoved(state, action) {

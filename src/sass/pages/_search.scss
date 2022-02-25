@@ -49,7 +49,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    &-icon {
+    svg {
       width: 2rem;
       fill: white;
     }
@@ -65,7 +65,7 @@
       background-color: $secondary-blue;
       color: $tertiary-blue-darker;
     }
-    &:hover &-icon {
+    &:hover svg {
       fill: $tertiary-blue-darker;
     }
   }

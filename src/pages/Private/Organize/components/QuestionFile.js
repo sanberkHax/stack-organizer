@@ -21,6 +21,7 @@ export const QuestionFile = ({
   newQuestionId,
   setSelectedQuestion,
   setCurrentFileArray,
+  setTitleIcon,
 }) => {
   const questions = useSelector(selectAllQuestions);
 
@@ -31,6 +32,7 @@ export const QuestionFile = ({
   const questionRef = useRef();
 
   const clickHandler = (e) => {
+    setTitleIcon(<QuestionIcon />);
     const clickedQuestion = questions.find(
       (p) => p.name === questionRef.current.textContent
     );

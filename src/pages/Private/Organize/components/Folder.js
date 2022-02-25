@@ -35,6 +35,7 @@ export const Folder = ({
   setSelectedFolder,
   currentFileArray,
   setCurrentFileArray,
+  setTitleIcon,
 }) => {
   const previousFolders = useSelector((state) => state.folders.previousFolders);
   const parentFolder = useSelector((state) => state.folders.parentFolder);
@@ -49,6 +50,7 @@ export const Folder = ({
 
   // Open folder on click
   const clickHandler = (e) => {
+    setTitleIcon(<FolderIcon />);
     const clickedFolder = currentFolders.find(
       (p) => p.name === e.target.textContent
     );

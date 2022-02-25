@@ -2,6 +2,7 @@ import { Comment } from '../../Search/components/Comment';
 import { SaveAsButton } from '../../../../components/SaveAsButton';
 import { useState } from 'react';
 import { CommentsButton } from '../../../../components/CommentsButton';
+
 export const Answer = ({
   voteCount,
   comments,
@@ -10,7 +11,6 @@ export const Answer = ({
   owner,
   saveModalHandler,
   answer,
-  setSaveModalData,
 }) => {
   const [showComments, setShowComments] = useState(false);
 

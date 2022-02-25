@@ -393,6 +393,26 @@
     flex-direction: column;
     gap: 1rem;
   }
+  &__btn {
+    background-color: $primary-blue;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px;
+    fill: white;
+    align-self: flex-start;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    svg {
+      width: 2rem;
+      fill: white;
+    }
+    &:hover {
+      background-color: $tertiary-blue-darker;
+    }
+  }
   &__title {
     color: white;
   }

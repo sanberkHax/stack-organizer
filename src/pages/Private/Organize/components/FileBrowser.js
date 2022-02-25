@@ -27,6 +27,7 @@ export const FileBrowser = ({
   selectedFolder,
   setCurrentFileArray,
   newFolderId,
+  setTitleIcon,
 }) => {
   const folders = useSelector(selectAllFolders);
   const projects = useSelector(selectAllProjects);
@@ -104,6 +105,7 @@ export const FileBrowser = ({
           {error && <p className="organize__error">{error}</p>}
           {currentFolders?.map((f) => (
             <Folder
+              setTitleIcon={setTitleIcon}
               key={f.id}
               setSelectedFolder={setSelectedFolder}
               selectedProject={selectedProject}
@@ -117,6 +119,7 @@ export const FileBrowser = ({
           {selectedFolder
             ? folderQuestions?.map((q) => (
                 <QuestionFile
+                  setTitleIcon={setTitleIcon}
                   key={q.id}
                   name={q.name}
                   setSelectedQuestion={setSelectedQuestion}
@@ -125,6 +128,7 @@ export const FileBrowser = ({
               ))
             : projectQuestions?.map((q) => (
                 <QuestionFile
+                  setTitleIcon={setTitleIcon}
                   key={q.id}
                   name={q.name}
                   setSelectedQuestion={setSelectedQuestion}
@@ -134,6 +138,7 @@ export const FileBrowser = ({
           {selectedFolder
             ? folderAnswers?.map((a) => (
                 <AnswerFile
+                  setTitleIcon={setTitleIcon}
                   key={a.id}
                   name={a.name}
                   setSelectedAnswer={setSelectedAnswer}
@@ -142,6 +147,7 @@ export const FileBrowser = ({
               ))
             : projectAnswers?.map((a) => (
                 <AnswerFile
+                  setTitleIcon={setTitleIcon}
                   key={a.id}
                   name={a.name}
                   setSelectedAnswer={setSelectedAnswer}

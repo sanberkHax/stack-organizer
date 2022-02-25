@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { FolderIcon } from '../../../components/FolderIcon';
 import { ProjectIcon } from '../../../components/ProjectIcon';
+import { AnswerIcon } from '../../../components/AnswerIcon';
+import { QuestionIcon } from '../../../components/QuestionIcon';
 
 import {
   folderAdded,
@@ -33,6 +35,7 @@ export const Organize = () => {
   const [newFolderId, setNewFolderId] = useState();
   const [newProjectId, setNewProjectId] = useState();
   const [currentFileArray, setCurrentFileArray] = useState([]);
+  const [titleIcon, setTitleIcon] = useState(<ProjectIcon />);
 
   const projects = useSelector(selectAllProjects);
   const previousFolders = useSelector((state) => state.folders.previousFolders);
@@ -42,6 +45,7 @@ export const Organize = () => {
   // When file browser at the base level, set selected folder to null
   useEffect(() => {
     if (currentFileArray.length === 1) {
+      setTitleIcon(<ProjectIcon />);
       setSelectedFolder(null);
     }
   }, [currentFileArray]);
@@ -55,6 +59,9 @@ export const Organize = () => {
 
   // Go one level back inside the nested folder
   const backHandler = () => {
+    if (selectedFolder) {
+      setTitleIcon(<FolderIcon />);
+    }
     // Get the last set of previous folders
     const lastFolders = previousFolders[previousFolders.length - 1];
 
@@ -124,6 +131,7 @@ export const Organize = () => {
         Create a New Project and start organizing!
       </h1>
     );
+
   return (
     <main className="organize">
       <aside className="organize__projects">
@@ -152,7 +160,7 @@ export const Organize = () => {
               <h1 className="heading-primary">
                 {currentFileArray[currentFileArray.length - 1]?.name}
               </h1>
-              {!selectedFolder ? <ProjectIcon /> : <FolderIcon />}
+              {titleIcon}
             </div>
             {selectedAnswer && (
               <StackOverflowButton link={selectedAnswer.data.link} />
@@ -181,6 +189,7 @@ export const Organize = () => {
                 onClick={addFolderHandler}
               />
               <FileBrowser
+                setTitleIcon={setTitleIcon}
                 selectedFolder={selectedFolder}
                 setSelectedFolder={setSelectedFolder}
                 setSelectedQuestion={setSelectedQuestion}

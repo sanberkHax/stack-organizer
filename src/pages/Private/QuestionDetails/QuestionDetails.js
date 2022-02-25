@@ -108,7 +108,7 @@ export const QuestionDetails = () => {
               onClick={() => navigate(-1)}
             />
             <h1 className="heading-primary question-details__heading">
-              DETAILS
+              Question
             </h1>
             <StackOverflowButton
               className="stack-overflow-btn"

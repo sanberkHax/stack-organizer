@@ -60,17 +60,22 @@ export const SaveModal = ({ setModal, question, answer }) => {
 
   const saveHandler = (formData) => {
     const { name, note } = formData;
+
     const questionData = {
+      id: question?.question_id,
       title: question?.title,
       body: question?.body,
       ...(question?.answers && { answers: question.answers }),
       link: question?.link,
+      acceptedAnswerId: question?.accepted_answer_id,
     };
     const answerData = {
+      id: question?.question_id,
       body: answer?.body,
       link: question?.link,
       questionTitle: question?.title,
       questionBody: question?.body,
+      comments: answer?.comments,
     };
     if (question && !answer) {
       const questionId = uuidv4();

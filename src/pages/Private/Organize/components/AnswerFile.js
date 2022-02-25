@@ -21,6 +21,7 @@ export const AnswerFile = ({
   newAnswerId,
   setSelectedAnswer,
   setCurrentFileArray,
+  setTitleIcon,
 }) => {
   const answers = useSelector(selectAllAnswers);
 
@@ -31,6 +32,7 @@ export const AnswerFile = ({
   const answerRef = useRef();
 
   const clickHandler = (e) => {
+    setTitleIcon(<AnswerIcon />);
     const clickedAnswer = answers.find(
       (p) => p.name === answerRef.current.textContent
     );

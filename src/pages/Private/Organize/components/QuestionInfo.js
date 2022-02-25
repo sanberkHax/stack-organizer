@@ -1,27 +1,43 @@
-export const QuestionInfo = ({ selectedQuestion }) => {
-  const { title, body, answers } = selectedQuestion.data;
+import { DetailsButton } from '../../../../components/DetailsButton';
+import { useNavigate } from 'react-router-dom';
 
+export const QuestionInfo = ({ selectedQuestion }) => {
+  const { id, title, body } = selectedQuestion.data;
+  const { note } = selectedQuestion;
+
+  const navigate = useNavigate();
+
+  const navigateHandler = () => {
+    navigate(`/questions/${id}`);
+  };
   return (
-    <div className="question-info">
-      <div className="question-info__container">
-        <h1
-          className="heading-primary question-info__title"
-          dangerouslySetInnerHTML={{ __html: `${title}` }}
-        ></h1>
-        <p
-          className="question-info__body"
-          dangerouslySetInnerHTML={{ __html: `${body}` }}
-        ></p>
-      </div>
-      <h1 className="heading-primary">Answers</h1>
-      {answers.map((a) => (
+    <>
+      <div className="question-info">
+        <h1 className="heading-primary">Question</h1>
+        <DetailsButton
+          onClick={navigateHandler}
+          text="Go to Question Details"
+          className="question-info__btn"
+        />
         <div className="question-info__container">
+          <h1
+            className="heading-primary question-info__title"
+            dangerouslySetInnerHTML={{ __html: `${title}` }}
+          ></h1>
           <p
             className="question-info__body"
-            dangerouslySetInnerHTML={{ __html: `${a.body}` }}
-          />
+            dangerouslySetInnerHTML={{ __html: `${body}` }}
+          ></p>
         </div>
-      ))}
-    </div>
+        {note && (
+          <>
+            <h1 className="heading-primary">Note</h1>
+            <div className="question-info__container">
+              <p>{note}</p>
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 };

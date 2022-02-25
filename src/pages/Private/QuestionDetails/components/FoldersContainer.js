@@ -70,7 +70,7 @@ export const FoldersContainer = ({
       folderAdded({
         id: newFolderId,
         isActive: false,
-        project: activeProject.id,
+        project: activeProject?.id,
         children: [],
       })
     );

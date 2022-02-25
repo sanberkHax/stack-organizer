@@ -1,24 +1,24 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Question } from './components/Question';
 import { useSearchParams } from 'react-router-dom';
 import { DualRing } from 'react-awesome-spinners';
+
+import { Question } from './components/Question';
 import { getSearchResults } from '../../../slices/searchSlice';
-import { useEffect } from 'react';
+
 export const Search = () => {
   const [searchParams] = useSearchParams();
   const questions = useSelector((state) => state.search.searchResults);
   const loading = useSelector((state) => state.search.loading);
+  const error = useSelector((state) => state.search.error);
   const dispatch = useDispatch();
 
   // Get the search keyword from URL
   const keyword = searchParams.get('q');
 
-  // Fetch search results when search results are empty
   useEffect(() => {
-    if (questions.length === 0) {
-      dispatch(getSearchResults({ searchBar: keyword }));
-    }
-  }, [dispatch, keyword, questions]);
+    dispatch(getSearchResults({ searchBar: keyword }));
+  }, [dispatch, keyword]);
 
   const resultsContent = questions.map((question) => (
     <Question
@@ -37,7 +37,11 @@ export const Search = () => {
   return (
     <main className="search-page">
       <h1 className="heading-primary">Search Results</h1>
-      <h2 className="heading-secondary">for "{keyword}"</h2>
+      {error ? (
+        <p className="heading-secondary">{error}</p>
+      ) : (
+        <h2 className="heading-secondary">for "{keyword}"</h2>
+      )}
       <section>
         {loading ? (
           <DualRing size="60" color="#1C5274" />

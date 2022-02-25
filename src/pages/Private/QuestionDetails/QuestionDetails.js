@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Comment } from '../Search/components/Comment';
 import { Answer } from './components/Answer';
@@ -12,29 +12,26 @@ import { BackButton } from '../../../components/BackButton';
 import { toLocaleDate } from '../../../utils/toLocaleDate';
 import { DualRing } from 'react-awesome-spinners';
 import { useEffect } from 'react';
+import { getQuestion } from '../../../slices/searchSlice';
 
 export const QuestionDetails = () => {
   const navigate = useNavigate();
 
-  const [showComments, setShowComments] = useState(false);
-  const [modal, setModal] = useState(false);
-
-  const questions = useSelector((state) => state.search.searchResults);
-  const loading = useSelector((state) => state.search.loading);
-
-  const [answer, setAnswer] = useState();
-  const [results, setResults] = useState(questions);
-
-  useEffect(() => {
-    const searchResults = JSON.parse(localStorage.getItem('searchResults'));
-    setResults(searchResults);
-  }, []);
-
-  // Get the current question id from URL
   const { questionId } = useParams();
 
-  // Find the current question from search results
-  const question = results.find((q) => q.question_id == questionId);
+  const dispatch = useDispatch();
+
+  const [showComments, setShowComments] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [answer, setAnswer] = useState();
+
+  const loading = useSelector((state) => state.search.loading);
+  const question = useSelector((state) => state.search.question);
+
+  // Fetch question
+  useEffect(() => {
+    dispatch(getQuestion(questionId));
+  }, [dispatch, questionId]);
 
   // Convert unix date format to Month/Day/Year
   const creationDate = toLocaleDate(question?.creation_date);
@@ -57,6 +54,10 @@ export const QuestionDetails = () => {
 
   const commentsContent = question?.comment_count > 0 && (
     <>
+      <CommentsButton
+        showComments={showComments}
+        onClick={commentDisplayHandler}
+      />
       {showComments && (
         <ul>
           {question.comments.map((comment) => (
@@ -89,7 +90,11 @@ export const QuestionDetails = () => {
   return (
     <main className="question-details">
       {loading ? (
-        <DualRing size="60" color="#1C5274" />
+        <DualRing
+          className="question-details__spinner"
+          size="60"
+          color="#1C5274"
+        />
       ) : (
         <>
           {modal && (
@@ -130,13 +135,10 @@ export const QuestionDetails = () => {
                 asked {creationDate}
               </p>
               <p className="question-details__owner">
-                {question?.owner.display_name}
+                {question?.owner?.display_name}
               </p>
             </div>
-            <CommentsButton
-              showComments={showComments}
-              onClick={commentDisplayHandler}
-            />
+
             {commentsContent}
             <SaveAsButton onClick={saveModalHandler} />
           </div>

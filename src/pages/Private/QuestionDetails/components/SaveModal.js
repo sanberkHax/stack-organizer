@@ -67,8 +67,8 @@ export const SaveModal = ({ setModal, question, answer }) => {
       body: question?.body,
       ...(question?.answers && { answers: question.answers }),
       link: question?.link,
-      acceptedAnswerId: question?.accepted_answer_id,
     };
+
     const answerData = {
       id: question?.question_id,
       body: answer?.body,

@@ -20,7 +20,6 @@ export const ProjectsContainer = ({
   setSelectedFolder,
   selectedFolder,
   selectedProject,
-  mode,
 }) => {
   const projects = useSelector(selectAllProjects);
   const dispatch = useDispatch();

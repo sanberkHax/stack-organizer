@@ -377,6 +377,7 @@
   align-items: center;
   border-radius: 20px;
   color: white;
+  word-wrap: break-word;
   overflow-y: auto;
   @include md {
     padding: 1rem;

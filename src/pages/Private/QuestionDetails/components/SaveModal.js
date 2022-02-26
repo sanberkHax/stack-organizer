@@ -1,6 +1,6 @@
 import { ProjectsContainer } from './ProjectsContainer';
 import { FoldersContainer } from './FoldersContainer';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,7 +12,6 @@ import {
   foldersErrorUpdated,
   foldersReset,
 } from '../../../../slices/foldersSlice';
-import { useEffect } from 'react';
 import { SaveModalForm } from './SaveModalForm';
 import {
   questionAdded,
@@ -23,6 +22,7 @@ import {
   writeAnswersData,
 } from '../../../../services/firebase';
 import { selectAllAnswers, answerAdded } from '../../../../slices/answersSlice';
+import { CloseButton } from '../../../../components/CloseButton';
 
 export const SaveModal = ({ setModal, question, answer }) => {
   const uid = useSelector((state) => state.auth.currentUser);
@@ -58,6 +58,9 @@ export const SaveModal = ({ setModal, question, answer }) => {
     writeAnswersData(uid, answers);
   }, [answers, uid]);
 
+  const modalHandler = () => {
+    setModal(false);
+  };
   const saveHandler = (formData) => {
     const { name, note } = formData;
 
@@ -109,6 +112,7 @@ export const SaveModal = ({ setModal, question, answer }) => {
 
   return (
     <div className="save-modal">
+      <CloseButton className="save-modal__close-btn" onClick={modalHandler} />
       <h1 className="heading-primary">Save As</h1>
       <h2 className="heading-secondary">Select Project:</h2>
       {projectsError && <p className="error">{projectsError}</p>}

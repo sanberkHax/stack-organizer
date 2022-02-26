@@ -377,9 +377,9 @@
   align-items: center;
   border-radius: 20px;
   color: white;
-  padding: 1rem;
   overflow-y: auto;
   @include md {
+    padding: 1rem;
     max-height: 38rem;
     min-height: 38rem;
   }

@@ -31,7 +31,7 @@
 .answer {
   margin: 2rem auto;
   padding: 1.5rem;
-  width: 80%;
+  width: 90%;
   border-radius: 1rem;
   color: white;
   background-color: $tertiary-blue;
@@ -40,7 +40,9 @@
   flex-direction: column;
   justify-content: space-evenly;
   gap: 1rem;
-
+  @include sm {
+    width: 80%;
+  }
   &__title {
     color: white;
   }

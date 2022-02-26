@@ -103,6 +103,7 @@
   display: flex;
   justify-content: flex-end;
   flex-basis: 25%;
+  z-index: 1;
   @include sm {
     display: none;
   }

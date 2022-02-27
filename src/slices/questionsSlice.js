@@ -23,7 +23,7 @@ export const questionsSlice = createSlice({
       }
       // Remove all questions
       else {
-        questionsAdapter.removeAll();
+        questionsAdapter.removeAll(state);
       }
     },
     questionsFetched: questionsAdapter.setAll,

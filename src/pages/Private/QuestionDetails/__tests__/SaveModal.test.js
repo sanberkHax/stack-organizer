@@ -37,7 +37,9 @@ describe('<SaveModal />', () => {
 
     userEvent.click(addProjectButton);
 
-    const projectTitleInput = screen.getByTestId('project-btn-input');
+    const projectTitleInput = screen.getByRole('textbox', {
+      name: /project-name-input/i,
+    });
 
     userEvent.type(projectTitleInput, 'project test{enter}', {
       skipClick: true,
@@ -117,7 +119,9 @@ describe('<SaveModal />', () => {
 
     userEvent.click(addProjectButton);
 
-    const projectTitleInput = screen.getByTestId('project-btn-input');
+    const projectTitleInput = screen.getByRole('textbox', {
+      name: /project-name-input/i,
+    });
 
     userEvent.type(projectTitleInput, 'project test{enter}', {
       skipClick: true,
@@ -160,17 +164,18 @@ describe('<SaveModal />', () => {
 
     userEvent.click(addProjectButton);
 
-    const projectTitleInput = screen.getByTestId('project-btn-input');
+    const projectTitleInput = screen.getByRole('textbox', {
+      name: /project-name-input/i,
+    });
 
     userEvent.type(projectTitleInput, '{enter}', {
       skipClick: true,
     });
 
-    // Check for error and project
+    // Check for error
     expect(
       await screen.findByText("CAN'T ADD PROJECT WITHOUT A NAME")
     ).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: '' })).not.toBeInTheDocument();
   });
 
   it('prevents adding a folder without a name', async () => {
@@ -181,7 +186,9 @@ describe('<SaveModal />', () => {
 
     userEvent.click(addProjectButton);
 
-    const projectTitleInput = screen.getByTestId('project-btn-input');
+    const projectTitleInput = screen.getByRole('textbox', {
+      name: /project-name-input/i,
+    });
 
     userEvent.type(projectTitleInput, 'project test{enter}', {
       skipClick: true,
@@ -204,10 +211,9 @@ describe('<SaveModal />', () => {
 
     userEvent.type(folderTitleInput, '{enter}', { skipClick: true });
 
-    // Check for error and folder
+    // Check for error
     expect(
       await screen.findByText("CAN'T ADD FOLDER WITHOUT A NAME")
     ).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: '' })).not.toBeInTheDocument();
   });
 });

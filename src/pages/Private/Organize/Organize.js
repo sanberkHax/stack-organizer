@@ -3,20 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { FolderIcon } from '../../../components/FolderIcon';
 import { ProjectIcon } from '../../../components/ProjectIcon';
-import { AnswerIcon } from '../../../components/AnswerIcon';
-import { QuestionIcon } from '../../../components/QuestionIcon';
 
 import {
   folderAdded,
   currentFoldersUpdated,
   previousFoldersRemoved,
   foldersErrorUpdated,
+  newFolderIdUpdated,
 } from '../../../slices/foldersSlice';
 import {
   selectAllProjects,
   projectsErrorUpdated,
   projectAdded,
-  projectReset,
 } from '../../../slices/projectsSlice';
 import { FileBrowser } from './components/FileBrowser';
 import { BackButton } from '../../../components/BackButton';
@@ -32,7 +30,6 @@ export const Organize = () => {
   const [selectedFolder, setSelectedFolder] = useState();
   const [selectedAnswer, setSelectedAnswer] = useState();
   const [selectedQuestion, setSelectedQuestion] = useState();
-  const [newFolderId, setNewFolderId] = useState();
   const [newProjectId, setNewProjectId] = useState();
   const [currentFileArray, setCurrentFileArray] = useState([]);
   const [titleIcon, setTitleIcon] = useState(<ProjectIcon />);
@@ -56,6 +53,24 @@ export const Organize = () => {
       setCurrentFileArray([selectedProject]);
     }
   }, [selectedProject]);
+
+  // Add empty folder to active project
+  const addFolderHandler = () => {
+    const activeProject = projects.find((p) => p.isActive);
+    const newFolderId = uuidv4();
+
+    dispatch(foldersErrorUpdated(null));
+    dispatch(
+      folderAdded({
+        id: newFolderId,
+        isActive: false,
+        project: activeProject.id,
+        children: [],
+        ...(selectedFolder && { parent: selectedFolder.id }),
+      })
+    );
+    dispatch(newFolderIdUpdated(newFolderId));
+  };
 
   // Go one level back inside the nested folder
   const backHandler = () => {
@@ -85,23 +100,6 @@ export const Organize = () => {
     if (selectedAnswer) {
       setSelectedAnswer(null);
     }
-  };
-
-  // Add empty folder to active project
-  const addFolderHandler = () => {
-    const activeProject = projects.find((p) => p.isActive);
-    const newFolderId = uuidv4();
-    dispatch(foldersErrorUpdated(null));
-    dispatch(
-      folderAdded({
-        id: newFolderId,
-        isActive: false,
-        project: activeProject.id,
-        children: [],
-        ...(selectedFolder && { parent: selectedFolder.id }),
-      })
-    );
-    setNewFolderId(newFolderId);
   };
 
   // Add empty project
@@ -136,7 +134,7 @@ export const Organize = () => {
     <main className="organize">
       <aside className="organize__projects">
         <h1 className="heading-primary">Projects</h1>
-        <NewProjectButton ariaLabel="add-project" onClick={addProjectHandler} />
+        <NewProjectButton ariaLabel="New Project" onClick={addProjectHandler} />
         {error && <p className="organize__error">{error}</p>}
         <ProjectsSidebar
           setSelectedProject={setSelectedProject}
@@ -151,7 +149,7 @@ export const Organize = () => {
           <div className="file__details">
             {currentFileArray?.length > 1 && (
               <BackButton
-                ariaLabel="back-button"
+                ariaLabel="Back Button"
                 className="file__back-btn"
                 onClick={backHandler}
               />
@@ -185,7 +183,7 @@ export const Organize = () => {
           ) : (
             <>
               <NewFolderButton
-                ariaLabel="add-folder"
+                ariaLabel="New Folder"
                 onClick={addFolderHandler}
               />
               <FileBrowser
@@ -195,7 +193,6 @@ export const Organize = () => {
                 setSelectedQuestion={setSelectedQuestion}
                 setSelectedAnswer={setSelectedAnswer}
                 selectedProject={selectedProject}
-                newFolderId={newFolderId}
                 setCurrentFileArray={setCurrentFileArray}
               />
             </>

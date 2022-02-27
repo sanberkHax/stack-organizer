@@ -21,19 +21,13 @@ import {
 import { FolderIcon } from '../../../../components/FolderIcon';
 import { EditButton } from './EditButton';
 import { DeleteButton } from './DeleteButton';
-import {
-  questionsRemoved,
-  selectAllQuestions,
-} from '../../../../slices/questionsSlice';
-import { useEffect } from 'react';
+import { questionsRemoved } from '../../../../slices/questionsSlice';
 
 export const Folder = ({
   className,
   name,
-  newFolderId,
   selectedFolder,
   setSelectedFolder,
-  currentFileArray,
   setCurrentFileArray,
   setTitleIcon,
 }) => {
@@ -42,6 +36,7 @@ export const Folder = ({
   const projects = useSelector(selectAllProjects);
   const folders = useSelector(selectAllFolders);
   const currentFolders = useSelector((state) => state.folders.currentFolders);
+  const newFolderId = useSelector((state) => state.folders.newFolderId);
 
   const [editableFolder, setEditableFolder] = useState();
 
@@ -105,56 +100,53 @@ export const Folder = ({
   // Add a name to empty folder
   const addNameHandler = (f) => {
     const folderName = f.name;
-
     const activeProject = projects.find((p) => p.isActive);
     const existingFolder = currentFolders.find((f) => f.name === folderName);
+    const folderId = editableFolder ? editableFolder.id : newFolderId;
 
     if (existingFolder) {
       dispatch(
         foldersErrorUpdated('FOLDER NAME EXISTS, SELECT DIFFERENT NAME')
       );
-      dispatch(folderRemoved(newFolderId));
-      dispatch(currentFolderRemoved(newFolderId));
+      dispatch(folderRemoved(folderId));
+      dispatch(currentFolderRemoved(folderId));
       return;
     } else if (folderName === null) {
-      dispatch(folderRemoved(newFolderId));
-      dispatch(currentFolderRemoved(newFolderId));
+      dispatch(folderRemoved(folderId));
+      dispatch(currentFolderRemoved(folderId));
       return;
     } else if (folderName === '') {
       dispatch(foldersErrorUpdated(`CAN'T ADD FOLDER WITHOUT A NAME`));
-
-      dispatch(folderRemoved(newFolderId));
-      dispatch(currentFolderRemoved(newFolderId));
+      dispatch(folderRemoved(folderId));
+      dispatch(currentFolderRemoved(folderId));
     } else if (folderName.length > 50) {
       dispatch(foldersErrorUpdated(`MAX CHARACTER LIMIT IS 50`));
-      dispatch(folderRemoved(newFolderId));
-      dispatch(currentFolderRemoved(newFolderId));
+      dispatch(folderRemoved(folderId));
+      dispatch(currentFolderRemoved(folderId));
     } else {
       // Rename folder
       if (editableFolder) {
-        dispatch(folderUpdated({ id: editableFolder.id, name: folderName }));
-        dispatch(
-          currentFolderUpdated({ id: editableFolder.id, name: folderName })
-        );
+        dispatch(folderUpdated({ id: folderId, name: folderName }));
+        dispatch(currentFolderUpdated({ id: folderId, name: folderName }));
       } else {
         if (activeProject) {
           // Update empty folder's name
           dispatch(
             folderUpdated({
-              id: newFolderId,
+              id: folderId,
               name: folderName,
             })
           );
 
           // Update empty folder inside currentFolders
-          dispatch(currentFolderUpdated({ id: newFolderId, name: folderName }));
+          dispatch(currentFolderUpdated({ id: folderId, name: folderName }));
 
           // Add the folder inside active project
           dispatch(
             projectUpdated({
               id: activeProject.id,
               isActive: true,
-              folders: newFolderId,
+              folders: folderId,
             })
           );
 
@@ -164,7 +156,7 @@ export const Folder = ({
               folderUpdated({
                 id: parentFolder.id,
                 isActive: false,
-                children: newFolderId,
+                children: folderId,
               })
             );
             // If there are multiple previous folders, update them
@@ -172,7 +164,7 @@ export const Folder = ({
               dispatch(
                 previousFoldersUpdated({
                   id: parentFolder.id,
-                  children: newFolderId,
+                  children: folderId,
                 })
               );
             }
@@ -184,7 +176,12 @@ export const Folder = ({
   return (
     <>
       <div className={className}>
-        <div ref={folderRef} onClick={clickHandler} className="folder__details">
+        <div
+          data-testid="folder"
+          ref={folderRef}
+          onClick={clickHandler}
+          className="folder__details"
+        >
           <FolderIcon />
           {!name ? (
             <Formik initialValues={{ name: '' }} onSubmit={addNameHandler}>
@@ -192,7 +189,7 @@ export const Folder = ({
                 return (
                   <Form className="folder__form">
                     <Field
-                      data-testid="folder-btn-input"
+                      aria-label="Folder Name Input"
                       id="name"
                       name="name"
                       autoFocus={true}
@@ -210,8 +207,13 @@ export const Folder = ({
             <p>{name}</p>
           )}
           <div className="folder__btn-container">
-            <EditButton onClick={editHandler} className="folder__edit-btn" />
+            <EditButton
+              ariaLabel="Rename Folder"
+              onClick={editHandler}
+              className="folder__edit-btn"
+            />
             <DeleteButton
+              ariaLabel="Delete Folder"
               onClick={deleteHandler}
               className="folder__delete-btn"
             />

@@ -138,7 +138,7 @@ export const Project = ({
                 return (
                   <Form className="project__form">
                     <Field
-                      data-testid="project-btn-input"
+                      aria-label="Project Name Input"
                       id="name"
                       name="name"
                       autoFocus={true}
@@ -155,8 +155,13 @@ export const Project = ({
             <p>{name}</p>
           )}
           <div className="project__btn-container">
-            <EditButton onClick={editHandler} className="project__edit-btn" />
+            <EditButton
+              ariaLabel="Rename Project"
+              onClick={editHandler}
+              className="project__edit-btn"
+            />
             <DeleteButton
+              ariaLabel="Delete Project"
               onClick={deleteHandler}
               className="project__delete-btn"
             />

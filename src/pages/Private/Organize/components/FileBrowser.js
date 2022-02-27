@@ -26,7 +26,6 @@ export const FileBrowser = ({
   selectedProject,
   selectedFolder,
   setCurrentFileArray,
-  newFolderId,
   setTitleIcon,
 }) => {
   const folders = useSelector(selectAllFolders);
@@ -112,7 +111,6 @@ export const FileBrowser = ({
               selectedFolder={selectedFolder}
               name={f.name}
               className={f.isActive ? 'folder--active' : 'folder'}
-              newFolderId={newFolderId}
               setCurrentFileArray={setCurrentFileArray}
             />
           ))}

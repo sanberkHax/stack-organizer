@@ -5,6 +5,7 @@ const initialState = foldersAdapter.getInitialState({
   previousFolders: [],
   currentFolders: [],
   parentFolder: {},
+  newFolderId: null,
   loading: true,
   error: null,
 });
@@ -41,12 +42,12 @@ export const foldersSlice = createSlice({
       const removedFolders = action.payload;
 
       // When there is a folder array given, remove only those folders
-      if (removedFolders.length > 0) {
+      if (removedFolders?.length > 0) {
         removedFolders.forEach((f) => {
           foldersAdapter.removeOne(state, f.id);
         });
       } else {
-        foldersAdapter.removeAll();
+        foldersAdapter.removeAll(state);
       }
     },
     foldersFetched: foldersAdapter.setAll,
@@ -214,6 +215,9 @@ export const foldersSlice = createSlice({
     foldersErrorUpdated(state, action) {
       state.error = action.payload;
     },
+    newFolderIdUpdated(state, action) {
+      state.newFolderId = action.payload;
+    },
   },
   extraReducers: {},
 });
@@ -236,6 +240,7 @@ export const {
   parentFolderSet,
   foldersLoadingUpdated,
   foldersErrorUpdated,
+  newFolderIdUpdated,
 } = foldersSlice.actions;
 
 // Export the customized selectors for this adapter using `getSelectors`

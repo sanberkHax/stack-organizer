@@ -74,7 +74,7 @@ export const ProjectButton = ({
             return (
               <Form className="file-container__btn__form">
                 <Field
-                  data-testid="project-btn-input"
+                  aria-label="project-name-input"
                   id="name"
                   name="name"
                   autoFocus={true}

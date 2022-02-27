@@ -62,6 +62,10 @@ export const SaveModal = ({ setModal, question, answer }) => {
     setModal(false);
   };
   const saveHandler = (formData) => {
+    if (!selectedProject) {
+      dispatch(projectsErrorUpdated('PLEASE SELECT A PROJECT'));
+      return;
+    }
     const { name, note } = formData;
 
     const questionData = {

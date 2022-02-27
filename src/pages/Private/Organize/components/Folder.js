@@ -108,21 +108,29 @@ export const Folder = ({
       dispatch(
         foldersErrorUpdated('FOLDER NAME EXISTS, SELECT DIFFERENT NAME')
       );
-      dispatch(folderRemoved(folderId));
-      dispatch(currentFolderRemoved(folderId));
+      if (!editableFolder) {
+        dispatch(folderRemoved(folderId));
+        dispatch(currentFolderRemoved(folderId));
+      }
       return;
     } else if (folderName === null) {
-      dispatch(folderRemoved(folderId));
-      dispatch(currentFolderRemoved(folderId));
+      if (!editableFolder) {
+        dispatch(folderRemoved(folderId));
+        dispatch(currentFolderRemoved(folderId));
+      }
       return;
     } else if (folderName === '') {
       dispatch(foldersErrorUpdated(`CAN'T ADD FOLDER WITHOUT A NAME`));
-      dispatch(folderRemoved(folderId));
-      dispatch(currentFolderRemoved(folderId));
+      if (!editableFolder) {
+        dispatch(folderRemoved(folderId));
+        dispatch(currentFolderRemoved(folderId));
+      }
     } else if (folderName.length > 50) {
       dispatch(foldersErrorUpdated(`MAX CHARACTER LIMIT IS 50`));
-      dispatch(folderRemoved(folderId));
-      dispatch(currentFolderRemoved(folderId));
+      if (!editableFolder) {
+        dispatch(folderRemoved(folderId));
+        dispatch(currentFolderRemoved(folderId));
+      }
     } else {
       // Rename folder
       if (editableFolder) {

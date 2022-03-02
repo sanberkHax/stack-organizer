@@ -23,7 +23,7 @@
   }
   &__logo {
     display: none;
-
+    cursor: pointer;
     @include lg {
       display: inline-block;
       width: 14rem;

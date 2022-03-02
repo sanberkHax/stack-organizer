@@ -35,6 +35,7 @@ export const SaveModal = ({ setModal, question, answer }) => {
 
   const [selectedProject, setSelectedProject] = useState();
   const [selectedFolder, setSelectedFolder] = useState();
+  const [confirmation, setConfirmation] = useState();
 
   // Reset folders,projects and error mesages on unmount
   useEffect(() => {
@@ -72,8 +73,8 @@ export const SaveModal = ({ setModal, question, answer }) => {
       id: question?.question_id,
       title: question?.title,
       body: question?.body,
-      ...(question?.answers && { answers: question.answers }),
       link: question?.link,
+      ...(question?.answers && { answers: question.answers }),
     };
 
     const answerData = {
@@ -82,7 +83,7 @@ export const SaveModal = ({ setModal, question, answer }) => {
       link: question?.link,
       questionTitle: question?.title,
       questionBody: question?.body,
-      comments: answer?.comments,
+      ...(answer?.comments && { comments: answer?.comments }),
     };
     if (question && !answer) {
       const questionId = uuidv4();
@@ -111,44 +112,61 @@ export const SaveModal = ({ setModal, question, answer }) => {
         })
       );
     }
-    setModal(false);
+    setConfirmation(true);
   };
 
   return (
     <div className="save-modal">
-      <CloseButton className="save-modal__close-btn" onClick={modalHandler} />
-      <h1 className="heading-primary">Save As</h1>
-      <h2 className="heading-secondary">Select Project:</h2>
-      {projectsError && <p className="error">{projectsError}</p>}
-      <ProjectsContainer
-        className="file-container"
-        buttonClassName="file-container__btn"
-        setSelectedProject={setSelectedProject}
-        setSelectedFolder={setSelectedFolder}
-        selectedProject={selectedProject}
-        selectedFolder={selectedFolder}
-      />
-      <h2 className="heading-secondary">Select Folder:</h2>
-      {foldersError && <p className="error">{foldersError}</p>}
-      <div className="save-modal__info">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-        >
-          <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2.033 16.01c.564-1.789 1.632-3.932 1.821-4.474.273-.787-.211-1.136-1.74.209l-.34-.64c1.744-1.897 5.335-2.326 4.113.613-.763 1.835-1.309 3.074-1.621 4.03-.455 1.393.694.828 1.819-.211.153.25.203.331.356.619-2.498 2.378-5.271 2.588-4.408-.146zm4.742-8.169c-.532.453-1.32.443-1.761-.022-.441-.465-.367-1.208.164-1.661.532-.453 1.32-.442 1.761.022.439.466.367 1.209-.164 1.661z" />
-        </svg>
-        <p>(You can double click on folders to go inside!)</p>
-      </div>
-      <FoldersContainer
-        className="file-container"
-        buttonClassName="file-container__btn"
-        selectedFolder={selectedFolder}
-        setSelectedFolder={setSelectedFolder}
-        selectedProject={selectedProject}
-      />
-      <SaveModalForm onSubmit={saveHandler} />
+      {confirmation ? (
+        <div className="save-modal__confirmation">
+          <h1 className="heading-primary">File succesfully saved</h1>
+          <h2 className="heading-secondary">
+            Go to Organize page and start organizing!
+          </h2>
+          <button onClick={modalHandler} className="btn">
+            OK
+          </button>
+        </div>
+      ) : (
+        <>
+          <CloseButton
+            className="save-modal__close-btn"
+            onClick={modalHandler}
+          />
+          <h1 className="heading-primary">Save As</h1>
+          <h2 className="heading-secondary">Select Project:</h2>
+          {projectsError && <p className="error">{projectsError}</p>}
+          <ProjectsContainer
+            className="file-container"
+            buttonClassName="file-container__btn"
+            setSelectedProject={setSelectedProject}
+            setSelectedFolder={setSelectedFolder}
+            selectedProject={selectedProject}
+            selectedFolder={selectedFolder}
+          />
+          <h2 className="heading-secondary">Select Folder:</h2>
+          {foldersError && <p className="error">{foldersError}</p>}
+          <div className="save-modal__info">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2.033 16.01c.564-1.789 1.632-3.932 1.821-4.474.273-.787-.211-1.136-1.74.209l-.34-.64c1.744-1.897 5.335-2.326 4.113.613-.763 1.835-1.309 3.074-1.621 4.03-.455 1.393.694.828 1.819-.211.153.25.203.331.356.619-2.498 2.378-5.271 2.588-4.408-.146zm4.742-8.169c-.532.453-1.32.443-1.761-.022-.441-.465-.367-1.208.164-1.661.532-.453 1.32-.442 1.761.022.439.466.367 1.209-.164 1.661z" />
+            </svg>
+            <p>(You can double click on folders to go inside!)</p>
+          </div>
+          <FoldersContainer
+            className="file-container"
+            buttonClassName="file-container__btn"
+            selectedFolder={selectedFolder}
+            setSelectedFolder={setSelectedFolder}
+            selectedProject={selectedProject}
+          />
+          <SaveModalForm onSubmit={saveHandler} />
+        </>
+      )}
     </div>
   );
 };

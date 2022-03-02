@@ -236,6 +236,14 @@
     padding: 0 4rem;
     width: 50%;
   }
+  &__confirmation {
+    display: flex;
+    padding: 1rem;
+    flex-direction: column;
+    color: $tertiary-blue-darker;
+    justify-content: space-around;
+    align-items: center;
+  }
   &__info {
     padding-bottom: 10px;
     display: flex;

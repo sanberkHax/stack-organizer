@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import {
   selectAllProjects,
@@ -29,8 +29,6 @@ export const ProjectsContainer = ({
   // Get project's folders
   const [projectFolders, setProject] = useProjectFolders();
 
-  const [newProjectId, setNewProjectId] = useState();
-
   // Update current folders when selected project changes
   useEffect(() => {
     setProject(selectedProject);
@@ -48,8 +46,6 @@ export const ProjectsContainer = ({
   const addHandler = () => {
     const newProjectId = uuidv4();
 
-    setNewProjectId(newProjectId);
-
     const newProject = {
       id: newProjectId,
       isActive: false,
@@ -66,8 +62,8 @@ export const ProjectsContainer = ({
 
       {projects?.map((p) => (
         <ProjectButton
+          id={p.id}
           key={p.id}
-          newProjectId={newProjectId}
           setSelectedFolder={setSelectedFolder}
           setSelectedProject={setSelectedProject}
           selectedFolder={selectedFolder}

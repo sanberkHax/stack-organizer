@@ -1,6 +1,7 @@
 import { Formik, Form, Field } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useRef } from 'react';
+import { motion } from 'framer-motion/dist/framer-motion';
 
 import {
   previousFoldersAdded,
@@ -101,7 +102,11 @@ export const AnswerFile = ({
   };
   return (
     <>
-      <div className="question-file">
+      <motion.div
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className="question-file"
+      >
         <div
           ref={answerRef}
           onClick={clickHandler}
@@ -142,7 +147,7 @@ export const AnswerFile = ({
             />
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

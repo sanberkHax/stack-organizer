@@ -11,7 +11,7 @@ import { folderUpdated, foldersReset } from '../slices/foldersSlice';
 import { ProjectIcon } from './ProjectIcon';
 
 export const ProjectButton = ({
-  newProjectId,
+  id,
   name,
   setSelectedProject,
   setSelectedFolder,
@@ -23,9 +23,8 @@ export const ProjectButton = ({
 
   //  Toggle project's active status on click
   const clickHandler = (e) => {
-    const clickedProject = projects.find(
-      (p) => p.name === e.target.textContent
-    );
+    const clickedProject = projects.find((p) => p.id === id);
+
     dispatch(
       projectUpdated({
         id: clickedProject?.id,
@@ -45,24 +44,24 @@ export const ProjectButton = ({
   // Add a name to empty project
   const addNameHandler = (p) => {
     const projectName = p.name;
-
+    const clickedProject = projects.find((p) => p.id === id);
+    const projectId = clickedProject.id;
     const existingProject = projects.find((f) => f.name === projectName);
-    const lastProject = projects[projects.length - 1];
 
     if (existingProject) {
       dispatch(
         projectsErrorUpdated('PROJECT NAME EXISTS, SELECT DIFFERENT NAME')
       );
-      dispatch(projectRemoved(newProjectId));
+      dispatch(projectRemoved(projectId));
       return;
     } else if (projectName === null) {
-      dispatch(projectRemoved(newProjectId));
+      dispatch(projectRemoved(projectId));
       return;
     } else if (projectName === '') {
       dispatch(projectsErrorUpdated(`CAN'T ADD PROJECT WITHOUT A NAME`));
-      dispatch(projectRemoved(newProjectId));
+      dispatch(projectRemoved(projectId));
     } else {
-      dispatch(projectUpdated({ id: lastProject.id, name: projectName }));
+      dispatch(projectUpdated({ id: projectId, name: projectName }));
     }
   };
   return (

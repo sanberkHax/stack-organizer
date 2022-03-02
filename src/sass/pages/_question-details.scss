@@ -236,6 +236,15 @@
     padding: 0 4rem;
     width: 50%;
   }
+  &__info {
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    color: $tertiary-blue;
+    fill: $tertiary-blue-darker;
+  }
   &__close-btn {
     position: absolute;
     cursor: pointer;

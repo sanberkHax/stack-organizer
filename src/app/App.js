@@ -3,9 +3,10 @@ import { Private } from '../pages/Private/Private';
 import { Footer } from '../components/Footer';
 import { useSelector } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth, database, writeUsersData } from '../services/firebase';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+
+import { auth, database, writeUsersData } from '../services/firebase';
 import { logInCurrentUser } from '../slices/authSlice';
 import {
   projectsFetched,

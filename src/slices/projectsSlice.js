@@ -1,4 +1,4 @@
-import { createSlice, createEntityAdapter, current } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 const projectsAdapter = createEntityAdapter();
 
 const initialState = projectsAdapter.getInitialState({
@@ -22,13 +22,6 @@ export const projectsSlice = createSlice({
         const index = activeProjects[0].id;
         state.entities[index].isActive = false;
       }
-      // const unnamedProject = Object.values(current(state.entities)).find(
-      //   (p) => !p.name
-      // );
-      // if (unnamedProject) {
-      //   console.log(unnamedProject);
-      //   projectsAdapter.removeOne(state, unnamedProject.id);
-      // }
     },
     projectUpdated(state, action) {
       state.error = null;

@@ -23,7 +23,7 @@ export const useProjectFolders = (selectedProject) => {
     );
 
     setProjectFolders(projectParents);
-  }, [project]);
+  }, [project]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return [projectFolders, setProject];
 };

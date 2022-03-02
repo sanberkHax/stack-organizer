@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion/dist/framer-motion';
 
 import {
   selectAllProjects,
@@ -21,8 +22,8 @@ import { DeleteButton } from './DeleteButton';
 import { EditButton } from './EditButton';
 
 export const Project = ({
-  newProjectId,
   name,
+  id,
   setSelectedProject,
   setSelectedFolder,
   selectedFolder,
@@ -31,7 +32,6 @@ export const Project = ({
   const dispatch = useDispatch();
   const projects = useSelector(selectAllProjects);
   const folders = useSelector(selectAllFolders);
-  const projectRef = useRef();
 
   const [editableProject, setEditableProject] = useState();
 
@@ -45,29 +45,29 @@ export const Project = ({
 
   //  Toggle project's active status on click
   const clickHandler = (e) => {
-    const clickedProject = projects.find(
-      (p) => p.name === e.target.textContent
-    );
-    dispatch(
-      projectUpdated({
-        id: clickedProject?.id,
-        isActive: !clickedProject?.isActive,
-      })
-    );
-    if (clickedProject?.isActive) {
-      setSelectedProject(null);
-    } else {
-      dispatch(folderUpdated({ id: selectedFolder?.id, isActive: false }));
-      setSelectedFolder(null);
-      setSelectedProject(clickedProject);
+    const clickedProject = projects.find((p) => p.id === id);
+    if (clickedProject.name) {
+      dispatch(
+        projectUpdated({
+          id: clickedProject?.id,
+          isActive: !clickedProject?.isActive,
+        })
+      );
+      if (clickedProject?.isActive) {
+        setSelectedProject(null);
+      } else {
+        dispatch(folderUpdated({ id: selectedFolder?.id, isActive: false }));
+        setSelectedFolder(null);
+        setSelectedProject(clickedProject);
+      }
+
+      dispatch(foldersReset());
     }
-    dispatch(foldersReset());
   };
   const editHandler = (e) => {
     e.stopPropagation();
-    const clickedProject = projects.find(
-      (p) => p.name === projectRef.current.textContent
-    );
+    const clickedProject = projects.find((p) => p.id === id);
+
     if (clickedProject) {
       setEditableProject(clickedProject);
       dispatch(projectUpdated({ id: clickedProject.id, name: null }));
@@ -76,61 +76,77 @@ export const Project = ({
 
   const deleteHandler = (e) => {
     e.stopPropagation();
-    const clickedProject = projects.find(
-      (p) => p.name === projectRef.current.textContent
-    );
+    const clickedProject = projects.find((p) => p.id === id);
     const projectFolders = folders.filter(
       (f) => f.project === clickedProject.id
     );
-    if (clickedProject) {
-      if (projectFolders.length > 0) {
-        dispatch(foldersRemoved(projectFolders));
+
+    // Ask to confirm deletion process
+    if (window.confirm('PRESS "OK" TO DELETE SELECTED PROJECT')) {
+      if (clickedProject) {
+        if (projectFolders.length > 0) {
+          dispatch(foldersRemoved(projectFolders));
+        }
+        dispatch(projectRemoved(clickedProject.id));
+        dispatch(currentFoldersUpdated([]));
+        setSelectedProject(null);
       }
-      dispatch(projectRemoved(clickedProject.id));
-      dispatch(currentFoldersUpdated([]));
-      setSelectedProject(null);
+    } else {
+      return;
     }
   };
 
-  // Add a name to empty project
   const addNameHandler = (p) => {
     const projectName = p.name;
+    const clickedProject = projects.find((p) => p.id === id);
+    const projectId = clickedProject.id;
 
+    // Check if a project with the same name exists
     const existingProject = projects.find((f) => f.name === projectName);
 
     if (existingProject) {
+      if (editableProject) {
+        dispatch(projectUpdated({ id: projectId, name: editableProject.name }));
+      } else {
+        dispatch(projectRemoved(projectId));
+      }
       dispatch(
         projectsErrorUpdated('PROJECT NAME EXISTS, SELECT DIFFERENT NAME')
       );
-      if (!editableProject) {
-        dispatch(projectRemoved(newProjectId));
-      }
-      return;
     } else if (projectName === null) {
-      dispatch(projectRemoved(newProjectId));
-      return;
-    } else if (projectName === '') {
+      if (editableProject) {
+        dispatch(projectUpdated({ id: projectId, name: editableProject.name }));
+      } else {
+        dispatch(projectRemoved(projectId));
+      }
       dispatch(projectsErrorUpdated(`CAN'T ADD PROJECT WITHOUT A NAME`));
-      if (!editableProject) {
-        dispatch(projectRemoved(newProjectId));
+    } else if (projectName === '') {
+      if (editableProject) {
+        dispatch(projectUpdated({ id: projectId, name: editableProject.name }));
+        dispatch(
+          projectsErrorUpdated('PLEASE GIVE A VALID NAME TO RENAME THE PROJECT')
+        );
+      } else {
+        dispatch(projectsErrorUpdated(`CAN'T ADD PROJECT WITHOUT A NAME`));
+        dispatch(projectRemoved(projectId));
       }
     } else {
       if (editableProject) {
-        dispatch(projectUpdated({ id: editableProject.id, name: projectName }));
+        dispatch(projectUpdated({ id: projectId, name: projectName }));
         setSelectedProject(null);
       } else {
-        dispatch(projectUpdated({ id: newProjectId, name: projectName }));
+        dispatch(projectUpdated({ id: projectId, name: projectName }));
       }
     }
   };
   return (
     <>
-      <div className={className}>
-        <div
-          onClick={clickHandler}
-          ref={projectRef}
-          className="project__details"
-        >
+      <motion.div
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className={className}
+      >
+        <div onClick={clickHandler} className="project__details">
           <ProjectIcon />
           {!name ? (
             <Formik initialValues={{ name: '' }} onSubmit={addNameHandler}>
@@ -145,6 +161,9 @@ export const Project = ({
                       className="project__input"
                       onBlur={() => {
                         addNameHandler(values);
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
                       }}
                     />
                   </Form>
@@ -167,7 +186,7 @@ export const Project = ({
             />
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

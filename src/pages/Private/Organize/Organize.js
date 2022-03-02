@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { FolderIcon } from '../../../components/FolderIcon';
 import { ProjectIcon } from '../../../components/ProjectIcon';
+import { motion } from 'framer-motion/dist/framer-motion';
 
 import {
   folderAdded,
@@ -30,14 +31,13 @@ export const Organize = () => {
   const [selectedFolder, setSelectedFolder] = useState();
   const [selectedAnswer, setSelectedAnswer] = useState();
   const [selectedQuestion, setSelectedQuestion] = useState();
-  const [newProjectId, setNewProjectId] = useState();
   const [currentFileArray, setCurrentFileArray] = useState([]);
   const [titleIcon, setTitleIcon] = useState(<ProjectIcon />);
 
   const projects = useSelector(selectAllProjects);
   const previousFolders = useSelector((state) => state.folders.previousFolders);
+  const projectError = useSelector((state) => state.projects.error);
   const dispatch = useDispatch();
-  const error = useSelector((state) => state.projects.error);
 
   // When file browser at the base level, set selected folder to null
   useEffect(() => {
@@ -107,8 +107,6 @@ export const Organize = () => {
     setSelectedProject(null);
     const newProjectId = uuidv4();
 
-    setNewProjectId(newProjectId);
-
     const newProject = {
       id: newProjectId,
       isActive: false,
@@ -132,20 +130,27 @@ export const Organize = () => {
 
   return (
     <main className="organize">
-      <aside className="organize__projects">
+      <motion.aside
+        initial={{ opacity: 0, x: -200 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="organize__projects"
+      >
         <h1 className="heading-primary">Projects</h1>
         <NewProjectButton ariaLabel="New Project" onClick={addProjectHandler} />
-        {error && <p className="organize__error">{error}</p>}
+        {projectError && <p className="organize__error">{projectError}</p>}
         <ProjectsSidebar
           setSelectedProject={setSelectedProject}
           setSelectedFolder={setSelectedFolder}
           selectedFolder={selectedFolder}
-          newProjectId={newProjectId}
           selectedProject={selectedProject}
         />
-      </aside>
+      </motion.aside>
       {selectedProject ? (
-        <div className="organize__file">
+        <motion.div
+          initial={{ opacity: 0, x: 200 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="organize__file"
+        >
           <div className="file__details">
             {currentFileArray?.length > 1 && (
               <BackButton
@@ -197,7 +202,7 @@ export const Organize = () => {
               />
             </>
           )}
-        </div>
+        </motion.div>
       ) : (
         browserPlaceholder
       )}

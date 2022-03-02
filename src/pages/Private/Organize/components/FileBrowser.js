@@ -104,6 +104,7 @@ export const FileBrowser = ({
           {error && <p className="organize__error">{error}</p>}
           {currentFolders?.map((f) => (
             <Folder
+              id={f.id}
               setTitleIcon={setTitleIcon}
               key={f.id}
               setSelectedFolder={setSelectedFolder}

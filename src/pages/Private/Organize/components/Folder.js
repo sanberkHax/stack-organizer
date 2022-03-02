@@ -1,6 +1,7 @@
 import { Formik, Form, Field } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
+import { motion } from 'framer-motion/dist/framer-motion';
 
 import {
   selectAllProjects,
@@ -24,6 +25,7 @@ import { DeleteButton } from './DeleteButton';
 import { questionsRemoved } from '../../../../slices/questionsSlice';
 
 export const Folder = ({
+  id,
   className,
   name,
   selectedFolder,
@@ -36,19 +38,15 @@ export const Folder = ({
   const projects = useSelector(selectAllProjects);
   const folders = useSelector(selectAllFolders);
   const currentFolders = useSelector((state) => state.folders.currentFolders);
-  const newFolderId = useSelector((state) => state.folders.newFolderId);
 
   const [editableFolder, setEditableFolder] = useState();
 
   const dispatch = useDispatch();
-  const folderRef = useRef();
 
   // Open folder on click
   const clickHandler = (e) => {
     setTitleIcon(<FolderIcon />);
-    const clickedFolder = currentFolders.find(
-      (p) => p.name === e.target.textContent
-    );
+    const clickedFolder = currentFolders.find((f) => f.id === id);
     if (clickedFolder) {
       const clickedFolderChildren = folders.filter((f) =>
         clickedFolder.children?.includes(f.id)
@@ -71,9 +69,7 @@ export const Folder = ({
 
   const editHandler = (e) => {
     e.stopPropagation();
-    const clickedFolder = currentFolders.find(
-      (p) => p.name === folderRef.current.textContent
-    );
+    const clickedFolder = currentFolders.find((f) => f.id === id);
 
     // Remove folder's name
     if (clickedFolder) {
@@ -85,16 +81,14 @@ export const Folder = ({
 
   const deleteHandler = (e) => {
     e.stopPropagation();
-
-    const clickedFolder = currentFolders.find(
-      (p) => p.name === folderRef.current.textContent
-    );
-
-    if (clickedFolder) {
-      dispatch(folderRemoved(clickedFolder.id));
-      dispatch(currentFolderRemoved(clickedFolder.id));
-      dispatch(foldersErrorUpdated(null));
-      dispatch(questionsRemoved(folders));
+    const clickedFolder = currentFolders.find((f) => f.id === id);
+    if (window.confirm('PRESS "OK" TO DELETE SELECTED FOLDER')) {
+      if (clickedFolder) {
+        dispatch(folderRemoved(clickedFolder.id));
+        dispatch(currentFolderRemoved(clickedFolder.id));
+        dispatch(foldersErrorUpdated(null));
+        dispatch(questionsRemoved(folders));
+      }
     }
   };
   // Add a name to empty folder
@@ -102,35 +96,55 @@ export const Folder = ({
     const folderName = f.name;
     const activeProject = projects.find((p) => p.isActive);
     const existingFolder = currentFolders.find((f) => f.name === folderName);
-    const folderId = editableFolder ? editableFolder.id : newFolderId;
+    const clickedFolder = currentFolders.find((f) => f.id === id);
+
+    const folderId = clickedFolder.id;
 
     if (existingFolder) {
+      if (editableFolder) {
+        dispatch(folderUpdated({ id: folderId, name: editableFolder.name }));
+        dispatch(
+          currentFolderUpdated({ id: folderId, name: editableFolder.name })
+        );
+      } else {
+        dispatch(folderRemoved(folderId));
+        dispatch(currentFolderRemoved(folderId));
+      }
       dispatch(
         foldersErrorUpdated('FOLDER NAME EXISTS, SELECT DIFFERENT NAME')
       );
-      if (!editableFolder) {
-        dispatch(folderRemoved(folderId));
-        dispatch(currentFolderRemoved(folderId));
-      }
-      return;
     } else if (folderName === null) {
-      if (!editableFolder) {
+      if (editableFolder) {
+        dispatch(folderUpdated({ id: folderId, name: editableFolder.name }));
+        dispatch(
+          currentFolderUpdated({ id: folderId, name: editableFolder.name })
+        );
+      } else {
         dispatch(folderRemoved(folderId));
         dispatch(currentFolderRemoved(folderId));
       }
-      return;
     } else if (folderName === '') {
+      if (editableFolder) {
+        dispatch(folderUpdated({ id: folderId, name: editableFolder.name }));
+        dispatch(
+          currentFolderUpdated({ id: folderId, name: editableFolder.name })
+        );
+      } else {
+        dispatch(folderRemoved(folderId));
+        dispatch(currentFolderRemoved(folderId));
+      }
       dispatch(foldersErrorUpdated(`CAN'T ADD FOLDER WITHOUT A NAME`));
-      if (!editableFolder) {
-        dispatch(folderRemoved(folderId));
-        dispatch(currentFolderRemoved(folderId));
-      }
     } else if (folderName.length > 50) {
-      dispatch(foldersErrorUpdated(`MAX CHARACTER LIMIT IS 50`));
-      if (!editableFolder) {
+      if (editableFolder) {
+        dispatch(folderUpdated({ id: folderId, name: editableFolder.name }));
+        dispatch(
+          currentFolderUpdated({ id: folderId, name: editableFolder.name })
+        );
+      } else {
         dispatch(folderRemoved(folderId));
         dispatch(currentFolderRemoved(folderId));
       }
+      dispatch(foldersErrorUpdated(`MAX CHARACTER LIMIT IS 50`));
     } else {
       // Rename folder
       if (editableFolder) {
@@ -183,10 +197,13 @@ export const Folder = ({
   };
   return (
     <>
-      <div className={className}>
+      <motion.div
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className={className}
+      >
         <div
           data-testid="folder"
-          ref={folderRef}
           onClick={clickHandler}
           className="folder__details"
         >
@@ -205,7 +222,9 @@ export const Folder = ({
                       onBlur={() => {
                         addNameHandler(values);
                       }}
-                      onClick={editHandler}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
                     />
                   </Form>
                 );
@@ -227,7 +246,7 @@ export const Folder = ({
             />
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

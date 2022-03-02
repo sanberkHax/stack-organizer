@@ -16,7 +16,6 @@ export const ProjectsSidebar = ({
   setSelectedFolder,
   selectedFolder,
   selectedProject,
-  newProjectId,
 }) => {
   const projects = useSelector(selectAllProjects);
   const folders = useSelector(selectAllFolders);
@@ -52,8 +51,8 @@ export const ProjectsSidebar = ({
     <div className="projects-sidebar">
       {projects?.map((p) => (
         <Project
+          id={p.id}
           key={p.id}
-          newProjectId={newProjectId}
           setSelectedFolder={setSelectedFolder}
           setSelectedProject={setSelectedProject}
           selectedFolder={selectedFolder}

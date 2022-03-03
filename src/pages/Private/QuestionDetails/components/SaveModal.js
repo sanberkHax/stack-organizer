@@ -1,6 +1,7 @@
 import { ProjectsContainer } from './ProjectsContainer';
 import { FoldersContainer } from './FoldersContainer';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -23,6 +24,7 @@ import {
 } from '../../../../services/firebase';
 import { selectAllAnswers, answerAdded } from '../../../../slices/answersSlice';
 import { CloseButton } from '../../../../components/CloseButton';
+import { ConfirmationModal } from '../../../../components/ConfirmationModal';
 
 export const SaveModal = ({ setModal, question, answer }) => {
   const uid = useSelector((state) => state.auth.currentUser);
@@ -31,6 +33,7 @@ export const SaveModal = ({ setModal, question, answer }) => {
   const questions = useSelector(selectAllQuestions);
   const answers = useSelector(selectAllAnswers);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [selectedProject, setSelectedProject] = useState();
@@ -59,9 +62,14 @@ export const SaveModal = ({ setModal, question, answer }) => {
     writeAnswersData(uid, answers);
   }, [answers, uid]);
 
+  const redirectHandler = () => {
+    navigate('/organize');
+  };
+
   const modalHandler = () => {
     setModal(false);
   };
+
   const saveHandler = (formData) => {
     if (!selectedProject) {
       dispatch(projectsErrorUpdated('PLEASE SELECT A PROJECT'));
@@ -116,19 +124,14 @@ export const SaveModal = ({ setModal, question, answer }) => {
   };
 
   return (
-    <div className="save-modal">
+    <>
       {confirmation ? (
-        <div className="save-modal__confirmation">
-          <h1 className="heading-primary">File succesfully saved</h1>
-          <h2 className="heading-secondary">
-            Go to Organize page and start organizing!
-          </h2>
-          <button onClick={modalHandler} className="btn">
-            OK
-          </button>
-        </div>
+        <ConfirmationModal onConfirm={redirectHandler} onCancel={modalHandler}>
+          <h1 className="heading-primary">FILE SAVED</h1>
+          <h2 className="heading-secondary">Navigate to Organize page now?</h2>
+        </ConfirmationModal>
       ) : (
-        <>
+        <div className="save-modal">
           <CloseButton
             className="save-modal__close-btn"
             onClick={modalHandler}
@@ -165,8 +168,8 @@ export const SaveModal = ({ setModal, question, answer }) => {
             selectedProject={selectedProject}
           />
           <SaveModalForm onSubmit={saveHandler} />
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };

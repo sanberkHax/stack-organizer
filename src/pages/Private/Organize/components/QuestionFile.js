@@ -6,8 +6,11 @@ import { motion } from 'framer-motion/dist/framer-motion';
 import {
   previousFoldersAdded,
   currentFoldersUpdated,
+  foldersErrorUpdated,
 } from '../../../../slices/foldersSlice';
 import { QuestionIcon } from '../../../../components/QuestionIcon';
+import { ConfirmationModal } from '../../../../components/ConfirmationModal';
+import { Backdrop } from '../../../../components/Backdrop';
 import { EditButton } from './EditButton';
 import { DeleteButton } from './DeleteButton';
 import {
@@ -16,27 +19,33 @@ import {
   questionUpdated,
   selectAllQuestions,
 } from '../../../../slices/questionsSlice';
+import { answersErrorUpdated } from '../../../../slices/answersSlice';
+import { projectsErrorUpdated } from '../../../../slices/projectsSlice';
 
 export const QuestionFile = ({
   name,
-  newQuestionId,
+  id,
   setSelectedQuestion,
   setCurrentFileArray,
   setTitleIcon,
 }) => {
   const questions = useSelector(selectAllQuestions);
-
   const currentFolders = useSelector((state) => state.folders.currentFolders);
+
   const [editableQuestion, setEditableQuestion] = useState();
+  const [confirmationModal, setConfirmationModal] = useState();
 
   const dispatch = useDispatch();
   const questionRef = useRef();
 
   const clickHandler = (e) => {
+    dispatch(foldersErrorUpdated(null));
+    dispatch(answersErrorUpdated(null));
+    dispatch(projectsErrorUpdated(null));
     setTitleIcon(<QuestionIcon />);
-    const clickedQuestion = questions.find(
-      (p) => p.name === questionRef.current.textContent
-    );
+
+    const clickedQuestion = questions.find((q) => q.id === id);
+
     dispatch(previousFoldersAdded(currentFolders));
     dispatch(currentFoldersUpdated([]));
 
@@ -46,11 +55,18 @@ export const QuestionFile = ({
     }
   };
 
-  const editHandler = (e) => {
+  const modalToggleHandler = (e) => {
     e.stopPropagation();
-    const clickedQuestion = questions.find(
-      (p) => p.name === questionRef.current.textContent
-    );
+    setConfirmationModal((prev) => !prev);
+  };
+
+  const editHandler = (e) => {
+    dispatch(foldersErrorUpdated(null));
+    dispatch(answersErrorUpdated(null));
+    dispatch(projectsErrorUpdated(null));
+    e.stopPropagation();
+
+    const clickedQuestion = questions.find((q) => q.id === id);
 
     // Remove question's name
     if (clickedQuestion) {
@@ -60,11 +76,13 @@ export const QuestionFile = ({
   };
 
   const deleteHandler = (e) => {
+    dispatch(foldersErrorUpdated(null));
+    dispatch(answersErrorUpdated(null));
+    dispatch(projectsErrorUpdated(null));
     e.stopPropagation();
 
-    const clickedQuestion = questions.find(
-      (p) => p.name === questionRef.current.textContent
-    );
+    const clickedQuestion = questions.find((q) => q.id === id);
+
     if (clickedQuestion) {
       dispatch(questionRemoved(clickedQuestion.id));
       dispatch(questionsErrorUpdated(null));
@@ -74,36 +92,72 @@ export const QuestionFile = ({
 
   const addNameHandler = (f) => {
     const questionName = f.name;
-
     const existingQuestion = questions.find((q) => q.name === questionName);
 
     if (existingQuestion) {
       dispatch(
-        questionsErrorUpdated('FOLDER NAME EXISTS, SELECT DIFFERENT NAME')
+        questionUpdated({
+          id: editableQuestion.id,
+          name: editableQuestion.name,
+        })
       );
-      dispatch(questionRemoved(newQuestionId));
-      return;
+      dispatch(
+        questionsErrorUpdated('QUESTION NAME EXISTS, SELECT DIFFERENT NAME')
+      );
     } else if (questionName === null) {
-      dispatch(questionRemoved(newQuestionId));
-      return;
+      dispatch(
+        questionUpdated({
+          id: editableQuestion.id,
+          name: editableQuestion.name,
+        })
+      );
+      questionsErrorUpdated(`PLEASE ENTER A VALID NAME TO RENAME QUESTION`);
     } else if (questionName === '') {
-      dispatch(questionsErrorUpdated(`CAN'T ADD FOLDER WITHOUT A NAME`));
-
-      dispatch(questionRemoved(newQuestionId));
+      dispatch(
+        questionUpdated({
+          id: editableQuestion.id,
+          name: editableQuestion.name,
+        })
+      );
+      dispatch(
+        questionsErrorUpdated(`PLEASE ENTER A VALID NAME TO RENAME QUESTION`)
+      );
     } else if (questionName.length > 50) {
+      dispatch(
+        questionUpdated({
+          id: editableQuestion.id,
+          name: editableQuestion.name,
+        })
+      );
       dispatch(questionsErrorUpdated(`MAX CHARACTER LIMIT IS 50`));
-      dispatch(questionRemoved(newQuestionId));
     } else {
       // Rename question
       if (editableQuestion) {
         dispatch(
-          questionUpdated({ id: editableQuestion.id, name: questionName })
+          questionUpdated({
+            id: editableQuestion.id,
+            name: questionName,
+          })
         );
       }
     }
   };
   return (
     <>
+      {confirmationModal && (
+        <>
+          <ConfirmationModal
+            onConfirm={deleteHandler}
+            onCancel={modalToggleHandler}
+          >
+            <h1 className="heading-primary">DELETE QUESTION?</h1>
+            <h2 className="heading-secondary">
+              Please confirm to delete selected question
+            </h2>
+          </ConfirmationModal>
+          <Backdrop onClick={modalToggleHandler} />
+        </>
+      )}
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -144,7 +198,7 @@ export const QuestionFile = ({
               className="question-file__edit-btn"
             />
             <DeleteButton
-              onClick={deleteHandler}
+              onClick={modalToggleHandler}
               className="question-file__delete-btn"
             />
           </div>

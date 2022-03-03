@@ -1,0 +1,36 @@
+@use '../abstracts/' as *;
+
+.confirmation-modal {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  color: $tertiary-blue-darker;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  border-radius: 1rem;
+  transform: translate(-50%, -50%);
+  border: 2px solid $tertiary-blue-darker;
+  background: $secondary-blue;
+  width: 80%;
+  height: 30%;
+  padding: 1rem;
+  h1 {
+    color: $tertiary-blue !important;
+  }
+  @include sm {
+    width: 60%;
+  }
+  @include md {
+    width: 40%;
+  }
+  &__btn-ctn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+}

@@ -21,8 +21,13 @@
     gap: 10rem;
   }
   &__error {
-    color: rgb(255, 57, 57);
+    color: white;
     font-weight: bold;
+    border-radius: 1rem;
+    padding: 10px;
+    align-self: center;
+    width: 95%;
+    background-color: red;
   }
   &__projects {
     display: flex;

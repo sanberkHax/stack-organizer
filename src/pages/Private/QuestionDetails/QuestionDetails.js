@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Comment } from '../Search/components/Comment';
 import { Answer } from './components/Answer';
 import { SaveModal } from './components/SaveModal';
-import { Backdrop } from './components/Backdrop';
+import { Backdrop } from '../../../components/Backdrop';
 import { SaveAsButton } from '../../../components/SaveAsButton';
 import { StackOverflowButton } from '../../../components/StackOverflowButton';
 import { CommentsButton } from '../../../components/CommentsButton';

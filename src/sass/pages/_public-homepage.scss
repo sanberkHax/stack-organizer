@@ -3,7 +3,8 @@
 .public-homepage {
   flex: 1;
   background-color: white;
-  @extend %flex-col;
+  display: flex;
+  flex-direction: column;
   @include lg {
     flex-direction: row;
   }
@@ -11,7 +12,8 @@
 
 .welcome-section {
   flex: 1;
-  @extend %flex-col;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   &__logo {
@@ -74,7 +76,8 @@
   justify-content: space-around;
   align-items: center;
   padding: 1rem 2rem;
-  @extend %flex-col;
+  display: flex;
+  flex-direction: column;
   background-color: $secondary-blue;
   &__text__span {
     background-color: red;

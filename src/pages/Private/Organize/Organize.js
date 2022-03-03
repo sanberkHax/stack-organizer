@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { FolderIcon } from '../../../components/FolderIcon';
-import { ProjectIcon } from '../../../components/ProjectIcon';
 import { motion } from 'framer-motion/dist/framer-motion';
 
 import {
@@ -25,6 +23,8 @@ import { ProjectsSidebar } from './components/ProjectsSidebar';
 import { NewProjectButton } from './components/NewProjectButton';
 import { QuestionInfo } from './components/QuestionInfo';
 import { AnswerInfo } from './components/AnswerInfo';
+import { FolderIcon } from '../../../components/FolderIcon';
+import { ProjectIcon } from '../../../components/ProjectIcon';
 
 export const Organize = () => {
   const [selectedProject, setSelectedProject] = useState();

@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import { motion } from 'framer-motion/dist/framer-motion';
 
 import {
   selectAllFolders,
@@ -37,7 +38,9 @@ export const FileBrowser = ({
   const currentFolders = useSelector((state) => state.folders.currentFolders);
   const previousFolders = useSelector((state) => state.folders.previousFolders);
   const loading = useSelector((state) => state.folders.loading);
-  const error = useSelector((state) => state.folders.error);
+  const foldersError = useSelector((state) => state.folders.error);
+  const questionsError = useSelector((state) => state.questions.error);
+  const answersError = useSelector((state) => state.answers.error);
   const answers = useSelector(selectAllAnswers);
   const questions = useSelector(selectAllQuestions);
 
@@ -54,7 +57,6 @@ export const FileBrowser = ({
 
   useEffect(() => {
     const deletedQuestions = [];
-
     // Find questions inside deleted folder or project
     questions.forEach((q) => {
       if (q.folder) {
@@ -101,7 +103,36 @@ export const FileBrowser = ({
     <div className="file__browser">
       {selectedProject && (
         <>
-          {error && <p className="organize__error">{error}</p>}
+          {foldersError && (
+            <motion.p
+              initial={{ opacity: 0, y: -100 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: 'spring', duration: 0.5 }}
+              className="organize__error"
+            >
+              {foldersError}
+            </motion.p>
+          )}
+          {questionsError && (
+            <motion.p
+              initial={{ opacity: 0, y: -100 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: 'spring', duration: 0.5 }}
+              className="organize__error"
+            >
+              {questionsError}
+            </motion.p>
+          )}
+          {answersError && (
+            <motion.p
+              initial={{ opacity: 0, y: -100 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: 'spring', duration: 0.5 }}
+              className="organize__error"
+            >
+              {answersError}
+            </motion.p>
+          )}
           {currentFolders?.map((f) => (
             <Folder
               id={f.id}
@@ -118,6 +149,7 @@ export const FileBrowser = ({
           {selectedFolder
             ? folderQuestions?.map((q) => (
                 <QuestionFile
+                  id={q.id}
                   setTitleIcon={setTitleIcon}
                   key={q.id}
                   name={q.name}
@@ -127,6 +159,7 @@ export const FileBrowser = ({
               ))
             : projectQuestions?.map((q) => (
                 <QuestionFile
+                  id={q.id}
                   setTitleIcon={setTitleIcon}
                   key={q.id}
                   name={q.name}
@@ -137,6 +170,7 @@ export const FileBrowser = ({
           {selectedFolder
             ? folderAnswers?.map((a) => (
                 <AnswerFile
+                  id={a.id}
                   setTitleIcon={setTitleIcon}
                   key={a.id}
                   name={a.name}
@@ -146,6 +180,7 @@ export const FileBrowser = ({
               ))
             : projectAnswers?.map((a) => (
                 <AnswerFile
+                  id={a.id}
                   setTitleIcon={setTitleIcon}
                   key={a.id}
                   name={a.name}

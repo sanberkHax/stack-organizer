@@ -16,10 +16,15 @@ import {
   currentFoldersUpdated,
   selectAllFolders,
   foldersRemoved,
+  foldersErrorUpdated,
 } from '../../../../slices/foldersSlice';
+import { ConfirmationModal } from '../../../../components/ConfirmationModal';
+import { Backdrop } from '../../../../components/Backdrop';
 import { ProjectIcon } from '../../../../components/ProjectIcon';
 import { DeleteButton } from './DeleteButton';
 import { EditButton } from './EditButton';
+import { questionsErrorUpdated } from '../../../../slices/questionsSlice';
+import { answersErrorUpdated } from '../../../../slices/answersSlice';
 
 export const Project = ({
   name,
@@ -34,6 +39,7 @@ export const Project = ({
   const folders = useSelector(selectAllFolders);
 
   const [editableProject, setEditableProject] = useState();
+  const [confirmationModal, setConfirmationModal] = useState();
 
   // Reset active project
   useEffect(() => {
@@ -65,6 +71,9 @@ export const Project = ({
     }
   };
   const editHandler = (e) => {
+    dispatch(questionsErrorUpdated(null));
+    dispatch(answersErrorUpdated(null));
+    dispatch(foldersErrorUpdated(null));
     e.stopPropagation();
     const clickedProject = projects.find((p) => p.id === id);
 
@@ -72,6 +81,11 @@ export const Project = ({
       setEditableProject(clickedProject);
       dispatch(projectUpdated({ id: clickedProject.id, name: null }));
     }
+  };
+
+  const modalToggleHandler = (e) => {
+    e.stopPropagation();
+    setConfirmationModal((prev) => !prev);
   };
 
   const deleteHandler = (e) => {
@@ -82,17 +96,13 @@ export const Project = ({
     );
 
     // Ask to confirm deletion process
-    if (window.confirm('PRESS "OK" TO DELETE SELECTED PROJECT')) {
-      if (clickedProject) {
-        if (projectFolders.length > 0) {
-          dispatch(foldersRemoved(projectFolders));
-        }
-        dispatch(projectRemoved(clickedProject.id));
-        dispatch(currentFoldersUpdated([]));
-        setSelectedProject(null);
+    if (clickedProject) {
+      if (projectFolders.length > 0) {
+        dispatch(foldersRemoved(projectFolders));
       }
-    } else {
-      return;
+      dispatch(projectRemoved(clickedProject.id));
+      dispatch(currentFoldersUpdated([]));
+      setSelectedProject(null);
     }
   };
 
@@ -124,7 +134,9 @@ export const Project = ({
       if (editableProject) {
         dispatch(projectUpdated({ id: projectId, name: editableProject.name }));
         dispatch(
-          projectsErrorUpdated('PLEASE GIVE A VALID NAME TO RENAME THE PROJECT')
+          projectsErrorUpdated(
+            'PLEASE ENTER A VALID NAME TO RENAME THE PROJECT'
+          )
         );
       } else {
         dispatch(projectsErrorUpdated(`CAN'T ADD PROJECT WITHOUT A NAME`));
@@ -141,6 +153,20 @@ export const Project = ({
   };
   return (
     <>
+      {confirmationModal && (
+        <>
+          <ConfirmationModal
+            onConfirm={deleteHandler}
+            onCancel={modalToggleHandler}
+          >
+            <h1 className="heading-primary">DELETE PROJECT?</h1>
+            <h2 className="heading-secondary">
+              Please confirm to delete selected project
+            </h2>
+          </ConfirmationModal>
+          <Backdrop onClick={modalToggleHandler} />
+        </>
+      )}
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -181,7 +207,7 @@ export const Project = ({
             />
             <DeleteButton
               ariaLabel="Delete Project"
-              onClick={deleteHandler}
+              onClick={modalToggleHandler}
               className="project__delete-btn"
             />
           </div>

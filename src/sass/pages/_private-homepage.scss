@@ -3,7 +3,6 @@
 .private-homepage {
   background-color: $secondary-blue;
   flex: 1;
-  @extend %flex-col;
   margin-top: 1rem;
   display: flex;
   align-items: center;

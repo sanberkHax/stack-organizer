@@ -6,6 +6,7 @@ import { motion } from 'framer-motion/dist/framer-motion';
 import {
   selectAllProjects,
   projectUpdated,
+  projectsErrorUpdated,
 } from '../../../../slices/projectsSlice';
 import {
   folderUpdated,
@@ -20,9 +21,15 @@ import {
   foldersErrorUpdated,
 } from '../../../../slices/foldersSlice';
 import { FolderIcon } from '../../../../components/FolderIcon';
+import { ConfirmationModal } from '../../../../components/ConfirmationModal';
+import { Backdrop } from '../../../../components/Backdrop';
 import { EditButton } from './EditButton';
 import { DeleteButton } from './DeleteButton';
-import { questionsRemoved } from '../../../../slices/questionsSlice';
+import {
+  questionsErrorUpdated,
+  questionsRemoved,
+} from '../../../../slices/questionsSlice';
+import { answersErrorUpdated } from '../../../../slices/answersSlice';
 
 export const Folder = ({
   id,
@@ -40,11 +47,15 @@ export const Folder = ({
   const currentFolders = useSelector((state) => state.folders.currentFolders);
 
   const [editableFolder, setEditableFolder] = useState();
+  const [confirmationModal, setConfirmationModal] = useState();
 
   const dispatch = useDispatch();
 
   // Open folder on click
   const clickHandler = (e) => {
+    dispatch(questionsErrorUpdated(null));
+    dispatch(answersErrorUpdated(null));
+    dispatch(projectsErrorUpdated(null));
     setTitleIcon(<FolderIcon />);
     const clickedFolder = currentFolders.find((f) => f.id === id);
     if (clickedFolder) {
@@ -67,7 +78,15 @@ export const Folder = ({
     }
   };
 
+  const modalToggleHandler = (e) => {
+    e.stopPropagation();
+    setConfirmationModal((prev) => !prev);
+  };
   const editHandler = (e) => {
+    dispatch(questionsErrorUpdated(null));
+    dispatch(answersErrorUpdated(null));
+    dispatch(projectsErrorUpdated(null));
+
     e.stopPropagation();
     const clickedFolder = currentFolders.find((f) => f.id === id);
 
@@ -80,16 +99,19 @@ export const Folder = ({
   };
 
   const deleteHandler = (e) => {
+    dispatch(questionsErrorUpdated(null));
+    dispatch(answersErrorUpdated(null));
+    dispatch(projectsErrorUpdated(null));
+
     e.stopPropagation();
     const clickedFolder = currentFolders.find((f) => f.id === id);
-    if (window.confirm('PRESS "OK" TO DELETE SELECTED FOLDER')) {
-      if (clickedFolder) {
-        dispatch(folderRemoved(clickedFolder.id));
-        dispatch(currentFolderRemoved(clickedFolder.id));
-        dispatch(foldersErrorUpdated(null));
-        dispatch(questionsRemoved(folders));
-      }
+    if (clickedFolder) {
+      dispatch(folderRemoved(clickedFolder.id));
+      dispatch(currentFolderRemoved(clickedFolder.id));
+      dispatch(foldersErrorUpdated(null));
+      dispatch(questionsRemoved(folders));
     }
+    setConfirmationModal(false);
   };
   // Add a name to empty folder
   const addNameHandler = (f) => {
@@ -129,11 +151,14 @@ export const Folder = ({
         dispatch(
           currentFolderUpdated({ id: folderId, name: editableFolder.name })
         );
+        dispatch(
+          foldersErrorUpdated(`PLEASE ENTER A VALID NAME TO RENAME FOLDER`)
+        );
       } else {
         dispatch(folderRemoved(folderId));
         dispatch(currentFolderRemoved(folderId));
+        dispatch(foldersErrorUpdated(`CAN'T ADD FOLDER WITHOUT A NAME`));
       }
-      dispatch(foldersErrorUpdated(`CAN'T ADD FOLDER WITHOUT A NAME`));
     } else if (folderName.length > 50) {
       if (editableFolder) {
         dispatch(folderUpdated({ id: folderId, name: editableFolder.name }));
@@ -197,6 +222,20 @@ export const Folder = ({
   };
   return (
     <>
+      {confirmationModal && (
+        <>
+          <ConfirmationModal
+            onConfirm={deleteHandler}
+            onCancel={modalToggleHandler}
+          >
+            <h1 className="heading-primary">DELETE FOLDER?</h1>
+            <h2 className="heading-secondary">
+              Please confirm to delete selected folder
+            </h2>
+          </ConfirmationModal>
+          <Backdrop onClick={modalToggleHandler} />
+        </>
+      )}
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -241,7 +280,7 @@ export const Folder = ({
             />
             <DeleteButton
               ariaLabel="Delete Folder"
-              onClick={deleteHandler}
+              onClick={modalToggleHandler}
               className="folder__delete-btn"
             />
           </div>

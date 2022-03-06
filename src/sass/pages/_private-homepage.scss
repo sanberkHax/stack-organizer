@@ -51,28 +51,66 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     color: $tertiary-blue-darker;
+    min-height: 40vh;
+    width: 100%;
     h1 {
       text-align: center;
       border-bottom: 3px solid $primary-blue;
       width: 70%;
     }
     ul {
-      border-radius: 10px;
+      background-color: $tertiary-blue;
       display: flex;
       flex-direction: column;
       width: 85%;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
       padding: 1rem;
-      gap: 1rem;
+      gap: 1.5rem;
       @include sm {
         width: 70%;
-        gap: 1.5rem;
+      }
+      @include lg {
+        width: 50%;
+      }
+      @include xl {
+        width: 40%;
       }
       li {
-        font-weight: bold;
-        color: $tertiary-blue;
+        color: white;
         list-style: disc;
       }
+    }
+  }
+  &__accordion-btn {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    background-color: $primary-blue;
+    color: white;
+    svg {
+      fill: white;
+    }
+    &:hover {
+      background-color: $tertiary-blue-darker;
+    }
+    padding: 18px;
+    width: 85%;
+    @include sm {
+      font-size: 1.5rem;
+      width: 70%;
+    }
+    @include lg {
+      width: 50%;
+    }
+    @include xl {
+      width: 40%;
     }
   }
 }

@@ -4,6 +4,7 @@
   background-color: $secondary-blue;
   flex: 1;
   margin-top: 1rem;
+  margin-bottom: 6rem;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -52,65 +53,56 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: $tertiary-blue-darker;
-    min-height: 40vh;
-    width: 100%;
-    h1 {
-      text-align: center;
-      border-bottom: 3px solid $primary-blue;
-      width: 70%;
-    }
-    ul {
-      background-color: $tertiary-blue;
-      display: flex;
-      flex-direction: column;
-      width: 85%;
-      text-align: center;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-      gap: 1.5rem;
-      @include sm {
-        width: 70%;
-      }
-      @include lg {
-        width: 50%;
-      }
-      @include xl {
-        width: 40%;
-      }
-      li {
-        color: white;
-        list-style: disc;
-      }
-    }
-  }
-  &__accordion-btn {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: 1rem;
-    background-color: $primary-blue;
-    color: white;
-    svg {
-      fill: white;
-    }
-    &:hover {
-      background-color: $tertiary-blue-darker;
-    }
-    padding: 18px;
-    width: 85%;
+    color: $tertiary-blue;
+    position: fixed;
+    z-index: 1;
+    overflow-y: auto;
+    flex: 1;
+    left: 50%;
+    top: 50%;
+    border-radius: 1rem;
+    padding: 2rem 3rem;
+    transform: translate(-50%, -50%);
+    background-color: $secondary-blue;
+    gap: 2rem;
+    width: 80%;
     @include sm {
-      font-size: 1.5rem;
-      width: 70%;
+      width: 60%;
     }
     @include lg {
       width: 50%;
     }
     @include xl {
-      width: 40%;
+      width: 30%;
+    }
+    ul {
+      color: $tertiary-blue;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      justify-content: space-around;
+      align-items: flex-start;
+      width: 100%;
+    }
+    li {
+      list-style-type: disc;
+    }
+    &__heading {
+      text-align: center;
+    }
+    &__btn {
+      cursor: pointer;
+      position: absolute;
+      bottom: 10rem;
+      right: 5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      fill: $tertiary-blue;
+      svg {
+        width: 3rem;
+      }
     }
   }
 }

@@ -40,13 +40,13 @@ https://user-images.githubusercontent.com/69405619/158071252-899ac85e-24f1-429d-
 
 
 #### Prequisites:
+Rename `.env.example` file to `.env` to use testing credentials for Firebase
+
 Install Firebase CLI for emulators with `npm install -g firebase-tools`
 
 Run Firebase Emulators with `firebase emulators:start` 
 
 > :warning: *All tests will fail if emulators are not running*
-
-Rename `.env.example` file to `.env` to use testing credentials for Firebase
 
 
 Run `npm start` to start the project in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser

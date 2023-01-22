@@ -2,6 +2,7 @@ import { Organize } from '../Organize';
 import {
   render,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from '../../../../utils/test-utils';
 import userEvent from '@testing-library/user-event';
@@ -123,7 +124,9 @@ describe('<Organize />', () => {
 
       userEvent.click(deleteButton);
 
-      expect(screen.queryByText(/project-test/i)).not.toBeInTheDocument();
+      waitFor(() =>
+        expect(screen.queryByText(/project-test/i)).not.toBeInTheDocument()
+      );
     });
     it('Selects the project', async () => {
       // Create new project
@@ -355,7 +358,9 @@ describe('<Organize />', () => {
 
       userEvent.click(deleteButton);
 
-      expect(screen.queryByText(/folder-test/i)).not.toBeInTheDocument();
+      waitFor(() =>
+        expect(screen.queryByText(/folder-test/i)).not.toBeInTheDocument()
+      );
     });
     it('Goes inside the folder, adds a new folder inside then comes back to base level', async () => {
       // Create new project and select it

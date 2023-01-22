@@ -33,27 +33,26 @@ https://user-images.githubusercontent.com/69405619/158071199-2d53ee02-451e-4a2f-
 
 https://user-images.githubusercontent.com/69405619/158071252-899ac85e-24f1-429d-8ed1-d789055e0a53.mp4
 
-## Problems I have Faced
-- ### File System
-Even though I made a proper plan before writing any code, I highly underestimated how complicated the file system was.
+### Local Setup
+> **Note**
+>
+> Node version 16.13.0 is recommended
 
-As I dived into implementation in the "Save As" modal first and succesfully implemented project selection, I got completely stuck with the folder selection. Since it needed to have nested folders, it couldn't just be a dropdown selection. And because I had a very specific design for it, I couldn't find any third party library to fit my needs.
 
-After days of researching how to properly store nested data in redux and database, learning more about normalized data and bunch of trial and errors. I finally managed to make it work.
+#### Prequisites:
+Install Firebase CLI for emulators with `npm install -g firebase-tools`
 
-While it was a tough challenge, I really enjoyed getting my hands dirty with something like this, it was a great learning experience.
+Run Firebase Emulators with `firebase emulators:start` 
 
-- ### Firebase
-Even though I've used Firebase in my other projects before, none of those projects scale was as big as this one. So I spent few days how to properly integrate Firebase with Automated Testing and Redux.
+> :warning: *All tests will fail if emulators are not running*
 
-## What I have Learned
-This whole project was a challenge on another level but also a great opportunity to improve my knowledge, because stepping out of my comfort zone and diving right into something new is the best way for me to learn something.
+Rename `.env.example` file to `.env` to use testing credentials for Firebase
 
-I've learned how to manage complex states with Redux and how to store data efficiently in database to work with.
 
-Greatly improved my knowledge on Automated Testing.
+Run `npm start` to start the project in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser
 
-Got the grasp of managing a bigger scale project from start to finish.
+Run `npm test` to launch test runner
 
-And found out Stack Organizer is actually useful, because I kept getting lost inside multiple Stack Overflow tabs and wished I had built it sooner.
-After dealing with bunch of small bugs, I eventually set up Firebase Emulators for Automated Testing to mock Firebase services in tests.
+
+
+

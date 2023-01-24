@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 import { ReactComponent as StackOverflowIcon } from '../assets/stack-overflow-icon.svg';
-import { SearchButton } from './SearchButton';
+import { SearchButton } from './Buttons/SearchButton';
 import { Form, Formik, Field } from 'formik';
 import { useDispatch } from 'react-redux';
 import { getSearchResults } from '../slices/searchSlice';

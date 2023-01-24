@@ -10,8 +10,8 @@ import {
 import { updateProjectsData } from '../../../../services/firebase';
 import { currentFoldersUpdated } from '../../../../slices/foldersSlice';
 import { useProjectFolders } from '../../../../hooks/useProjectFolders';
-import { ProjectButton } from '../../../../components/ProjectButton';
-import { AddButton } from '../../../../components/AddButton';
+import { ProjectButton } from '../../../../components/Buttons/ProjectButton';
+import { AddButton } from '../../../../components/Buttons/AddButton';
 
 export const ProjectsContainer = ({
   className,

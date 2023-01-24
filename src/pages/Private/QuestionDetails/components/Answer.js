@@ -1,7 +1,7 @@
 import { Comment } from '../../Search/components/Comment';
-import { SaveAsButton } from '../../../../components/SaveAsButton';
+import { SaveAsButton } from '../../../../components/Buttons/SaveAsButton';
 import { useState } from 'react';
-import { CommentsButton } from '../../../../components/CommentsButton';
+import { CommentsButton } from '../../../../components/Buttons/CommentsButton';
 
 export const Answer = ({
   voteCount,

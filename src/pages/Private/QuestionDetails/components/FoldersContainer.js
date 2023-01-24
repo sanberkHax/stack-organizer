@@ -13,9 +13,9 @@ import {
 } from '../../../../slices/foldersSlice';
 import { selectAllProjects } from '../../../../slices/projectsSlice';
 import { writeFoldersData } from '../../../../services/firebase';
-import { FolderButton } from '../../../../components/FolderButton';
-import { BackButton } from '../../../../components/BackButton';
-import { AddButton } from '../../../../components/AddButton';
+import { FolderButton } from '../../../../components/Buttons/FolderButton';
+import { BackButton } from '../../../../components/Buttons/BackButton';
+import { AddButton } from '../../../../components/Buttons/AddButton';
 
 export const FoldersContainer = ({
   setSelectedFolder,

@@ -8,11 +8,11 @@ import {
   currentFoldersUpdated,
   foldersErrorUpdated,
 } from '../../../../slices/foldersSlice';
-import { QuestionIcon } from '../../../../components/QuestionIcon';
+import { Icon } from '../../../../components/Icon';
 import { ConfirmationModal } from '../../../../components/ConfirmationModal';
 import { Backdrop } from '../../../../components/Backdrop';
-import { EditButton } from './EditButton';
-import { DeleteButton } from './DeleteButton';
+import { EditButton } from '../../../../components/Buttons/EditButton';
+import { DeleteButton } from '../../../../components/Buttons/DeleteButton';
 import {
   questionRemoved,
   questionsErrorUpdated,
@@ -42,7 +42,7 @@ export const QuestionFile = ({
     dispatch(foldersErrorUpdated(null));
     dispatch(answersErrorUpdated(null));
     dispatch(projectsErrorUpdated(null));
-    setTitleIcon(<QuestionIcon />);
+    setTitleIcon(<Icon name="question" />);
 
     const clickedQuestion = questions.find((q) => q.id === id);
 
@@ -168,7 +168,7 @@ export const QuestionFile = ({
           onClick={clickHandler}
           className="question-file__details"
         >
-          <QuestionIcon />
+          <Icon name="question" />
           {!name ? (
             <Formik initialValues={{ name: '' }} onSubmit={addNameHandler}>
               {({ values }) => {

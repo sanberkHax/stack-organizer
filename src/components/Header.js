@@ -1,21 +1,23 @@
 import { useState } from 'react';
-import { ReactComponent as StackOrganizerIcon } from '../assets/stack-organizer-icon.svg';
-import { ReactComponent as StackOrganizerLogo } from '../assets/stack-organizer-logo.svg';
-import { ReactComponent as SearchIcon } from '../assets/search-icon.svg';
-import { ReactComponent as BackButton } from '../assets/back-button.svg';
 import { SearchBar } from './SearchBar';
-import { LogoutBtn } from './LogoutBtn';
-import { OrganizeBtn } from './OrganizeBtn';
 import { HamburgerMenu } from './HamburgerMenu';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../slices/authSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { BackButton } from './Buttons/BackButton';
+import { LogoutButton } from './Buttons/LogoutButton';
+import { OrganizeButton } from './Buttons/OrganizeButton';
+import { Icon } from './Icon';
+
 export const Header = () => {
   const dispatch = useDispatch();
   const [showSearch, setShowSearch] = useState(false);
 
+  const navigate = useNavigate();
+
   const logOutHandler = () => {
     dispatch(logOut());
+    navigate('/');
   };
 
   // Show search bar when clicked on search icon
@@ -31,7 +33,7 @@ export const Header = () => {
   if (showSearch) {
     return (
       <header className="header">
-        <BackButton onClick={backHandler} className="back-btn" />
+        <BackButton onClick={backHandler} />
         <SearchBar className="header__search--full" />
       </header>
     );
@@ -40,25 +42,25 @@ export const Header = () => {
     <header className="header">
       <div className="logo-ctn">
         <Link to="/">
-          <StackOrganizerIcon className="header__icon" />
+          <Icon name="stackOrganizerIcon" className="header__icon" />
         </Link>
         <Link to="/">
-          <StackOrganizerLogo className="header__logo" />
+          <Icon name="stackOrganizerLogo" className="header__logo" />
         </Link>
       </div>
       <SearchBar className="header__search" />
-      <SearchIcon onClick={searchBarHandler} className="header__search-btn" />
+      <Icon
+        name="search"
+        onClick={searchBarHandler}
+        className="header__search-btn"
+      />
       <nav className="header__nav">
         <ul className="header__buttons">
           <li>
-            <Link to="organize">
-              <OrganizeBtn />
-            </Link>
+            <OrganizeButton onClick={() => navigate('organize')} />
           </li>
           <li>
-            <Link to="/">
-              <LogoutBtn onClick={logOutHandler} />
-            </Link>
+            <LogoutButton onClick={logOutHandler} />
           </li>
         </ul>
       </nav>

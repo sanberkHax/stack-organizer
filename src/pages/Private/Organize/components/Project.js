@@ -20,11 +20,11 @@ import {
 } from '../../../../slices/foldersSlice';
 import { ConfirmationModal } from '../../../../components/ConfirmationModal';
 import { Backdrop } from '../../../../components/Backdrop';
-import { ProjectIcon } from '../../../../components/ProjectIcon';
-import { DeleteButton } from './DeleteButton';
-import { EditButton } from './EditButton';
+import { DeleteButton } from '../../../../components/Buttons/DeleteButton';
+import { EditButton } from '../../../../components/Buttons/EditButton';
 import { questionsErrorUpdated } from '../../../../slices/questionsSlice';
 import { answersErrorUpdated } from '../../../../slices/answersSlice';
+import { Icon } from '../../../../components/Icon';
 
 export const Project = ({
   name,
@@ -173,7 +173,7 @@ export const Project = ({
         className={className}
       >
         <div onClick={clickHandler} className="project__details">
-          <ProjectIcon />
+          <Icon name="project" />
           {!name ? (
             <Formik initialValues={{ name: '' }} onSubmit={addNameHandler}>
               {({ values }) => {

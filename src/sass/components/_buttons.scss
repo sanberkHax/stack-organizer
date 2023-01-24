@@ -37,3 +37,33 @@
     fill: $tertiary-blue-darker;
   }
 }
+
+.logout-btn,
+.organize-btn {
+  margin-left: auto;
+  display: none;
+  flex-basis: 25%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &__icon {
+    fill: $tertiary-blue;
+    width: 2rem;
+  }
+  &__text {
+    color: $tertiary-blue;
+    font-weight: bold;
+  }
+  &:hover &__icon {
+    fill: $tertiary-blue-darker;
+  }
+  &:hover &__text {
+    color: $tertiary-blue-darker;
+  }
+  @include sm {
+    display: flex;
+  }
+}

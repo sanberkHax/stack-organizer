@@ -1,8 +1,8 @@
-import { DetailsButton } from '../../../../components/DetailsButton';
+import { DetailsButton } from '../../../../components/Buttons/DetailsButton';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Comment } from '../../Search/components/Comment';
-import { CommentsButton } from '../../../../components/CommentsButton';
+import { CommentsButton } from '../../../../components/Buttons/CommentsButton';
 export const AnswerInfo = ({ selectedAnswer }) => {
   const [showComments, setShowComments] = useState(false);
   const { questionTitle, questionBody, body, id, comments } =

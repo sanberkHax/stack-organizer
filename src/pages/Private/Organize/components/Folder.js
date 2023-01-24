@@ -20,16 +20,16 @@ import {
   currentFolderRemoved,
   foldersErrorUpdated,
 } from '../../../../slices/foldersSlice';
-import { FolderIcon } from '../../../../components/FolderIcon';
 import { ConfirmationModal } from '../../../../components/ConfirmationModal';
 import { Backdrop } from '../../../../components/Backdrop';
-import { EditButton } from './EditButton';
-import { DeleteButton } from './DeleteButton';
+import { EditButton } from '../../../../components/Buttons/EditButton';
+import { DeleteButton } from '../../../../components/Buttons/DeleteButton';
 import {
   questionsErrorUpdated,
   questionsRemoved,
 } from '../../../../slices/questionsSlice';
 import { answersErrorUpdated } from '../../../../slices/answersSlice';
+import { Icon } from '../../../../components/Icon';
 
 export const Folder = ({
   id,
@@ -56,11 +56,11 @@ export const Folder = ({
     dispatch(questionsErrorUpdated(null));
     dispatch(answersErrorUpdated(null));
     dispatch(projectsErrorUpdated(null));
-    setTitleIcon(<FolderIcon />);
+    setTitleIcon(<Icon name="folder" />);
     const clickedFolder = currentFolders.find((f) => f.id === id);
     if (clickedFolder) {
       const clickedFolderChildren = folders.filter((f) =>
-        clickedFolder.children?.includes(f.id)
+        clickedFolder?.children?.includes(f.id)
       );
       setSelectedFolder(clickedFolder);
 
@@ -246,7 +246,7 @@ export const Folder = ({
           onClick={clickHandler}
           className="folder__details"
         >
-          <FolderIcon />
+          <Icon name="folder" />
           {!name ? (
             <Formik initialValues={{ name: '' }} onSubmit={addNameHandler}>
               {({ values }) => {

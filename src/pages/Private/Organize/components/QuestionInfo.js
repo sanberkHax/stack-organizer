@@ -1,4 +1,4 @@
-import { DetailsButton } from '../../../../components/DetailsButton';
+import { DetailsButton } from '../../../../components/Buttons/DetailsButton';
 import { useNavigate } from 'react-router-dom';
 
 export const QuestionInfo = ({ selectedQuestion }) => {

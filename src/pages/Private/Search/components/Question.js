@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { toLocaleDate } from '../../../../utils/toLocaleDate';
-import { DetailsButton } from '../../../../components/DetailsButton';
+import { DetailsButton } from '../../../../components/Buttons/DetailsButton';
 export const Question = ({ voteCount, answerCount, tags, title, date, id }) => {
   const navigate = useNavigate();
 

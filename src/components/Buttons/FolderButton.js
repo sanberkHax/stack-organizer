@@ -1,7 +1,7 @@
 import { Formik, Form, Field } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { selectAllProjects, projectUpdated } from '../slices/projectsSlice';
+import { selectAllProjects, projectUpdated } from '../../slices/projectsSlice';
 import {
   folderUpdated,
   previousFoldersUpdated,
@@ -13,8 +13,8 @@ import {
   folderRemoved,
   currentFolderRemoved,
   foldersErrorUpdated,
-} from '../slices/foldersSlice';
-import { FolderIcon } from './FolderIcon';
+} from '../../slices/foldersSlice';
+import { Icon } from '../Icon';
 
 export const FolderButton = ({
   className,
@@ -60,7 +60,7 @@ export const FolderButton = ({
       (p) => p.name === e.target.textContent
     );
     const clickedFolderChildren = folders.filter((f) =>
-      clickedFolder.children?.includes(f.id)
+      clickedFolder?.children?.includes(f.id)
     );
 
     setSelectedFolder(clickedFolder);
@@ -160,7 +160,7 @@ export const FolderButton = ({
   return (
     <>
       <button onClick={clickHandler} className={className}>
-        <FolderIcon />
+        <Icon name="folder" />
         {!name ? (
           <Formik initialValues={{ name: '' }} onSubmit={addNameHandler}>
             {({ values }) => {

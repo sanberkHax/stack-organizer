@@ -6,9 +6,9 @@ import {
   projectUpdated,
   projectRemoved,
   projectsErrorUpdated,
-} from '../slices/projectsSlice';
-import { folderUpdated, foldersReset } from '../slices/foldersSlice';
-import { ProjectIcon } from './ProjectIcon';
+} from '../../slices/projectsSlice';
+import { folderUpdated, foldersReset } from '../../slices/foldersSlice';
+import { Icon } from '../Icon';
 
 export const ProjectButton = ({
   id,
@@ -66,7 +66,7 @@ export const ProjectButton = ({
   };
   return (
     <button onClick={clickHandler} className={className}>
-      <ProjectIcon />
+      <Icon name="project" />
       {!name ? (
         <Formik initialValues={{ name: '' }} onSubmit={addNameHandler}>
           {({ values }) => {

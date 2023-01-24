@@ -1,9 +1,8 @@
-export const CommentsButton = ({ onClick, showComments }) => {
-  const onClickHandler = () => {
-    onClick();
-  };
+import { Button } from '../Button';
+
+export const CommentsButton = ({ showComments, ...props }) => {
   return (
-    <button className="comments-btn" onClick={onClickHandler}>
+    <Button className="comments-btn" {...props}>
       <h2 className="comments-btn__text">Show Comments</h2>
       <div className="comments-btn__icon-ctn">
         {showComments ? (
@@ -28,6 +27,6 @@ export const CommentsButton = ({ onClick, showComments }) => {
           </svg>
         )}
       </div>
-    </button>
+    </Button>
   );
 };

@@ -23,7 +23,7 @@ import {
   writeAnswersData,
 } from '../../../../services/firebase';
 import { selectAllAnswers, answerAdded } from '../../../../slices/answersSlice';
-import { CloseButton } from '../../../../components/CloseButton';
+import { CloseButton } from '../../../../components/Buttons/CloseButton';
 import { ConfirmationModal } from '../../../../components/ConfirmationModal';
 
 export const SaveModal = ({ setModal, question, answer }) => {
@@ -93,6 +93,7 @@ export const SaveModal = ({ setModal, question, answer }) => {
       questionBody: question?.body,
       ...(answer?.comments && { comments: answer?.comments }),
     };
+
     if (question && !answer) {
       const questionId = uuidv4();
       dispatch(

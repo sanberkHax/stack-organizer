@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { ReactComponent as StackOrganizerLogo } from '../../../assets/stack-organizer-logo.svg';
 import { SearchBar } from '../../../components/SearchBar';
-import { HelpIcon } from '../../../components/HelpIcon';
 import { Backdrop } from '../../../components/Backdrop';
 import { motion } from 'framer-motion/dist/framer-motion';
+import { Icon } from '../../../components/Icon';
 
 export const Home = () => {
   const [helpModal, setHelpModal] = useState();
@@ -47,7 +47,7 @@ export const Home = () => {
         className="private-homepage__help__btn"
         onClick={helpModalHandler}
       >
-        <HelpIcon />
+        <Icon name="help" />
       </button>
     </main>
   );

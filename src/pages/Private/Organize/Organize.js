@@ -16,15 +16,14 @@ import {
   projectAdded,
 } from '../../../slices/projectsSlice';
 import { FileBrowser } from './components/FileBrowser';
-import { BackButton } from '../../../components/BackButton';
-import { StackOverflowButton } from '../../../components/StackOverflowButton';
-import { NewFolderButton } from './components/NewFolderButton';
+import { BackButton } from '../../../components/Buttons/BackButton';
+import { StackOverflowButton } from '../../../components/Buttons/StackOverflowButton';
+import { NewFolderButton } from '../../../components/Buttons/NewFolderButton';
 import { ProjectsSidebar } from './components/ProjectsSidebar';
-import { NewProjectButton } from './components/NewProjectButton';
+import { NewProjectButton } from '../../../components/Buttons/NewProjectButton';
 import { QuestionInfo } from './components/QuestionInfo';
 import { AnswerInfo } from './components/AnswerInfo';
-import { FolderIcon } from '../../../components/FolderIcon';
-import { ProjectIcon } from '../../../components/ProjectIcon';
+import { Icon } from '../../../components/Icon';
 
 export const Organize = () => {
   const [selectedProject, setSelectedProject] = useState();
@@ -32,7 +31,7 @@ export const Organize = () => {
   const [selectedAnswer, setSelectedAnswer] = useState();
   const [selectedQuestion, setSelectedQuestion] = useState();
   const [currentFileArray, setCurrentFileArray] = useState([]);
-  const [titleIcon, setTitleIcon] = useState(<ProjectIcon />);
+  const [titleIcon, setTitleIcon] = useState(<Icon name="project" />);
 
   const projects = useSelector(selectAllProjects);
   const previousFolders = useSelector((state) => state.folders.previousFolders);
@@ -42,7 +41,7 @@ export const Organize = () => {
   // When file browser at the base level, set selected folder to null
   useEffect(() => {
     if (currentFileArray.length === 1) {
-      setTitleIcon(<ProjectIcon />);
+      setTitleIcon(<Icon name="project" />);
       setSelectedFolder(null);
     }
   }, [currentFileArray]);
@@ -75,7 +74,7 @@ export const Organize = () => {
   // Go one level back inside the nested folder
   const backHandler = () => {
     if (selectedFolder) {
-      setTitleIcon(<FolderIcon />);
+      setTitleIcon(<Icon name="folder" />);
     }
     // Get the last set of previous folders
     const lastFolders = previousFolders[previousFolders.length - 1];
@@ -136,7 +135,7 @@ export const Organize = () => {
         className="organize__projects"
       >
         <h1 className="heading-primary">Projects</h1>
-        <NewProjectButton ariaLabel="New Project" onClick={addProjectHandler} />
+        <NewProjectButton onClick={addProjectHandler} />
         {projectError && <p className="organize__error">{projectError}</p>}
         <ProjectsSidebar
           setSelectedProject={setSelectedProject}
@@ -187,10 +186,7 @@ export const Organize = () => {
             <AnswerInfo selectedAnswer={selectedAnswer} />
           ) : (
             <>
-              <NewFolderButton
-                ariaLabel="New Folder"
-                onClick={addFolderHandler}
-              />
+              <NewFolderButton onClick={addFolderHandler} />
               <FileBrowser
                 setTitleIcon={setTitleIcon}
                 selectedFolder={selectedFolder}

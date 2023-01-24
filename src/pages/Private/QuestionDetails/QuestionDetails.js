@@ -140,7 +140,7 @@ export const QuestionDetails = () => {
             </div>
 
             {commentsContent}
-            <SaveAsButton onClick={saveModalHandler} />
+            <SaveAsButton onClick={() => setModal(true)} />
           </div>
           <h2 className="heading-primary">Answers</h2>
           <ul className="question-details__answers">{answersContent}</ul>

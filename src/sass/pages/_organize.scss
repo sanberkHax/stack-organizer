@@ -41,7 +41,7 @@
       color: white;
     }
     @include md {
-      flex-basis: 50%;
+      flex: 1;
       max-height: 47rem;
     }
     @include lg {
@@ -64,8 +64,9 @@
     }
   }
   &__heading {
-    flex-basis: 80%;
+    vertical-align: middle;
     @include md {
+      flex: 1;
       padding-bottom: 5rem;
       align-self: center;
     }
@@ -303,8 +304,9 @@
     }
   }
   &__back-btn {
-    flex-basis: 25%;
+    cursor: pointer;
     svg {
+      fill: #124768;
       width: 2rem;
     }
     @include md {

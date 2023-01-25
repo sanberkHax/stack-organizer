@@ -70,7 +70,11 @@
     margin: auto;
     display: flex;
     width: 90%;
+    justify-content: space-between;
     align-items: center;
+    button {
+      flex: 1;
+    }
     @include sm {
       width: 80%;
     }
@@ -100,13 +104,13 @@
   }
 
   &__back-btn {
+    cursor: pointer;
     svg {
       width: 2rem;
       @include sm {
         width: 3rem;
       }
     }
-    flex-basis: 25%;
   }
 }
 

@@ -14,6 +14,8 @@ So I decided to solve this problem by building an organizing app that allows you
 - React
 - Redux
 - Sass
+- Firebase Realtime Database
+- Firebase Authentication
 - Jest
 
 ## Features
@@ -39,7 +41,7 @@ https://user-images.githubusercontent.com/69405619/158071252-899ac85e-24f1-429d-
 > Node version 16.13.0 is recommended
 
 
-#### Prequisites:
+#### Prerequisites:
 Rename `.env.example` file to `.env` to use testing credentials for Firebase
 
 Install Firebase CLI for emulators with `npm install -g firebase-tools`

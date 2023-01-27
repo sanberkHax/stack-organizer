@@ -1,0 +1,27 @@
+on: [push, pull_request]
+jobs:
+  emulator_test:
+    name: Run all tests using Firebase Emulator Suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "16"
+      - name: Install Firebase Emulator Suite
+        run: npm install -g firebase-tools
+      - name: Install dependencies
+        run: npm install
+        working-directory: codelab-final-state/functions
+      - name: Run all the tests
+        working-directory: codelab-final-state/functions
+        run: firebase emulators:exec --project example 'npm test'
+        env:
+          REACT_APP_FIREBASE_API_KEY: AIzaSyDm50LO8bSDmW9IDWX2Fa8WiI2I8x0POL0
+          REACT_APP_AUTH_DOMAIN: stack-organizer-testing.firebaseapp.com
+          REACT_APP_DATABASE_URL: https://stack-organizer-testing-default-rtdb.europe-west1.firebasedatabase.app/
+          REACT_APP_PROJECT_ID: stack-organizer-testing
+          REACT_APP_STORAGE_BUCKET: stack-organizer-testing.appspot.com
+          REACT_APP_MESSAGING_SENDER_ID: 156852922530
+          REACT_APP_APP_ID: 1:156852922530:web:1974d6f5307c27bc41cffb
+          REACT_APP_STACK_EXCHANGE_API_KEY: 1LaAo2yXpIWR4807hKjZRw((

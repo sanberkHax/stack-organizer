@@ -39,21 +39,25 @@ https://user-images.githubusercontent.com/69405619/158071252-899ac85e-24f1-429d-
 > **Note**
 >
 > Node version 16.13.0 is recommended
+>
+> Java needs to be installed for Firebase Emulators to work
 
+***Automated tests can be seen in repository's [Actions](https://github.com/sanberkHax/stack-organizer/actions) tab. But to run tests locally, follow the testing step below.***
 
 #### Prerequisites:
-Rename `.env.example` file to `.env` to use testing credentials for Firebase
+Rename `.env.example` file to `.env` to use testing credentials for Firebase  
 
+Run `npm install` to install dependencies
+
+**Testing:**  
 Install Firebase CLI for emulators with `npm install -g firebase-tools`
 
-Run Firebase Emulators with `firebase emulators:start` 
+Run tests through firebase emulators with `firebase emulators:exec --project stack-organizer 'npm run test-ci'` 
 
-> :warning: *All tests will fail if emulators are not running*
+> :warning: *It's a slow process, so don't worry if it looks stuck and nothing happens.*
 
-
+**Development:**   
 Run `npm start` to start the project in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser
-
-Run `npm test` to launch test runner
 
 
 

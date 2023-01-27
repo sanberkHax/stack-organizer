@@ -13,7 +13,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run all the tests
-        run: firebase emulators:exec --project stack-organizer 'npm test-ci'
+        run: firebase emulators:exec --project stack-organizer 'npm run test-ci'
         env:
           REACT_APP_FIREBASE_API_KEY: AIzaSyDm50LO8bSDmW9IDWX2Fa8WiI2I8x0POL0
           REACT_APP_AUTH_DOMAIN: stack-organizer-testing.firebaseapp.com

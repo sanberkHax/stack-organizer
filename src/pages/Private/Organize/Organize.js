@@ -49,6 +49,7 @@ export const Organize = () => {
   useEffect(() => {
     if (selectedProject) {
       setSelectedQuestion(null);
+      setSelectedAnswer(null);
       setCurrentFileArray([selectedProject]);
     }
   }, [selectedProject]);

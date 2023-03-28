@@ -22,8 +22,8 @@ export const SearchBar = ({ hasButton, className }) => {
   // Show search results on submit if the keyword is different
   const submitHandler = (values, { resetForm }) => {
     if (values.searchBar !== keyword) {
-      dispatch(getSearchResults(values));
-      navigate(`/search?q=${values.searchBar}`, { replace: true });
+      dispatch(getSearchResults({ searchBar: values.searchBar, page: 1 }));
+      navigate(`/search?q=${values.searchBar}&p=1`);
       resetForm();
     }
   };

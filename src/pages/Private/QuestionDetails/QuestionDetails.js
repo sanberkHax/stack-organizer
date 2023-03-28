@@ -13,6 +13,7 @@ import { toLocaleDate } from '../../../utils/toLocaleDate';
 import { DualRing } from 'react-awesome-spinners';
 import { useEffect } from 'react';
 import { getQuestion } from '../../../slices/searchSlice';
+import parse from 'html-react-parser';
 
 export const QuestionDetails = () => {
   const navigate = useNavigate();
@@ -121,14 +122,10 @@ export const QuestionDetails = () => {
             />
           </div>
           <div className="question">
-            <h2
-              className="heading-primary question__title"
-              dangerouslySetInnerHTML={{ __html: question?.title }}
-            ></h2>
-            <p
-              className="question-details__body"
-              dangerouslySetInnerHTML={{ __html: `${question?.body}` }}
-            ></p>
+            <h2 className="heading-primary question__title">
+              {parse(question?.title)}
+            </h2>
+            <p className="question-details__body">{parse(question?.body)}</p>
             <div className="question-details__stats">
               <p className="question-details__edit-date">edited {editedDate}</p>
               <p className="question-details__creation-date">

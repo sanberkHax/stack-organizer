@@ -1,5 +1,6 @@
 import { DetailsButton } from '../../../../components/Buttons/DetailsButton';
 import { useNavigate } from 'react-router-dom';
+import parse from 'html-react-parser';
 
 export const QuestionInfo = ({ selectedQuestion }) => {
   const { id, title, body } = selectedQuestion.data;
@@ -20,14 +21,8 @@ export const QuestionInfo = ({ selectedQuestion }) => {
           className="question-info__btn"
         />
         <div className="question-info__container">
-          <h1
-            className="heading-primary question-info__title"
-            dangerouslySetInnerHTML={{ __html: `${title}` }}
-          ></h1>
-          <p
-            className="question-info__body"
-            dangerouslySetInnerHTML={{ __html: `${body}` }}
-          ></p>
+          <h1 className="heading-primary question-info__title">{title}</h1>
+          <p className="question-info__body">{body}</p>
         </div>
         {note && (
           <>

@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { toLocaleDate } from '../../../../utils/toLocaleDate';
 import { DetailsButton } from '../../../../components/Buttons/DetailsButton';
+import parse from 'html-react-parser';
+
 export const Question = ({ voteCount, answerCount, tags, title, date, id }) => {
   const navigate = useNavigate();
 
@@ -26,10 +28,7 @@ export const Question = ({ voteCount, answerCount, tags, title, date, id }) => {
         <p className="question__vote-count">{voteContent}</p>
         <p className="question__answer-count">{answerCount} Answers</p>
       </div>
-      <h2
-        className="heading-primary question__title"
-        dangerouslySetInnerHTML={{ __html: title }}
-      ></h2>
+      <h2 className="heading-primary question__title">{parse(title)}</h2>
       <div className="question__details">
         <div className="question__tags">{tagsContent}</div>
         <p>{creationDate}</p>

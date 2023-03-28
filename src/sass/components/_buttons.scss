@@ -25,6 +25,17 @@
   }
 }
 
+.settings-btn,
+.search-btn {
+  width: 20px;
+  height: 20px;
+  &__icon {
+    fill: $tertiary-blue;
+    width: 20px;
+    height: 20px;
+  }
+}
+
 .back-btn,
 .next-btn {
   &:disabled {

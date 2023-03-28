@@ -19,6 +19,7 @@ import { ReactComponent as AddIcon } from '../assets/add-icon.svg';
 import { ReactComponent as DocumentIcon } from '../assets/document-icon.svg';
 import { ReactComponent as ForwardIcon } from '../assets/forward-icon.svg';
 import { ReactComponent as NextIcon } from '../assets/next-icon.svg';
+import { ReactComponent as SettingsIcon } from '../assets/settings-icon.svg';
 
 export const Icon = (props) => {
   const { name, ...svgProps } = props;
@@ -45,6 +46,7 @@ export const Icon = (props) => {
     document: <DocumentIcon {...svgProps} />,
     forward: <ForwardIcon {...svgProps} />,
     next: <NextIcon {...svgProps} />,
+    settings: <SettingsIcon {...svgProps} />,
   };
   return Icons[name];
 };

@@ -64,8 +64,8 @@ export const searchSlice = createSlice({
     [getSearchResults.fulfilled]: (state, action) => {
       const { results, keyword } = action.payload;
 
-      if (results.length === 0) {
-        state.error = `We couldn't find anything for "${keyword}"`;
+      if (results.items.length === 0) {
+        state.error = `No question found for "${keyword}"`;
       }
       state.loading = false;
       state.searchResults = results;
@@ -75,13 +75,17 @@ export const searchSlice = createSlice({
     },
     [getQuestion.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = `Question not found`;
     },
     [getQuestion.fulfilled]: (state, action) => {
-      const question = action.payload[0];
-
       state.loading = false;
-      state.question = question;
+      if (action.payload.length === 0) {
+        state.error = `Question not found`;
+      } else {
+        const question = action.payload[0];
+        state.loading = false;
+        state.question = question;
+      }
     },
   },
 });

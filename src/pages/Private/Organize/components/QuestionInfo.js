@@ -21,8 +21,10 @@ export const QuestionInfo = ({ selectedQuestion }) => {
           className="question-info__btn"
         />
         <div className="question-info__container">
-          <h1 className="heading-primary question-info__title">{title}</h1>
-          <p className="question-info__body">{body}</p>
+          <h1 className="heading-primary question-info__title">
+            {parse(title)}
+          </h1>
+          <p className="question-info__body">{parse(body)}</p>
         </div>
         {note && (
           <>

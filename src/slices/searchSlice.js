@@ -11,12 +11,21 @@ const initialState = {
 // Thunk Creators
 export const getSearchResults = createAsyncThunk(
   'search/getSearchResults',
-  async ({ searchBar }, thunkAPI) => {
+  async ({ searchBar, page }, thunkAPI) => {
     try {
+      // Filter with pagination
+      const newFilter =
+        '!*LhrxEW3C5GaqiyopWc.IvEqcCnz5718)2L(Q)ZcpkKCNeL7PedOnT_zmW5zU5.tT';
+
+      // Filter without pagination
+      const oldFilter =
+        '!sR(bXF4sEaztLIZ4lk62zXM(U-sPSKFvelsQbp7tDKBPizPQa.Abp403_M3zdXZLHyj5iq9Rchz8i';
+
       const response = await axios(
-        `https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q=${searchBar}&site=stackoverflow&filter=!sR(bXF4sEaztLIZ4lk62zXM(U-sPSKFvelsQbp7tDKBPizPQa.Abp403_M3zdXZLHyj5iq9Rchz8i&key=${process.env.REACT_APP_STACK_EXCHANGE_API_KEY}`
+        `https://api.stackexchange.com/2.3/search/advanced?page=${page}&pagesize=10&order=desc&sort=relevance&q=${searchBar}&site=stackoverflow&filter=${newFilter}&key=${process.env.REACT_APP_STACK_EXCHANGE_API_KEY}`
       );
-      const results = response.data.items;
+
+      const results = response.data;
       return { results: results, keyword: searchBar };
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
@@ -55,8 +64,8 @@ export const searchSlice = createSlice({
     [getSearchResults.fulfilled]: (state, action) => {
       const { results, keyword } = action.payload;
 
-      if (results.length === 0) {
-        state.error = `We couldn't find anything for "${keyword}"`;
+      if (results.items.length === 0) {
+        state.error = `No question found for "${keyword}"`;
       }
       state.loading = false;
       state.searchResults = results;
@@ -66,13 +75,17 @@ export const searchSlice = createSlice({
     },
     [getQuestion.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = `Question not found`;
     },
     [getQuestion.fulfilled]: (state, action) => {
-      const question = action.payload[0];
-
       state.loading = false;
-      state.question = question;
+      if (action.payload.length === 0) {
+        state.error = `Question not found`;
+      } else {
+        const question = action.payload[0];
+        state.loading = false;
+        state.question = question;
+      }
     },
   },
 });

@@ -6,7 +6,6 @@ import { motion } from 'framer-motion/dist/framer-motion';
 import {
   selectAllProjects,
   projectUpdated,
-  projectsErrorUpdated,
 } from '../../../../slices/projectsSlice';
 import {
   folderUpdated,
@@ -24,12 +23,9 @@ import { ConfirmationModal } from '../../../../components/ConfirmationModal';
 import { Backdrop } from '../../../../components/Backdrop';
 import { EditButton } from '../../../../components/Buttons/EditButton';
 import { DeleteButton } from '../../../../components/Buttons/DeleteButton';
-import {
-  questionsErrorUpdated,
-  questionsRemoved,
-} from '../../../../slices/questionsSlice';
-import { answersErrorUpdated } from '../../../../slices/answersSlice';
+import { questionsRemoved } from '../../../../slices/questionsSlice';
 import { Icon } from '../../../../components/Icon';
+import { toast } from 'react-toastify';
 
 export const Folder = ({
   id,
@@ -53,9 +49,6 @@ export const Folder = ({
 
   // Open folder on click
   const clickHandler = (e) => {
-    dispatch(questionsErrorUpdated(null));
-    dispatch(answersErrorUpdated(null));
-    dispatch(projectsErrorUpdated(null));
     setTitleIcon(<Icon name="folder" />);
     const clickedFolder = currentFolders.find((f) => f.id === id);
     if (clickedFolder) {
@@ -83,10 +76,6 @@ export const Folder = ({
     setConfirmationModal((prev) => !prev);
   };
   const editHandler = (e) => {
-    dispatch(questionsErrorUpdated(null));
-    dispatch(answersErrorUpdated(null));
-    dispatch(projectsErrorUpdated(null));
-
     e.stopPropagation();
     const clickedFolder = currentFolders.find((f) => f.id === id);
 
@@ -99,10 +88,6 @@ export const Folder = ({
   };
 
   const deleteHandler = (e) => {
-    dispatch(questionsErrorUpdated(null));
-    dispatch(answersErrorUpdated(null));
-    dispatch(projectsErrorUpdated(null));
-
     e.stopPropagation();
     const clickedFolder = currentFolders.find((f) => f.id === id);
     if (clickedFolder) {
@@ -132,9 +117,7 @@ export const Folder = ({
         dispatch(folderRemoved(folderId));
         dispatch(currentFolderRemoved(folderId));
       }
-      dispatch(
-        foldersErrorUpdated('FOLDER NAME EXISTS, SELECT DIFFERENT NAME')
-      );
+      toast.error(`Name already exists`);
     } else if (folderName === null) {
       if (editableFolder) {
         dispatch(folderUpdated({ id: folderId, name: editableFolder.name }));
@@ -151,13 +134,11 @@ export const Folder = ({
         dispatch(
           currentFolderUpdated({ id: folderId, name: editableFolder.name })
         );
-        dispatch(
-          foldersErrorUpdated(`PLEASE ENTER A VALID NAME TO RENAME FOLDER`)
-        );
+        toast.error(`Name is invalid`);
       } else {
         dispatch(folderRemoved(folderId));
         dispatch(currentFolderRemoved(folderId));
-        dispatch(foldersErrorUpdated(`CAN'T ADD FOLDER WITHOUT A NAME`));
+        toast.error(`Name is required`);
       }
     } else if (folderName.length > 50) {
       if (editableFolder) {
@@ -169,7 +150,7 @@ export const Folder = ({
         dispatch(folderRemoved(folderId));
         dispatch(currentFolderRemoved(folderId));
       }
-      dispatch(foldersErrorUpdated(`MAX CHARACTER LIMIT IS 50`));
+      toast.error(`Name must be lower than 50 characters`);
     } else {
       // Rename folder
       if (editableFolder) {

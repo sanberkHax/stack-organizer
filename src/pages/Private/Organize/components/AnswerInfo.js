@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Comment } from '../../Search/components/Comment';
 import { CommentsButton } from '../../../../components/Buttons/CommentsButton';
+import parse from 'html-react-parser';
+
 export const AnswerInfo = ({ selectedAnswer }) => {
   const [showComments, setShowComments] = useState(false);
   const { questionTitle, questionBody, body, id, comments } =
@@ -49,21 +51,14 @@ export const AnswerInfo = ({ selectedAnswer }) => {
       />
       <h1 className="heading-primary">Question</h1>
       <div className="answer-info__container">
-        <h1
-          className="heading-primary answer-info__title"
-          dangerouslySetInnerHTML={{ __html: `${questionTitle}` }}
-        ></h1>
-        <p
-          className="answer-info__body"
-          dangerouslySetInnerHTML={{ __html: `${questionBody}` }}
-        ></p>
+        <h1 className="heading-primary answer-info__title">
+          {parse(questionTitle)}
+        </h1>
+        <p className="answer-info__body">{parse(questionBody)}</p>
       </div>
       <h1 className="heading-primary">Saved Answer</h1>
       <div className="answer-info__container">
-        <p
-          className="answer-info__body"
-          dangerouslySetInnerHTML={{ __html: `${body}` }}
-        />
+        <p className="answer-info__body">{parse(body)}</p>
         {commentsContent}
       </div>
       {note && (

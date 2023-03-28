@@ -25,7 +25,25 @@
   }
 }
 
-.back-btn {
+.settings-btn,
+.search-btn {
+  width: 20px;
+  height: 20px;
+  &__icon {
+    fill: $tertiary-blue;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.back-btn,
+.next-btn {
+  &:disabled {
+    &:hover {
+      fill: gray;
+    }
+    fill: gray;
+  }
   display: flex;
   cursor: pointer;
   justify-content: flex-start;

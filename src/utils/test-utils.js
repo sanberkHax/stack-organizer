@@ -9,6 +9,7 @@ import projectsReducer from '../slices/projectsSlice';
 import foldersReducer from '../slices/foldersSlice';
 import questionsReducer from '../slices/questionsSlice';
 import answersReducer from '../slices/answersSlice';
+import { ToastContainer } from 'react-toastify';
 
 function render(
   ui,
@@ -32,6 +33,7 @@ function render(
     return (
       <Provider store={store}>
         <MemoryRouter>{children}</MemoryRouter>
+        <ToastContainer autoClose={false} />
       </Provider>
     );
   }

@@ -12,9 +12,14 @@
   }
   .logo-ctn {
     cursor: pointer;
+    // flex: 1;
+    // flex-basis: 25%;
+    // flex-grow: 0;
+    // flex-shrink: 0;
+    // flex: 1;
     flex-basis: 25%;
-    flex-grow: 0;
-    flex-shrink: 0;
+    @include lg {
+    }
   }
   &__icon {
     width: 2rem;
@@ -34,7 +39,10 @@
     }
   }
   &__search {
-    flex-basis: 50%;
+    flex-basis: 70%;
+    @include lg {
+      flex-basis: 50%;
+    }
     display: none;
     @include sm {
       display: flex;
@@ -57,6 +65,10 @@
     }
   }
   &__nav {
+    display: none;
+    @include sm {
+      display: flex;
+    }
     margin-left: auto;
   }
   &__buttons {
@@ -75,6 +87,7 @@
   display: flex;
   justify-content: flex-end;
   flex-basis: 25%;
+  // flex: 1;
   z-index: 1;
   @include sm {
     display: none;

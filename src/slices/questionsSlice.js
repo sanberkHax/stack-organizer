@@ -31,9 +31,6 @@ export const questionsSlice = createSlice({
     questionsLoadingUpdated(state, action) {
       state.loading = action.payload;
     },
-    questionsErrorUpdated(state, action) {
-      state.error = action.payload;
-    },
     questionUpdated(state, action) {
       const { id, name } = action.payload;
       const existingQuestion = state.entities[id];
@@ -60,7 +57,6 @@ export const {
   questionsLoadingUpdated,
   questionsRemoved,
   questionRemoved,
-  questionsErrorUpdated,
   questionUpdated,
 } = questionsSlice.actions;
 

@@ -13,6 +13,7 @@ import { toLocaleDate } from '../../../utils/toLocaleDate';
 import { DualRing } from 'react-awesome-spinners';
 import { useEffect } from 'react';
 import { getQuestion } from '../../../slices/searchSlice';
+import parse from 'html-react-parser';
 
 export const QuestionDetails = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ export const QuestionDetails = () => {
 
   const loading = useSelector((state) => state.search.loading);
   const question = useSelector((state) => state.search.question);
+  const error = useSelector((state) => state.search.error);
 
   // Fetch question
   useEffect(() => {
@@ -60,7 +62,7 @@ export const QuestionDetails = () => {
       />
       {showComments && (
         <ul>
-          {question.comments.map((comment) => (
+          {question.comments?.map((comment) => (
             <Comment
               key={comment.comment_id}
               body={comment.body}
@@ -86,66 +88,74 @@ export const QuestionDetails = () => {
       saveModalHandler={saveModalHandler}
     />
   ));
-
+  console.log(question);
   return (
-    <main className="question-details">
-      {loading ? (
-        <DualRing
-          className="question-details__spinner"
-          size="60"
-          color="#1C5274"
-        />
-      ) : (
-        <>
-          {modal && (
-            <>
-              <SaveModal
-                question={question}
-                answer={answer}
-                setModal={setModal}
-              />
-              <Backdrop onClick={backdropHandler} />
-            </>
-          )}
-          <div className="question-details__nav">
-            <BackButton
-              className="back-btn question-details__back-btn"
-              onClick={() => navigate(-1)}
-            />
-            <h1 className="heading-primary question-details__heading">
-              Question
-            </h1>
-            <StackOverflowButton
-              className="stack-overflow-btn"
-              link={question?.link}
-            />
-          </div>
-          <div className="question">
-            <h2
-              className="heading-primary question__title"
-              dangerouslySetInnerHTML={{ __html: question?.title }}
-            ></h2>
-            <p
-              className="question-details__body"
-              dangerouslySetInnerHTML={{ __html: `${question?.body}` }}
-            ></p>
-            <div className="question-details__stats">
-              <p className="question-details__edit-date">edited {editedDate}</p>
-              <p className="question-details__creation-date">
-                asked {creationDate}
-              </p>
-              <p className="question-details__owner">
-                {question?.owner?.display_name}
-              </p>
-            </div>
+    <>
+      <main className="question-details">
+        {loading ? (
+          <DualRing
+            className="question-details__spinner"
+            size="60"
+            color="#1C5274"
+          />
+        ) : (
+          <>
+            {modal && (
+              <>
+                <SaveModal
+                  question={question}
+                  answer={answer}
+                  setModal={setModal}
+                />
+                <Backdrop onClick={backdropHandler} />
+              </>
+            )}
+            {Object.keys(question).length === 0 || error ? (
+              <p>{error}</p>
+            ) : (
+              <>
+                <div className="question-details__nav">
+                  <BackButton
+                    className="back-btn question-details__back-btn"
+                    onClick={() => navigate(-1)}
+                  />
+                  <h1 className="heading-primary question-details__heading">
+                    Question
+                  </h1>
+                  <StackOverflowButton
+                    className="stack-overflow-btn"
+                    link={question?.link}
+                  />
+                </div>
+                <div className="question">
+                  <h2 className="heading-primary question__title">
+                    {parse(question?.title)}
+                  </h2>
+                  <p className="question-details__body">
+                    {parse(question?.body)}
+                  </p>
+                  <div className="question-details__stats">
+                    <p className="question-details__edit-date">
+                      edited {editedDate}
+                    </p>
+                    <p className="question-details__creation-date">
+                      asked {creationDate}
+                    </p>
+                    <p className="question-details__owner">
+                      {question?.owner?.display_name}
+                    </p>
+                  </div>
 
-            {commentsContent}
-            <SaveAsButton onClick={() => setModal(true)} />
-          </div>
-          <h2 className="heading-primary">Answers</h2>
-          <ul className="question-details__answers">{answersContent}</ul>
-        </>
-      )}
-    </main>
+                  {commentsContent}
+                  <SaveAsButton onClick={() => setModal(true)} />
+                </div>
+                <h2 className="heading-primary">Answers</h2>
+                <ul className="question-details__answers">{answersContent}</ul>
+              </>
+            )}
+          </>
+        )}
+      </main>
+    </>
   );
 };

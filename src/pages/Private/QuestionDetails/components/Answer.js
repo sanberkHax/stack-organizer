@@ -2,6 +2,7 @@ import { Comment } from '../../Search/components/Comment';
 import { SaveAsButton } from '../../../../components/Buttons/SaveAsButton';
 import { useState } from 'react';
 import { CommentsButton } from '../../../../components/Buttons/CommentsButton';
+import parse from 'html-react-parser';
 
 export const Answer = ({
   voteCount,
@@ -50,10 +51,7 @@ export const Answer = ({
           {voteCount > 1 ? `${voteCount} votes` : `${voteCount} vote`}
         </p>
       </div>
-      <p
-        className="answer__body"
-        dangerouslySetInnerHTML={{ __html: `${body}` }}
-      ></p>
+      <p className="answer__body">{parse(body)}</p>
       <div className="question-details__stats">
         <p className="question-details__creation-date">answered {date}</p>
         <p className="question-details__owner">{owner}</p>

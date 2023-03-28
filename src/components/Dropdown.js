@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
-
-export const Dropdown = () => {
+export const Dropdown = ({ items, onClick }) => {
   return (
-    <div className="settings__dropdown">
-      <Link to="/" className="dropdown__item">
-        Log Out
-      </Link>
-    </div>
+    <ul className="dropdown">
+      {items.map((item) => (
+        <li className="dropdown__item" onClick={(e) => onClick(e)}>
+          {item}
+        </li>
+      ))}
+    </ul>
   );
 };

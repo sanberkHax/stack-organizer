@@ -43,9 +43,7 @@ describe('<Organize />', () => {
 
       userEvent.type(projectInput, '{enter}');
 
-      expect(
-        await screen.findByText(/CAN'T ADD PROJECT WITHOUT A NAME/i)
-      ).toBeInTheDocument();
+      expect(await screen.findByText(/Name is required/i)).toBeInTheDocument();
     });
     it("Shows an error when a project with new project's name already exists", async () => {
       // Create new project
@@ -67,7 +65,7 @@ describe('<Organize />', () => {
       userEvent.type(projectInput, 'project-test{enter}');
 
       expect(
-        await screen.findByText(/PROJECT NAME EXISTS, SELECT DIFFERENT NAME/i)
+        await screen.findByText(/Name already exists/i)
       ).toBeInTheDocument();
     });
 
@@ -221,9 +219,7 @@ describe('<Organize />', () => {
 
       userEvent.type(folderInput, '{enter}');
 
-      expect(
-        await screen.findByText(/CAN'T ADD FOLDER WITHOUT A NAME/i)
-      ).toBeInTheDocument();
+      expect(await screen.findByText(/Name is required/i)).toBeInTheDocument();
     });
     it("Shows an error when a folder with new folder's name already exists", async () => {
       // Create new project and select it
@@ -265,7 +261,7 @@ describe('<Organize />', () => {
 
       userEvent.type(folderInput, 'folder-test{enter}');
       expect(
-        await screen.findByText(/FOLDER NAME EXISTS, SELECT DIFFERENT NAME/i)
+        await screen.findByText(/Name already exists/i)
       ).toBeInTheDocument();
     });
     it('Renames the folder', async () => {

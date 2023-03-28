@@ -7,7 +7,6 @@ import {
   selectAllProjects,
   projectUpdated,
   projectRemoved,
-  projectsErrorUpdated,
   projectReset,
 } from '../../../../slices/projectsSlice';
 import {
@@ -16,15 +15,13 @@ import {
   currentFoldersUpdated,
   selectAllFolders,
   foldersRemoved,
-  foldersErrorUpdated,
 } from '../../../../slices/foldersSlice';
 import { ConfirmationModal } from '../../../../components/ConfirmationModal';
 import { Backdrop } from '../../../../components/Backdrop';
 import { DeleteButton } from '../../../../components/Buttons/DeleteButton';
 import { EditButton } from '../../../../components/Buttons/EditButton';
-import { questionsErrorUpdated } from '../../../../slices/questionsSlice';
-import { answersErrorUpdated } from '../../../../slices/answersSlice';
 import { Icon } from '../../../../components/Icon';
+import { toast } from 'react-toastify';
 
 export const Project = ({
   name,
@@ -71,9 +68,6 @@ export const Project = ({
     }
   };
   const editHandler = (e) => {
-    dispatch(questionsErrorUpdated(null));
-    dispatch(answersErrorUpdated(null));
-    dispatch(foldersErrorUpdated(null));
     e.stopPropagation();
     const clickedProject = projects.find((p) => p.id === id);
 
@@ -120,26 +114,20 @@ export const Project = ({
       } else {
         dispatch(projectRemoved(projectId));
       }
-      dispatch(
-        projectsErrorUpdated('PROJECT NAME EXISTS, SELECT DIFFERENT NAME')
-      );
+      toast.error(`Name already exists`);
     } else if (projectName === null) {
       if (editableProject) {
         dispatch(projectUpdated({ id: projectId, name: editableProject.name }));
       } else {
         dispatch(projectRemoved(projectId));
       }
-      dispatch(projectsErrorUpdated(`CAN'T ADD PROJECT WITHOUT A NAME`));
+      toast.error(`Name is required`);
     } else if (projectName === '') {
       if (editableProject) {
         dispatch(projectUpdated({ id: projectId, name: editableProject.name }));
-        dispatch(
-          projectsErrorUpdated(
-            'PLEASE ENTER A VALID NAME TO RENAME THE PROJECT'
-          )
-        );
+        toast.error(`Name is required`);
       } else {
-        dispatch(projectsErrorUpdated(`CAN'T ADD PROJECT WITHOUT A NAME`));
+        toast.error(`Name is required`);
         dispatch(projectRemoved(projectId));
       }
     } else {

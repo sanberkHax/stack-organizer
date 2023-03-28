@@ -6,7 +6,6 @@ import { motion } from 'framer-motion/dist/framer-motion';
 import {
   previousFoldersAdded,
   currentFoldersUpdated,
-  foldersErrorUpdated,
 } from '../../../../slices/foldersSlice';
 import { Icon } from '../../../../components/Icon';
 import { ConfirmationModal } from '../../../../components/ConfirmationModal';
@@ -15,12 +14,10 @@ import { EditButton } from '../../../../components/Buttons/EditButton';
 import { DeleteButton } from '../../../../components/Buttons/DeleteButton';
 import {
   questionRemoved,
-  questionsErrorUpdated,
   questionUpdated,
   selectAllQuestions,
 } from '../../../../slices/questionsSlice';
-import { answersErrorUpdated } from '../../../../slices/answersSlice';
-import { projectsErrorUpdated } from '../../../../slices/projectsSlice';
+import { toast } from 'react-toastify';
 
 export const QuestionFile = ({
   name,
@@ -39,9 +36,6 @@ export const QuestionFile = ({
   const questionRef = useRef();
 
   const clickHandler = (e) => {
-    dispatch(foldersErrorUpdated(null));
-    dispatch(answersErrorUpdated(null));
-    dispatch(projectsErrorUpdated(null));
     setTitleIcon(<Icon name="question" />);
 
     const clickedQuestion = questions.find((q) => q.id === id);
@@ -61,9 +55,6 @@ export const QuestionFile = ({
   };
 
   const editHandler = (e) => {
-    dispatch(foldersErrorUpdated(null));
-    dispatch(answersErrorUpdated(null));
-    dispatch(projectsErrorUpdated(null));
     e.stopPropagation();
 
     const clickedQuestion = questions.find((q) => q.id === id);
@@ -76,16 +67,12 @@ export const QuestionFile = ({
   };
 
   const deleteHandler = (e) => {
-    dispatch(foldersErrorUpdated(null));
-    dispatch(answersErrorUpdated(null));
-    dispatch(projectsErrorUpdated(null));
     e.stopPropagation();
 
     const clickedQuestion = questions.find((q) => q.id === id);
 
     if (clickedQuestion) {
       dispatch(questionRemoved(clickedQuestion.id));
-      dispatch(questionsErrorUpdated(null));
     }
     setSelectedQuestion(null);
   };
@@ -101,9 +88,7 @@ export const QuestionFile = ({
           name: editableQuestion.name,
         })
       );
-      dispatch(
-        questionsErrorUpdated('QUESTION NAME EXISTS, SELECT DIFFERENT NAME')
-      );
+      toast.error(`Name already exists`);
     } else if (questionName === null) {
       dispatch(
         questionUpdated({
@@ -111,7 +96,7 @@ export const QuestionFile = ({
           name: editableQuestion.name,
         })
       );
-      questionsErrorUpdated(`PLEASE ENTER A VALID NAME TO RENAME QUESTION`);
+      toast.error(`Name is invalid`);
     } else if (questionName === '') {
       dispatch(
         questionUpdated({
@@ -119,9 +104,7 @@ export const QuestionFile = ({
           name: editableQuestion.name,
         })
       );
-      dispatch(
-        questionsErrorUpdated(`PLEASE ENTER A VALID NAME TO RENAME QUESTION`)
-      );
+      toast.error(`Name is invalid`);
     } else if (questionName.length > 50) {
       dispatch(
         questionUpdated({
@@ -129,7 +112,7 @@ export const QuestionFile = ({
           name: editableQuestion.name,
         })
       );
-      dispatch(questionsErrorUpdated(`MAX CHARACTER LIMIT IS 50`));
+      toast.error(`Name must be lower than 50 characters`);
     } else {
       // Rename question
       if (editableQuestion) {

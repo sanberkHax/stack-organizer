@@ -27,6 +27,18 @@
   }
 }
 
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 6rem;
+  &__text {
+    font-size: 1.5rem;
+    color: $tertiary-blue-darker;
+    font-weight: bold;
+  }
+}
 .question,
 .answer {
   margin: 2rem auto;

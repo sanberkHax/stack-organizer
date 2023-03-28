@@ -6,7 +6,8 @@
   -webkit-box-shadow: 0px 6px 9px -3px #000000;
   box-shadow: 0px 6px 9px -3px #000000;
   font-size: 0.8rem;
-  padding: 0 3rem;
+  padding-left: 3rem;
+  padding-right: 4rem;
   @include sm {
     font-size: 0.8rem;
   }
@@ -17,24 +18,45 @@
     font-size: 1rem;
   }
 }
-.search-bar__icon--left {
-  position: absolute;
-  width: 1.5rem;
-  top: 7px;
-  left: 5px;
-  @include sm {
-    width: 1.7rem;
+.search-options {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  text-align: center;
+  border-radius: 10px;
+  border: $primary-blue 2px solid;
+  color: $primary-blue;
+  &__button {
+    flex: 1;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 6px;
+    &--active {
+      color: white;
+      background-color: $primary-blue;
+    }
   }
 }
-.search-bar__icon--right {
+.search-bar__icon--left {
   position: absolute;
-  width: 1.2rem;
+  width: 1.7rem;
+  top: 7px;
+  left: 5px;
+}
+
+.search-bar__right {
+  position: absolute;
+  // width: 5rem;
+  // background-color: red;
   top: 8px;
   right: 8px;
-  fill: $tertiary-blue-darker;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  // fill: $tertiary-blue-darker;
 
   @include sm {
-    width: 1.4rem;
+    // width: 1.4rem;
   }
 }
 
@@ -43,5 +65,37 @@
   width: 100%;
   @include xl {
     width: 90%;
+  }
+  &--error {
+    -webkit-box-shadow: 0px 2px 9px -3px red;
+    box-shadow: 0px 2px 9px -3px red;
+    border: 2px solid red;
+  }
+}
+
+.dropdown {
+  position: absolute;
+  background-color: white;
+  top: 30px;
+  right: 0px;
+  display: flex;
+  flex-direction: column;
+  z-index: 99;
+  white-space: nowrap;
+  border: 2px solid $tertiary-blue;
+  border-radius: 10px;
+  &__item {
+    padding: 1rem;
+    cursor: pointer;
+    color: $tertiary-blue;
+    font-weight: bold;
+    &:hover {
+      background-color: $tertiary-blue;
+      color: white;
+    }
+    &--active {
+      color: white;
+      background-color: $tertiary-blue-darker;
+    }
   }
 }

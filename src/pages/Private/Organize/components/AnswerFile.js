@@ -6,7 +6,6 @@ import { motion } from 'framer-motion/dist/framer-motion';
 import {
   previousFoldersAdded,
   currentFoldersUpdated,
-  foldersErrorUpdated,
 } from '../../../../slices/foldersSlice';
 import { ConfirmationModal } from '../../../../components/ConfirmationModal';
 import { Backdrop } from '../../../../components/Backdrop';
@@ -15,12 +14,10 @@ import { EditButton } from '../../../../components/Buttons/EditButton';
 import { DeleteButton } from '../../../../components/Buttons/DeleteButton';
 import {
   selectAllAnswers,
-  answersErrorUpdated,
   answerRemoved,
   answerUpdated,
 } from '../../../../slices/answersSlice';
-import { projectsErrorUpdated } from '../../../../slices/projectsSlice';
-import { questionsErrorUpdated } from '../../../../slices/questionsSlice';
+import { toast } from 'react-toastify';
 
 export const AnswerFile = ({
   name,
@@ -39,9 +36,6 @@ export const AnswerFile = ({
   const answerRef = useRef();
 
   const clickHandler = (e) => {
-    dispatch(foldersErrorUpdated(null));
-    dispatch(projectsErrorUpdated(null));
-    dispatch(questionsErrorUpdated(null));
     setTitleIcon(<Icon name="answer" />);
     const clickedAnswer = answers.find(
       (p) => p.name === answerRef.current.textContent
@@ -56,9 +50,6 @@ export const AnswerFile = ({
   };
 
   const editHandler = (e) => {
-    dispatch(foldersErrorUpdated(null));
-    dispatch(projectsErrorUpdated(null));
-    dispatch(questionsErrorUpdated(null));
     e.stopPropagation();
     const clickedAnswer = answers.find((a) => a.id === id);
 
@@ -70,15 +61,11 @@ export const AnswerFile = ({
   };
 
   const deleteHandler = (e) => {
-    dispatch(foldersErrorUpdated(null));
-    dispatch(projectsErrorUpdated(null));
-    dispatch(questionsErrorUpdated(null));
     e.stopPropagation();
 
     const clickedAnswer = answers.find((a) => a.id === id);
     if (clickedAnswer) {
       dispatch(answerRemoved(clickedAnswer.id));
-      dispatch(answersErrorUpdated(null));
     }
     setSelectedAnswer(null);
   };
@@ -87,7 +74,6 @@ export const AnswerFile = ({
     setConfirmationModal((prev) => !prev);
   };
   const addNameHandler = (f) => {
-    dispatch(answersErrorUpdated(null));
     const answerName = f.name;
 
     const existingAnswer = answers.find((q) => q.name === answerName);
@@ -96,28 +82,21 @@ export const AnswerFile = ({
       dispatch(
         answerUpdated({ id: editableAnswer.id, name: editableAnswer.name })
       );
-      dispatch(
-        answersErrorUpdated('ANSWER NAME EXISTS, SELECT DIFFERENT NAME')
-      );
+      toast.error(`Name already exists`);
     } else if (answerName === null) {
       dispatch(
         answerUpdated({ id: editableAnswer.id, name: editableAnswer.name })
-      );
-      dispatch(
-        answersErrorUpdated(`PLEASE ENTER A VALID NAME TO RENAME ANSWER`)
       );
     } else if (answerName === '') {
       dispatch(
         answerUpdated({ id: editableAnswer.id, name: editableAnswer.name })
       );
-      dispatch(
-        answersErrorUpdated(`PLEASE ENTER A VALID NAME TO RENAME ANSWER`)
-      );
+      toast.error(`Name is invalid`);
     } else if (answerName.length > 50) {
       dispatch(
         answerUpdated({ id: editableAnswer.id, name: editableAnswer.name })
       );
-      dispatch(answersErrorUpdated(`MAX CHARACTER LIMIT IS 50`));
+      toast.error(`Name must be lower than 50 characters`);
     } else {
       // Rename answer
       if (editableAnswer) {

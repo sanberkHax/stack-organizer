@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-
 import { auth, database, writeUsersData } from '../services/firebase';
 import { logInCurrentUser } from '../slices/authSlice';
 import {

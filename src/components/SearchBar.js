@@ -75,10 +75,14 @@ export const SearchBar = ({ hasButton, className }) => {
         {({ errors }) => {
           return (
             <Form className="form">
-              {errors.searchBar ? (
+              {/* {errors.searchBar ? (
                 <p className="form__error">{errors.searchBar}</p>
-              ) : undefined}
-              <div className="search-bar">
+              ) : undefined} */}
+              <div
+                className={`search-bar ${
+                  errors.searchBar && 'search-bar--error'
+                }`}
+              >
                 <StackOverflowIcon className="search-bar__icon--left" />
                 {!hasButton && (
                   <div className="search-bar__right">
@@ -102,7 +106,7 @@ export const SearchBar = ({ hasButton, className }) => {
                       ? 'Search in Stack Overflow'
                       : 'Paste Stack Overflow URL'
                   }
-                />{' '}
+                />
               </div>
               {hasButton && (
                 <div className="search-options">

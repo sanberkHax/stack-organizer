@@ -5,10 +5,10 @@ import {
   selectAllProjects,
   projectUpdated,
   projectRemoved,
-  projectsErrorUpdated,
 } from '../../slices/projectsSlice';
 import { folderUpdated, foldersReset } from '../../slices/foldersSlice';
 import { Icon } from '../Icon';
+import { toast } from 'react-toastify';
 
 export const ProjectButton = ({
   id,
@@ -49,16 +49,14 @@ export const ProjectButton = ({
     const existingProject = projects.find((f) => f.name === projectName);
 
     if (existingProject) {
-      dispatch(
-        projectsErrorUpdated('PROJECT NAME EXISTS, SELECT DIFFERENT NAME')
-      );
+      toast.error('Name already exists');
       dispatch(projectRemoved(projectId));
       return;
     } else if (projectName === null) {
       dispatch(projectRemoved(projectId));
       return;
     } else if (projectName === '') {
-      dispatch(projectsErrorUpdated(`CAN'T ADD PROJECT WITHOUT A NAME`));
+      toast.error('Name is required');
       dispatch(projectRemoved(projectId));
     } else {
       dispatch(projectUpdated({ id: projectId, name: projectName }));

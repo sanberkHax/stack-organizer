@@ -173,9 +173,7 @@ describe('<SaveModal />', () => {
     });
 
     // Check for error
-    expect(
-      await screen.findByText("CAN'T ADD PROJECT WITHOUT A NAME")
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Name is required')).toBeInTheDocument();
   });
 
   it('prevents adding a folder without a name', async () => {
@@ -212,8 +210,6 @@ describe('<SaveModal />', () => {
     userEvent.type(folderTitleInput, '{enter}', { skipClick: true });
 
     // Check for error
-    expect(
-      await screen.findByText("CAN'T ADD FOLDER WITHOUT A NAME")
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Name is required')).toBeInTheDocument();
   });
 });

@@ -12,9 +12,9 @@ import {
   selectAllFolders,
   folderRemoved,
   currentFolderRemoved,
-  foldersErrorUpdated,
 } from '../../slices/foldersSlice';
 import { Icon } from '../Icon';
+import { toast } from 'react-toastify';
 
 export const FolderButton = ({
   className,
@@ -99,9 +99,7 @@ export const FolderButton = ({
     const lastFolder = folders[folders.length - 1];
 
     if (existingFolder) {
-      dispatch(
-        foldersErrorUpdated('FOLDER NAME EXISTS, SELECT DIFFERENT NAME')
-      );
+      toast.error('Name already exists');
       dispatch(folderRemoved(newFolderId));
       dispatch(currentFolderRemoved(newFolderId));
       return;
@@ -110,8 +108,7 @@ export const FolderButton = ({
       dispatch(currentFolderRemoved(newFolderId));
       return;
     } else if (folderName === '') {
-      dispatch(foldersErrorUpdated(`CAN'T ADD FOLDER WITHOUT A NAME`));
-
+      toast.error('Name is required');
       dispatch(folderRemoved(newFolderId));
       dispatch(currentFolderRemoved(newFolderId));
     } else {

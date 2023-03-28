@@ -22,12 +22,7 @@ export const SearchBar = ({ hasButton, className }) => {
 
   // Yup schema for validation
   const schema = yup.object().shape({
-    searchBar:
-      searchOption === 'id'
-        ? yup.number().typeError('Id must be a number')
-        : searchOption === 'link'
-        ? yup.string().typeError('Link must be a string')
-        : yup.string().required(`Please enter a keyword`),
+    searchBar: yup.string().required(`Please enter a keyword`),
   });
 
   // Get the search keyword from URL
@@ -78,11 +73,7 @@ export const SearchBar = ({ hasButton, className }) => {
               {/* {errors.searchBar ? (
                 <p className="form__error">{errors.searchBar}</p>
               ) : undefined} */}
-              <div
-                className={`search-bar ${
-                  errors.searchBar && 'search-bar--error'
-                }`}
-              >
+              <div className={`search-bar`}>
                 <StackOverflowIcon className="search-bar__icon--left" />
                 {!hasButton && (
                   <div className="search-bar__right">
@@ -100,7 +91,9 @@ export const SearchBar = ({ hasButton, className }) => {
                 <Field
                   type="search"
                   name="searchBar"
-                  className="form__input search-bar__input"
+                  className={`form__input search-bar__input ${
+                    errors.searchBar && 'search-bar--error'
+                  }`}
                   placeholder={
                     searchOption === 'Direct Search'
                       ? 'Search in Stack Overflow'

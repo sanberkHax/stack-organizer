@@ -21,7 +21,7 @@ export const foldersSlice = createSlice({
 
       // Find and remove all children of folder
       const removeAllChildren = (folder) => {
-        if (folder.hasOwnProperty('children')) {
+        if (Object.prototype.hasOwnProperty.call(folder, 'children')) {
           folder.children.forEach((f) => {
             const removedChild = foldersArray.find((s) => s.id === f);
 

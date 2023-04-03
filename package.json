@@ -34,7 +34,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test-ci": "react-scripts test --forceExit"
+    "test-ci": "react-scripts test --forceExit",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -53,5 +55,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0"
   }
 }

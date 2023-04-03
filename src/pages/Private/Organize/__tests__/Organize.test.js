@@ -1,122 +1,122 @@
-import { Organize } from '../Organize';
+import { Organize } from "../Organize";
 import {
   render,
   screen,
   waitFor,
   waitForElementToBeRemoved,
-} from '../../../../utils/test-utils';
-import userEvent from '@testing-library/user-event';
+} from "../../../../utils/test-utils";
+import userEvent from "@testing-library/user-event";
 
-describe('<Organize />', () => {
+describe("<Organize />", () => {
   beforeEach(() => {
     render(<Organize />);
   });
 
-  describe('<ProjectsSidebar/>', () => {
-    it('Creates a new project', async () => {
-      const newProjectButton = screen.getByRole('button', {
+  describe("<ProjectsSidebar/>", () => {
+    it("Creates a new project", async () => {
+      const newProjectButton = screen.getByRole("button", {
         name: /New Project/i,
       });
 
       userEvent.click(newProjectButton);
 
-      const projectInput = screen.getByRole('textbox', {
+      const projectInput = screen.getByRole("textbox", {
         name: /Project Name Input/i,
       });
 
-      userEvent.type(projectInput, 'project test{enter}');
+      userEvent.type(projectInput, "project test{enter}");
 
       expect(await screen.findByText(/project test/i)).toBeInTheDocument();
     });
 
     it("Shows an error when new project's name is empty", async () => {
       // Create new project with empty name
-      const newProjectButton = screen.getByRole('button', {
+      const newProjectButton = screen.getByRole("button", {
         name: /New Project/i,
       });
 
       userEvent.click(newProjectButton);
 
-      const projectInput = screen.getByRole('textbox', {
+      const projectInput = screen.getByRole("textbox", {
         name: /Project Name Input/i,
       });
 
-      userEvent.type(projectInput, '{enter}');
+      userEvent.type(projectInput, "{enter}");
 
       expect(await screen.findByText(/Name is required/i)).toBeInTheDocument();
     });
     it("Shows an error when a project with new project's name already exists", async () => {
       // Create new project
-      const newProjectButton = screen.getByRole('button', {
+      const newProjectButton = screen.getByRole("button", {
         name: /New Project/i,
       });
 
       userEvent.click(newProjectButton);
 
-      const projectInput = screen.getByRole('textbox', {
+      const projectInput = screen.getByRole("textbox", {
         name: /Project Name Input/i,
       });
 
-      userEvent.type(projectInput, 'project-test{enter}');
+      userEvent.type(projectInput, "project-test{enter}");
 
       // Create another project with same name
       userEvent.click(newProjectButton);
 
-      userEvent.type(projectInput, 'project-test{enter}');
+      userEvent.type(projectInput, "project-test{enter}");
 
       expect(
         await screen.findByText(/Name already exists/i)
       ).toBeInTheDocument();
     });
 
-    it('Renames the project', async () => {
+    it("Renames the project", async () => {
       // Create new project
-      const newProjectButton = screen.getByRole('button', {
+      const newProjectButton = screen.getByRole("button", {
         name: /New Project/i,
       });
 
       userEvent.click(newProjectButton);
 
-      const projectInput = screen.getByRole('textbox', {
+      const projectInput = screen.getByRole("textbox", {
         name: /Project Name Input/i,
       });
 
-      userEvent.type(projectInput, 'project-test{enter}');
+      userEvent.type(projectInput, "project-test{enter}");
 
       expect(await screen.findByText(/project-test/i)).toBeInTheDocument();
 
       // Rename the project
-      const editButton = screen.getByRole('button', {
+      const editButton = screen.getByRole("button", {
         name: /Rename Project/i,
       });
 
       userEvent.click(editButton);
 
-      userEvent.type(projectInput, 'project-test renamed{enter}');
+      userEvent.type(projectInput, "project-test renamed{enter}");
 
       expect(
         await screen.findByText(/project-test renamed/i)
       ).toBeInTheDocument();
     });
 
-    it('Deletes the project', async () => {
+    it("Deletes the project", async () => {
       // Create new project
-      const newProjectButton = screen.getByRole('button', {
+      const newProjectButton = screen.getByRole("button", {
         name: /New Project/i,
       });
 
       userEvent.click(newProjectButton);
 
-      const projectInput = screen.getByRole('textbox', {
+      const projectInput = screen.getByRole("textbox", {
         name: /Project Name Input/i,
       });
 
-      userEvent.type(projectInput, 'project-test{enter}');
+      userEvent.type(projectInput, "project-test{enter}");
 
       expect(await screen.findByText(/project-test/i)).toBeInTheDocument();
 
       // Delete the project
-      const deleteButton = screen.getByRole('button', {
+      const deleteButton = screen.getByRole("button", {
         name: /Delete Project/i,
       });
 
@@ -126,19 +126,19 @@ describe('<Organize />', () => {
         expect(screen.queryByText(/project-test/i)).not.toBeInTheDocument()
       );
     });
-    it('Selects the project', async () => {
+    it("Selects the project", async () => {
       // Create new project
-      const newProjectButton = screen.getByRole('button', {
+      const newProjectButton = screen.getByRole("button", {
         name: /New Project/i,
       });
 
       userEvent.click(newProjectButton);
 
-      const projectInput = screen.getByRole('textbox', {
+      const projectInput = screen.getByRole("textbox", {
         name: /Project Name Input/i,
       });
 
-      userEvent.type(projectInput, 'project-test{enter}');
+      userEvent.type(projectInput, "project-test{enter}");
 
       expect(await screen.findByText(/project-test/i)).toBeInTheDocument();
 
@@ -150,20 +150,20 @@ describe('<Organize />', () => {
       expect(await screen.findByText(/new folder/i)).toBeInTheDocument();
     });
   });
-  describe('<FileBrowser/>', () => {
-    it('Adds new folder inside selected project', async () => {
+  describe("<FileBrowser/>", () => {
+    it("Adds new folder inside selected project", async () => {
       // Create new project and select it
-      const newProjectButton = screen.getByRole('button', {
+      const newProjectButton = screen.getByRole("button", {
         name: /New Project/i,
       });
 
       userEvent.click(newProjectButton);
 
-      const projectInput = screen.getByRole('textbox', {
+      const projectInput = screen.getByRole("textbox", {
         name: /Project Name Input/i,
       });
 
-      userEvent.type(projectInput, 'project-test{enter}');
+      userEvent.type(projectInput, "project-test{enter}");
 
       expect(await screen.findByText(/project-test/i)).toBeInTheDocument();
 
@@ -172,33 +172,33 @@ describe('<Organize />', () => {
       userEvent.click(projectButton);
 
       // Create new folder
-      const newFolderButton = await screen.findByRole('button', {
+      const newFolderButton = await screen.findByRole("button", {
         name: /new folder/i,
       });
 
       userEvent.click(newFolderButton);
 
-      const folderInput = screen.getByRole('textbox', {
+      const folderInput = screen.getByRole("textbox", {
         name: /Folder Name Input/i,
       });
 
-      userEvent.type(folderInput, 'folder-test{enter}');
+      userEvent.type(folderInput, "folder-test{enter}");
 
       expect(await screen.findByText(/folder-test/i)).toBeInTheDocument();
     });
     it("Shows an error when new folder's name is empty", async () => {
       // Create new project and select it
-      const newProjectButton = screen.getByRole('button', {
+      const newProjectButton = screen.getByRole("button", {
         name: /New Project/i,
       });
 
       userEvent.click(newProjectButton);
 
-      const projectInput = screen.getByRole('textbox', {
+      const projectInput = screen.getByRole("textbox", {
         name: /Project Name Input/i,
       });
 
-      userEvent.type(projectInput, 'project-test{enter}');
+      userEvent.type(projectInput, "project-test{enter}");
 
       expect(await screen.findByText(/project-test/i)).toBeInTheDocument();
 
@@ -207,33 +207,33 @@ describe('<Organize />', () => {
       userEvent.click(projectButton);
 
       // Create new folder with empty name
-      const newFolderButton = screen.getByRole('button', {
+      const newFolderButton = screen.getByRole("button", {
         name: /New Folder/i,
       });
 
       userEvent.click(newFolderButton);
 
-      const folderInput = screen.getByRole('textbox', {
+      const folderInput = screen.getByRole("textbox", {
         name: /Folder Name Input/i,
       });
 
-      userEvent.type(folderInput, '{enter}');
+      userEvent.type(folderInput, "{enter}");
 
       expect(await screen.findByText(/Name is required/i)).toBeInTheDocument();
     });
     it("Shows an error when a folder with new folder's name already exists", async () => {
       // Create new project and select it
-      const newProjectButton = screen.getByRole('button', {
+      const newProjectButton = screen.getByRole("button", {
         name: /New Project/i,
       });
 
       userEvent.click(newProjectButton);
 
-      const projectInput = screen.getByRole('textbox', {
+      const projectInput = screen.getByRole("textbox", {
         name: /Project Name Input/i,
       });
 
-      userEvent.type(projectInput, 'project-test{enter}');
+      userEvent.type(projectInput, "project-test{enter}");
 
       expect(await screen.findByText(/project-test/i)).toBeInTheDocument();
 
@@ -242,41 +242,41 @@ describe('<Organize />', () => {
       userEvent.click(projectButton);
 
       // Create new folder
-      const newFolderButton = screen.getByRole('button', {
+      const newFolderButton = screen.getByRole("button", {
         name: /New Folder/i,
       });
 
       userEvent.click(newFolderButton);
 
-      const folderInput = screen.getByRole('textbox', {
+      const folderInput = screen.getByRole("textbox", {
         name: /Folder Name Input/i,
       });
 
-      userEvent.type(folderInput, 'folder-test{enter}');
+      userEvent.type(folderInput, "folder-test{enter}");
 
       expect(await screen.findByText(/folder-test/i)).toBeInTheDocument();
 
       // Create new folder with same name
       userEvent.click(newFolderButton);
 
-      userEvent.type(folderInput, 'folder-test{enter}');
+      userEvent.type(folderInput, "folder-test{enter}");
       expect(
         await screen.findByText(/Name already exists/i)
       ).toBeInTheDocument();
     });
-    it('Renames the folder', async () => {
+    it("Renames the folder", async () => {
       // Create new project and select it
-      const newProjectButton = screen.getByRole('button', {
+      const newProjectButton = screen.getByRole("button", {
         name: /New Project/i,
       });
 
       userEvent.click(newProjectButton);
 
-      const projectInput = screen.getByRole('textbox', {
+      const projectInput = screen.getByRole("textbox", {
         name: /Project Name Input/i,
       });
 
-      userEvent.type(projectInput, 'project-test{enter}');
+      userEvent.type(projectInput, "project-test{enter}");
 
       expect(await screen.findByText(/project-test/i)).toBeInTheDocument();
 
@@ -285,47 +285,47 @@ describe('<Organize />', () => {
       userEvent.click(projectButton);
 
       // Create new folder
-      const newFolderButton = screen.getByRole('button', {
+      const newFolderButton = screen.getByRole("button", {
         name: /New Folder/i,
       });
 
       userEvent.click(newFolderButton);
 
-      const folderInput = screen.getByRole('textbox', {
+      const folderInput = screen.getByRole("textbox", {
         name: /Folder Name Input/i,
       });
 
-      userEvent.type(folderInput, 'folder-test{enter}');
+      userEvent.type(folderInput, "folder-test{enter}");
 
       expect(await screen.findByText(/folder-test/i)).toBeInTheDocument();
 
       // Rename the folder
-      const editButton = screen.getByRole('button', {
+      const editButton = screen.getByRole("button", {
         name: /Rename Folder/i,
       });
 
       userEvent.click(editButton);
 
-      userEvent.type(folderInput, 'folder-test renamed{enter}');
+      userEvent.type(folderInput, "folder-test renamed{enter}");
 
       expect(screen.queryByText(/folder-test/i)).not.toBeInTheDocument();
       expect(
         await screen.findByText(/folder-test renamed/i)
       ).toBeInTheDocument();
     });
-    it('Deletes the folder', async () => {
+    it("Deletes the folder", async () => {
       // Create new project and select it
-      const newProjectButton = screen.getByRole('button', {
+      const newProjectButton = screen.getByRole("button", {
         name: /New Project/i,
       });
 
       userEvent.click(newProjectButton);
 
-      const projectInput = screen.getByRole('textbox', {
+      const projectInput = screen.getByRole("textbox", {
         name: /Project Name Input/i,
       });
 
-      userEvent.type(projectInput, 'project-test{enter}');
+      userEvent.type(projectInput, "project-test{enter}");
 
       expect(await screen.findByText(/project-test/i)).toBeInTheDocument();
 
@@ -334,21 +334,21 @@ describe('<Organize />', () => {
       userEvent.click(projectButton);
 
       // Create new folder
-      const newFolderButton = screen.getByRole('button', {
+      const newFolderButton = screen.getByRole("button", {
         name: /New Folder/i,
       });
 
       userEvent.click(newFolderButton);
 
-      const folderInput = screen.getByRole('textbox', {
+      const folderInput = screen.getByRole("textbox", {
         name: /Folder Name Input/i,
       });
 
-      userEvent.type(folderInput, 'folder-test{enter}');
+      userEvent.type(folderInput, "folder-test{enter}");
 
       expect(await screen.findByText(/folder-test/i)).toBeInTheDocument();
 
-      const deleteButton = screen.getByRole('button', {
+      const deleteButton = screen.getByRole("button", {
         name: /Delete Folder/i,
       });
 
@@ -358,19 +358,19 @@ describe('<Organize />', () => {
         expect(screen.queryByText(/folder-test/i)).not.toBeInTheDocument()
       );
     });
-    it('Goes inside the folder, adds a new folder inside then comes back to base level', async () => {
+    it("Goes inside the folder, adds a new folder inside then comes back to base level", async () => {
       // Create new project and select it
-      const newProjectButton = screen.getByRole('button', {
+      const newProjectButton = screen.getByRole("button", {
         name: /New Project/i,
       });
 
       userEvent.click(newProjectButton);
 
-      const projectInput = screen.getByRole('textbox', {
+      const projectInput = screen.getByRole("textbox", {
         name: /Project Name Input/i,
       });
 
-      userEvent.type(projectInput, 'project-test{enter}');
+      userEvent.type(projectInput, "project-test{enter}");
 
       expect(await screen.findByText(/project-test/i)).toBeInTheDocument();
 
@@ -379,17 +379,17 @@ describe('<Organize />', () => {
       userEvent.click(projectButton);
 
       // Create new folder
-      const newFolderButton = screen.getByRole('button', {
+      const newFolderButton = screen.getByRole("button", {
         name: /New Folder/i,
       });
 
       userEvent.click(newFolderButton);
 
-      const folderInput = screen.getByRole('textbox', {
+      const folderInput = screen.getByRole("textbox", {
         name: /Folder Name Input/i,
       });
 
-      userEvent.type(folderInput, 'folder-test{enter}');
+      userEvent.type(folderInput, "folder-test{enter}");
 
       // Go inside the folder
       const folder = await screen.findByTestId(/folder/i);
@@ -403,12 +403,12 @@ describe('<Organize />', () => {
       // Add new folder
       userEvent.click(newFolderButton);
 
-      userEvent.type(folderInput, 'folder-test child{enter}');
+      userEvent.type(folderInput, "folder-test child{enter}");
 
       expect(await screen.findByText(/folder-test child/i)).toBeInTheDocument();
 
       // Go back to base level
-      const backButton = await screen.findByRole('button', {
+      const backButton = await screen.findByRole("button", {
         name: /Back Button/i,
       });
 

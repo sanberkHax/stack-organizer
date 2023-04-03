@@ -1,9 +1,9 @@
-import { DetailsButton } from '../../../../components/Buttons/DetailsButton';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { Comment } from '../../Search/components/Comment';
-import { CommentsButton } from '../../../../components/Buttons/CommentsButton';
-import parse from 'html-react-parser';
+import { DetailsButton } from "../../../../components/Buttons/DetailsButton";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Comment } from "../../Search/components/Comment";
+import { CommentsButton } from "../../../../components/Buttons/CommentsButton";
+import parse from "html-react-parser";
 
 export const AnswerInfo = ({ selectedAnswer }) => {
   const [showComments, setShowComments] = useState(false);

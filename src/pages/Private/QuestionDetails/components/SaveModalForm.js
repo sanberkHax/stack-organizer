@@ -1,16 +1,16 @@
-import { Formik, Form, Field } from 'formik';
-import * as yup from 'yup';
+import { Formik, Form, Field } from "formik";
+import * as yup from "yup";
 
 export const SaveModalForm = ({ onSubmit }) => {
   const schema = yup.object().shape({
-    name: yup.string().required('Name is required'),
+    name: yup.string().required("Name is required"),
   });
   const handleSubmit = (e) => {
     onSubmit(e);
   };
   return (
     <Formik
-      initialValues={{ name: '', note: '' }}
+      initialValues={{ name: "", note: "" }}
       validationSchema={schema}
       onSubmit={handleSubmit}
     >

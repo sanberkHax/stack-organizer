@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   searchResults: [],
@@ -10,16 +10,16 @@ const initialState = {
 
 // Thunk Creators
 export const getSearchResults = createAsyncThunk(
-  'search/getSearchResults',
+  "search/getSearchResults",
   async ({ searchBar, page }, thunkAPI) => {
     try {
       // Filter with pagination
       const newFilter =
-        '!*LhrxEW3C5GaqiyopWc.IvEqcCnz5718)2L(Q)ZcpkKCNeL7PedOnT_zmW5zU5.tT';
+        "!*LhrxEW3C5GaqiyopWc.IvEqcCnz5718)2L(Q)ZcpkKCNeL7PedOnT_zmW5zU5.tT";
 
       // Filter without pagination
       const oldFilter =
-        '!sR(bXF4sEaztLIZ4lk62zXM(U-sPSKFvelsQbp7tDKBPizPQa.Abp403_M3zdXZLHyj5iq9Rchz8i';
+        "!sR(bXF4sEaztLIZ4lk62zXM(U-sPSKFvelsQbp7tDKBPizPQa.Abp403_M3zdXZLHyj5iq9Rchz8i";
 
       const response = await axios(
         `https://api.stackexchange.com/2.3/search/advanced?page=${page}&pagesize=10&order=desc&sort=relevance&q=${searchBar}&site=stackoverflow&filter=${newFilter}&key=${process.env.REACT_APP_STACK_EXCHANGE_API_KEY}`
@@ -34,7 +34,7 @@ export const getSearchResults = createAsyncThunk(
 );
 
 export const getQuestion = createAsyncThunk(
-  'questions/getQuestion',
+  "questions/getQuestion",
   async (id, thunkAPI) => {
     try {
       const response = await axios(
@@ -49,7 +49,7 @@ export const getQuestion = createAsyncThunk(
 );
 
 export const searchSlice = createSlice({
-  name: 'search',
+  name: "search",
   initialState,
   reducers: {},
   extraReducers: {

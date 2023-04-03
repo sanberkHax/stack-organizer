@@ -1,16 +1,16 @@
-import { Formik, Form, Field } from 'formik';
-import * as yup from 'yup';
+import { Formik, Form, Field } from "formik";
+import * as yup from "yup";
 export const LogInForm = ({ onSubmit }) => {
   const schema = yup.object().shape({
     email: yup
       .string()
-      .email('Please enter a valid E-Mail')
-      .required('E-Mail is required'),
+      .email("Please enter a valid E-Mail")
+      .required("E-Mail is required"),
     password: yup.string().required(`Password is required`),
   });
   return (
     <Formik
-      initialValues={{ email: '', password: '' }}
+      initialValues={{ email: "", password: "" }}
       validationSchema={schema}
       onSubmit={(credentials) => {
         onSubmit(credentials);

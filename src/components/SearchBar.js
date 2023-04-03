@@ -1,13 +1,13 @@
-import * as yup from 'yup';
-import { ReactComponent as StackOverflowIcon } from '../assets/stack-overflow-icon.svg';
-import { SearchButton } from './Buttons/SearchButton';
-import { Form, Formik, Field } from 'formik';
-import { useDispatch } from 'react-redux';
-import { getSearchResults } from '../slices/searchSlice';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useState } from 'react';
-import { SettingsButton } from './Buttons/SettingsButton';
-import { Dropdown } from './Dropdown';
+import * as yup from "yup";
+import { ReactComponent as StackOverflowIcon } from "../assets/stack-overflow-icon.svg";
+import { SearchButton } from "./Buttons/SearchButton";
+import { Form, Formik, Field } from "formik";
+import { useDispatch } from "react-redux";
+import { getSearchResults } from "../slices/searchSlice";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { SettingsButton } from "./Buttons/SettingsButton";
+import { Dropdown } from "./Dropdown";
 
 export const SearchBar = ({ hasButton, className }) => {
   const [searchParams] = useSearchParams();
@@ -16,7 +16,7 @@ export const SearchBar = ({ hasButton, className }) => {
 
   const dispatch = useDispatch();
 
-  const [searchOption, setSearchOption] = useState('Direct Search');
+  const [searchOption, setSearchOption] = useState("Direct Search");
 
   const [dropdown, setDropdown] = useState(false);
 
@@ -26,9 +26,9 @@ export const SearchBar = ({ hasButton, className }) => {
   });
 
   // Get the search keyword from URL
-  const keyword = searchParams.get('q');
+  const keyword = searchParams.get("q");
 
-  const dropdownItems = ['Direct Search', 'URL Search'];
+  const dropdownItems = ["Direct Search", "URL Search"];
 
   const toggleDropdown = () => {
     setDropdown((prev) => !prev);
@@ -37,14 +37,14 @@ export const SearchBar = ({ hasButton, className }) => {
   // Show search results on submit if the keyword is different
   const submitHandler = (values, { resetForm }) => {
     if (values.searchBar !== keyword) {
-      if (searchOption === 'Direct Search') {
+      if (searchOption === "Direct Search") {
         dispatch(getSearchResults({ searchBar: values.searchBar, page: 1 }));
 
         navigate(`/search?q=${values.searchBar}&p=1`);
       } else {
-        const parts = values.searchBar.split('/');
+        const parts = values.searchBar.split("/");
 
-        const questionsIndex = parts.indexOf('questions');
+        const questionsIndex = parts.indexOf("questions");
 
         const questionId = parts[questionsIndex + 1];
 
@@ -63,7 +63,7 @@ export const SearchBar = ({ hasButton, className }) => {
     <div className={className}>
       <Formik
         validationSchema={schema}
-        initialValues={{ searchBar: '' }}
+        initialValues={{ searchBar: "" }}
         validateOnBlur={false}
         onSubmit={submitHandler}
       >
@@ -92,12 +92,12 @@ export const SearchBar = ({ hasButton, className }) => {
                   type="search"
                   name="searchBar"
                   className={`form__input search-bar__input ${
-                    errors.searchBar && 'search-bar--error'
+                    errors.searchBar && "search-bar--error"
                   }`}
                   placeholder={
-                    searchOption === 'Direct Search'
-                      ? 'Search in Stack Overflow'
-                      : 'Paste Stack Overflow URL'
+                    searchOption === "Direct Search"
+                      ? "Search in Stack Overflow"
+                      : "Paste Stack Overflow URL"
                   }
                 />
               </div>
@@ -105,19 +105,19 @@ export const SearchBar = ({ hasButton, className }) => {
                 <div className="search-options">
                   <button
                     className={`search-options__button ${
-                      searchOption === 'Direct Search' &&
-                      'search-options__button--active'
+                      searchOption === "Direct Search" &&
+                      "search-options__button--active"
                     }`}
-                    onClick={() => setSearchOption('Direct Search')}
+                    onClick={() => setSearchOption("Direct Search")}
                     type="button"
                   >
                     Direct Search
                   </button>
                   <button
                     className={`search-options__button ${
-                      searchOption === 'url' && 'search-options__button--active'
+                      searchOption === "url" && "search-options__button--active"
                     }`}
-                    onClick={() => setSearchOption('url')}
+                    onClick={() => setSearchOption("url")}
                     type="button"
                   >
                     URL Search

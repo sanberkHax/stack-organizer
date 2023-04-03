@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
-import { motion } from 'framer-motion/dist/framer-motion';
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+import { motion } from "framer-motion/dist/framer-motion";
 
 import {
   folderAdded,
@@ -9,21 +9,21 @@ import {
   previousFoldersRemoved,
   foldersErrorUpdated,
   newFolderIdUpdated,
-} from '../../../slices/foldersSlice';
+} from "../../../slices/foldersSlice";
 import {
   selectAllProjects,
   projectsErrorUpdated,
   projectAdded,
-} from '../../../slices/projectsSlice';
-import { FileBrowser } from './components/FileBrowser';
-import { BackButton } from '../../../components/Buttons/BackButton';
-import { StackOverflowButton } from '../../../components/Buttons/StackOverflowButton';
-import { NewFolderButton } from '../../../components/Buttons/NewFolderButton';
-import { ProjectsSidebar } from './components/ProjectsSidebar';
-import { NewProjectButton } from '../../../components/Buttons/NewProjectButton';
-import { QuestionInfo } from './components/QuestionInfo';
-import { AnswerInfo } from './components/AnswerInfo';
-import { Icon } from '../../../components/Icon';
+} from "../../../slices/projectsSlice";
+import { FileBrowser } from "./components/FileBrowser";
+import { BackButton } from "../../../components/Buttons/BackButton";
+import { StackOverflowButton } from "../../../components/Buttons/StackOverflowButton";
+import { NewFolderButton } from "../../../components/Buttons/NewFolderButton";
+import { ProjectsSidebar } from "./components/ProjectsSidebar";
+import { NewProjectButton } from "../../../components/Buttons/NewProjectButton";
+import { QuestionInfo } from "./components/QuestionInfo";
+import { AnswerInfo } from "./components/AnswerInfo";
+import { Icon } from "../../../components/Icon";
 
 export const Organize = () => {
   const [selectedProject, setSelectedProject] = useState();

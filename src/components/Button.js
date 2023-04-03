@@ -1,9 +1,9 @@
-import { Icon } from './Icon';
+import { Icon } from "./Icon";
 
 export const Button = ({
   icon,
   text,
-  className = 'btn',
+  className = "btn",
   onClick,
   children,
   ...props

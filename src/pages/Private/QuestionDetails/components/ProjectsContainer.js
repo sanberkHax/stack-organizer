@@ -1,17 +1,17 @@
-import { v4 as uuidv4 } from 'uuid';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { v4 as uuidv4 } from "uuid";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 import {
   selectAllProjects,
   projectAdded,
   projectsErrorUpdated,
-} from '../../../../slices/projectsSlice';
-import { updateProjectsData } from '../../../../services/firebase';
-import { currentFoldersUpdated } from '../../../../slices/foldersSlice';
-import { useProjectFolders } from '../../../../hooks/useProjectFolders';
-import { ProjectButton } from '../../../../components/Buttons/ProjectButton';
-import { AddButton } from '../../../../components/Buttons/AddButton';
+} from "../../../../slices/projectsSlice";
+import { updateProjectsData } from "../../../../services/firebase";
+import { currentFoldersUpdated } from "../../../../slices/foldersSlice";
+import { useProjectFolders } from "../../../../hooks/useProjectFolders";
+import { ProjectButton } from "../../../../components/Buttons/ProjectButton";
+import { AddButton } from "../../../../components/Buttons/AddButton";
 
 export const ProjectsContainer = ({
   className,

@@ -1,12 +1,12 @@
-import { Formik, Form, Field } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { motion } from 'framer-motion/dist/framer-motion';
+import { Formik, Form, Field } from "formik";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { motion } from "framer-motion/dist/framer-motion";
 
 import {
   selectAllProjects,
   projectUpdated,
-} from '../../../../slices/projectsSlice';
+} from "../../../../slices/projectsSlice";
 import {
   folderUpdated,
   previousFoldersUpdated,
@@ -18,14 +18,14 @@ import {
   folderRemoved,
   currentFolderRemoved,
   foldersErrorUpdated,
-} from '../../../../slices/foldersSlice';
-import { ConfirmationModal } from '../../../../components/ConfirmationModal';
-import { Backdrop } from '../../../../components/Backdrop';
-import { EditButton } from '../../../../components/Buttons/EditButton';
-import { DeleteButton } from '../../../../components/Buttons/DeleteButton';
-import { questionsRemoved } from '../../../../slices/questionsSlice';
-import { Icon } from '../../../../components/Icon';
-import { toast } from 'react-toastify';
+} from "../../../../slices/foldersSlice";
+import { ConfirmationModal } from "../../../../components/ConfirmationModal";
+import { Backdrop } from "../../../../components/Backdrop";
+import { EditButton } from "../../../../components/Buttons/EditButton";
+import { DeleteButton } from "../../../../components/Buttons/DeleteButton";
+import { questionsRemoved } from "../../../../slices/questionsSlice";
+import { Icon } from "../../../../components/Icon";
+import { toast } from "react-toastify";
 
 export const Folder = ({
   id,
@@ -128,7 +128,7 @@ export const Folder = ({
         dispatch(folderRemoved(folderId));
         dispatch(currentFolderRemoved(folderId));
       }
-    } else if (folderName === '') {
+    } else if (folderName === "") {
       if (editableFolder) {
         dispatch(folderUpdated({ id: folderId, name: editableFolder.name }));
         dispatch(
@@ -229,7 +229,7 @@ export const Folder = ({
         >
           <Icon name="folder" />
           {!name ? (
-            <Formik initialValues={{ name: '' }} onSubmit={addNameHandler}>
+            <Formik initialValues={{ name: "" }} onSubmit={addNameHandler}>
               {({ values }) => {
                 return (
                   <Form className="folder__form">

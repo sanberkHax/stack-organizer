@@ -24,10 +24,14 @@
     "react/no-unescaped-entities": 0,
     "no-unused-vars": "off",
     "prettier/prettier": [
-      "warn",
+      "error",
       {
-        "singleQuote": true,
-        "semi": true
+        "endOfLine": "auto",
+        "trailingComma": "es5",
+        "singleQuote": false,
+        "semi": true,
+        "printWidth": 80,
+        "jsxBracketSameLine": false
       }
     ]
   },

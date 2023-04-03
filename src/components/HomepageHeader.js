@@ -1,9 +1,9 @@
-import { HamburgerMenu } from './HamburgerMenu';
-import { useDispatch } from 'react-redux';
-import { logOut } from '../slices/authSlice';
-import { Link, useNavigate } from 'react-router-dom';
-import { OrganizeButton } from './Buttons/OrganizeButton';
-import { LogoutButton } from './Buttons/LogoutButton';
+import { HamburgerMenu } from "./HamburgerMenu";
+import { useDispatch } from "react-redux";
+import { logOut } from "../slices/authSlice";
+import { Link, useNavigate } from "react-router-dom";
+import { OrganizeButton } from "./Buttons/OrganizeButton";
+import { LogoutButton } from "./Buttons/LogoutButton";
 
 export const HomepageHeader = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ export const HomepageHeader = () => {
         <ul className="header__buttons">
           <li>
             <Link to="organize">
-              <OrganizeButton onClick={() => navigate('organize')} />
+              <OrganizeButton onClick={() => navigate("organize")} />
             </Link>
           </li>
           <li>

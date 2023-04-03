@@ -1,5 +1,5 @@
-import { Welcome } from './Welcome';
-import { Auth } from './Auth';
+import { Welcome } from "./Welcome";
+import { Auth } from "./Auth";
 
 export const Home = () => {
   return (

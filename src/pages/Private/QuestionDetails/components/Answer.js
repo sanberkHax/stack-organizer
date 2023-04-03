@@ -1,8 +1,8 @@
-import { Comment } from '../../Search/components/Comment';
-import { SaveAsButton } from '../../../../components/Buttons/SaveAsButton';
-import { useState } from 'react';
-import { CommentsButton } from '../../../../components/Buttons/CommentsButton';
-import parse from 'html-react-parser';
+import { Comment } from "../../Search/components/Comment";
+import { SaveAsButton } from "../../../../components/Buttons/SaveAsButton";
+import { useState } from "react";
+import { CommentsButton } from "../../../../components/Buttons/CommentsButton";
+import parse from "html-react-parser";
 
 export const Answer = ({
   voteCount,

@@ -1,12 +1,12 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, connectAuthEmulator } from 'firebase/auth';
+import { initializeApp } from "firebase/app";
+import { getAuth, connectAuthEmulator } from "firebase/auth";
 import {
   getDatabase,
   ref,
   update,
   set,
   connectDatabaseEmulator,
-} from 'firebase/database';
+} from "firebase/database";
 
 export const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -26,29 +26,29 @@ export const database = getDatabase(app);
 export const updateProjectsData = (userId, data) => {
   const projectsMetadata = data.map((p) => p.id);
   const updates = {};
-  updates['projects/' + userId] = data;
-  updates['users/' + userId + '/projects'] = projectsMetadata;
+  updates["projects/" + userId] = data;
+  updates["users/" + userId + "/projects"] = projectsMetadata;
   update(ref(database), updates);
 };
 
 export const writeFoldersData = (userId, data) => {
-  set(ref(database, 'folders/' + userId), data);
+  set(ref(database, "folders/" + userId), data);
 };
 export const writeUsersData = (userId, data) => {
-  set(ref(database, 'users/' + userId), data);
+  set(ref(database, "users/" + userId), data);
 };
 export const writeQuestionsData = (userId, data) => {
-  set(ref(database, 'questions/' + userId), data);
+  set(ref(database, "questions/" + userId), data);
 };
 export const writeAnswersData = (userId, data) => {
-  set(ref(database, 'answers/' + userId), data);
+  set(ref(database, "answers/" + userId), data);
 };
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
   // dev code
-} else if (process.env.NODE_ENV === 'test') {
+} else if (process.env.NODE_ENV === "test") {
   // test code
-  connectAuthEmulator(auth, 'http://localhost:9099');
-  connectDatabaseEmulator(database, 'localhost', 9000);
+  connectAuthEmulator(auth, "http://localhost:9099");
+  connectDatabaseEmulator(database, "localhost", 9000);
 } else {
   // production code
 }

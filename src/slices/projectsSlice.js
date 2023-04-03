@@ -1,4 +1,4 @@
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 const projectsAdapter = createEntityAdapter();
 
 const initialState = projectsAdapter.getInitialState({
@@ -7,7 +7,7 @@ const initialState = projectsAdapter.getInitialState({
 });
 
 export const projectsSlice = createSlice({
-  name: 'projects',
+  name: "projects",
   initialState,
   reducers: {
     projectsFetched: projectsAdapter.setAll,

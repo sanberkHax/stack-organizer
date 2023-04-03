@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-import { toLocaleDate } from '../../../../utils/toLocaleDate';
-import { DetailsButton } from '../../../../components/Buttons/DetailsButton';
-import parse from 'html-react-parser';
+import { useNavigate } from "react-router-dom";
+import { toLocaleDate } from "../../../../utils/toLocaleDate";
+import { DetailsButton } from "../../../../components/Buttons/DetailsButton";
+import parse from "html-react-parser";
 
 export const Question = ({ voteCount, answerCount, tags, title, date, id }) => {
   const navigate = useNavigate();

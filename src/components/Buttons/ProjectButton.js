@@ -1,14 +1,14 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { Formik, Form, Field } from 'formik';
+import { useSelector, useDispatch } from "react-redux";
+import { Formik, Form, Field } from "formik";
 
 import {
   selectAllProjects,
   projectUpdated,
   projectRemoved,
-} from '../../slices/projectsSlice';
-import { folderUpdated, foldersReset } from '../../slices/foldersSlice';
-import { Icon } from '../Icon';
-import { toast } from 'react-toastify';
+} from "../../slices/projectsSlice";
+import { folderUpdated, foldersReset } from "../../slices/foldersSlice";
+import { Icon } from "../Icon";
+import { toast } from "react-toastify";
 
 export const ProjectButton = ({
   id,
@@ -49,14 +49,14 @@ export const ProjectButton = ({
     const existingProject = projects.find((f) => f.name === projectName);
 
     if (existingProject) {
-      toast.error('Name already exists');
+      toast.error("Name already exists");
       dispatch(projectRemoved(projectId));
       return;
     } else if (projectName === null) {
       dispatch(projectRemoved(projectId));
       return;
-    } else if (projectName === '') {
-      toast.error('Name is required');
+    } else if (projectName === "") {
+      toast.error("Name is required");
       dispatch(projectRemoved(projectId));
     } else {
       dispatch(projectUpdated({ id: projectId, name: projectName }));
@@ -66,7 +66,7 @@ export const ProjectButton = ({
     <button onClick={clickHandler} className={className}>
       <Icon name="project" />
       {!name ? (
-        <Formik initialValues={{ name: '' }} onSubmit={addNameHandler}>
+        <Formik initialValues={{ name: "" }} onSubmit={addNameHandler}>
           {({ values }) => {
             return (
               <Form className="file-container__btn__form">

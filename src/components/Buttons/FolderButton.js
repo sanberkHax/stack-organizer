@@ -1,7 +1,7 @@
-import { Formik, Form, Field } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
+import { Formik, Form, Field } from "formik";
+import { useSelector, useDispatch } from "react-redux";
 
-import { selectAllProjects, projectUpdated } from '../../slices/projectsSlice';
+import { selectAllProjects, projectUpdated } from "../../slices/projectsSlice";
 import {
   folderUpdated,
   previousFoldersUpdated,
@@ -12,9 +12,9 @@ import {
   selectAllFolders,
   folderRemoved,
   currentFolderRemoved,
-} from '../../slices/foldersSlice';
-import { Icon } from '../Icon';
-import { toast } from 'react-toastify';
+} from "../../slices/foldersSlice";
+import { Icon } from "../Icon";
+import { toast } from "react-toastify";
 
 export const FolderButton = ({
   className,
@@ -99,7 +99,7 @@ export const FolderButton = ({
     const lastFolder = folders[folders.length - 1];
 
     if (existingFolder) {
-      toast.error('Name already exists');
+      toast.error("Name already exists");
       dispatch(folderRemoved(newFolderId));
       dispatch(currentFolderRemoved(newFolderId));
       return;
@@ -107,8 +107,8 @@ export const FolderButton = ({
       dispatch(folderRemoved(newFolderId));
       dispatch(currentFolderRemoved(newFolderId));
       return;
-    } else if (folderName === '') {
-      toast.error('Name is required');
+    } else if (folderName === "") {
+      toast.error("Name is required");
       dispatch(folderRemoved(newFolderId));
       dispatch(currentFolderRemoved(newFolderId));
     } else {
@@ -159,7 +159,7 @@ export const FolderButton = ({
       <button onClick={clickHandler} className={className}>
         <Icon name="folder" />
         {!name ? (
-          <Formik initialValues={{ name: '' }} onSubmit={addNameHandler}>
+          <Formik initialValues={{ name: "" }} onSubmit={addNameHandler}>
             {({ values }) => {
               return (
                 <Form className="file-container__btn__form">

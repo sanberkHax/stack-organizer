@@ -1,30 +1,30 @@
-import { ProjectsContainer } from './ProjectsContainer';
-import { FoldersContainer } from './FoldersContainer';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
+import { ProjectsContainer } from "./ProjectsContainer";
+import { FoldersContainer } from "./FoldersContainer";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
 import {
   projectReset,
   projectsErrorUpdated,
-} from '../../../../slices/projectsSlice';
+} from "../../../../slices/projectsSlice";
 import {
   foldersErrorUpdated,
   foldersReset,
-} from '../../../../slices/foldersSlice';
-import { SaveModalForm } from './SaveModalForm';
+} from "../../../../slices/foldersSlice";
+import { SaveModalForm } from "./SaveModalForm";
 import {
   questionAdded,
   selectAllQuestions,
-} from '../../../../slices/questionsSlice';
+} from "../../../../slices/questionsSlice";
 import {
   writeQuestionsData,
   writeAnswersData,
-} from '../../../../services/firebase';
-import { selectAllAnswers, answerAdded } from '../../../../slices/answersSlice';
-import { CloseButton } from '../../../../components/Buttons/CloseButton';
-import { ConfirmationModal } from '../../../../components/ConfirmationModal';
+} from "../../../../services/firebase";
+import { selectAllAnswers, answerAdded } from "../../../../slices/answersSlice";
+import { CloseButton } from "../../../../components/Buttons/CloseButton";
+import { ConfirmationModal } from "../../../../components/ConfirmationModal";
 
 export const SaveModal = ({ setModal, question, answer }) => {
   const uid = useSelector((state) => state.auth.currentUser);
@@ -63,7 +63,7 @@ export const SaveModal = ({ setModal, question, answer }) => {
   }, [answers, uid]);
 
   const redirectHandler = () => {
-    navigate('/organize');
+    navigate("/organize");
   };
 
   const modalHandler = () => {
@@ -72,7 +72,7 @@ export const SaveModal = ({ setModal, question, answer }) => {
 
   const saveHandler = (formData) => {
     if (!selectedProject) {
-      dispatch(projectsErrorUpdated('PLEASE SELECT A PROJECT'));
+      dispatch(projectsErrorUpdated("PLEASE SELECT A PROJECT"));
       return;
     }
     const { name, note } = formData;

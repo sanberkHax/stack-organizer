@@ -1,5 +1,5 @@
-import { toLocaleDate } from '../../../../utils/toLocaleDate';
-import parse from 'html-react-parser';
+import { toLocaleDate } from "../../../../utils/toLocaleDate";
+import parse from "html-react-parser";
 
 export const Comment = ({ owner, body, votes, date }) => {
   // Convert unix date format to Month/Day/Year

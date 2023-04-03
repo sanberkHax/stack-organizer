@@ -1,15 +1,15 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 
-import { selectAllProjects } from '../../../../slices/projectsSlice';
-import { updateProjectsData } from '../../../../services/firebase';
+import { selectAllProjects } from "../../../../slices/projectsSlice";
+import { updateProjectsData } from "../../../../services/firebase";
 import {
   currentFoldersUpdated,
   selectAllFolders,
-} from '../../../../slices/foldersSlice';
-import { useProjectFolders } from '../../../../hooks/useProjectFolders';
-import { Project } from './Project';
-import { writeFoldersData } from '../../../../services/firebase';
+} from "../../../../slices/foldersSlice";
+import { useProjectFolders } from "../../../../hooks/useProjectFolders";
+import { Project } from "./Project";
+import { writeFoldersData } from "../../../../services/firebase";
 
 export const ProjectsSidebar = ({
   setSelectedProject,

@@ -1,22 +1,22 @@
-import { SaveModal } from '../components/SaveModal';
+import { SaveModal } from "../components/SaveModal";
 import {
   render,
   screen,
   waitForElementToBeRemoved,
-} from '../../../../utils/test-utils';
-import userEvent from '@testing-library/user-event';
+} from "../../../../utils/test-utils";
+import userEvent from "@testing-library/user-event";
 
-describe('<SaveModal />', () => {
+describe("<SaveModal />", () => {
   beforeEach(() => {
     render(<SaveModal />);
   });
 
-  it('renders properly', () => {
-    const heading = screen.getByRole('heading', { name: /save as/i });
-    const selectProject = screen.getByRole('heading', {
+  it("renders properly", () => {
+    const heading = screen.getByRole("heading", { name: /save as/i });
+    const selectProject = screen.getByRole("heading", {
       name: /select project:/i,
     });
-    const selectFolder = screen.getByRole('heading', {
+    const selectFolder = screen.getByRole("heading", {
       name: /select folder:/i,
     });
     const title = screen.getByLabelText(/name:/i);
@@ -29,23 +29,23 @@ describe('<SaveModal />', () => {
     expect(note).toBeInTheDocument();
   });
 
-  it('adds a project and nested folders inside it then performs basic folder navigation', async () => {
+  it("adds a project and nested folders inside it then performs basic folder navigation", async () => {
     // Add new project and select it
-    const addProjectButton = screen.getByRole('button', {
-      name: 'add-project',
+    const addProjectButton = screen.getByRole("button", {
+      name: "add-project",
     });
 
     userEvent.click(addProjectButton);
 
-    const projectTitleInput = screen.getByRole('textbox', {
+    const projectTitleInput = screen.getByRole("textbox", {
       name: /project-name-input/i,
     });
 
-    userEvent.type(projectTitleInput, 'project test{enter}', {
+    userEvent.type(projectTitleInput, "project test{enter}", {
       skipClick: true,
     });
 
-    const projectButton = await screen.findByRole('button', {
+    const projectButton = await screen.findByRole("button", {
       name: /project test/i,
     });
 
@@ -54,7 +54,7 @@ describe('<SaveModal />', () => {
     userEvent.click(projectButton);
 
     // Add new folder and double click on it
-    const addFolderButton = screen.getByRole('button', {
+    const addFolderButton = screen.getByRole("button", {
       name: /add-folder/i,
     });
 
@@ -62,9 +62,9 @@ describe('<SaveModal />', () => {
 
     const folderTitleInput = screen.getByTestId(/folder-btn-input/i);
 
-    userEvent.type(folderTitleInput, 'folder test{enter}', { skipClick: true });
+    userEvent.type(folderTitleInput, "folder test{enter}", { skipClick: true });
 
-    const folderButton = await screen.findByRole('button', {
+    const folderButton = await screen.findByRole("button", {
       name: /folder test/i,
     });
 
@@ -81,13 +81,13 @@ describe('<SaveModal />', () => {
 
     const nestedFolderTitleInput = screen.getByTestId(/folder-btn-input/i);
 
-    userEvent.type(nestedFolderTitleInput, 'nested folder test{enter}', {
+    userEvent.type(nestedFolderTitleInput, "nested folder test{enter}", {
       skipClick: true,
     });
 
     await waitForElementToBeRemoved(nestedFolderTitleInput);
 
-    const nestedFolderButton = await screen.findByRole('button', {
+    const nestedFolderButton = await screen.findByRole("button", {
       name: /nested folder test/i,
     });
 
@@ -95,49 +95,49 @@ describe('<SaveModal />', () => {
 
     // Go back from 'folder test'
 
-    const backButton = screen.getByRole('button', { name: /back-button/i });
+    const backButton = screen.getByRole("button", { name: /back-button/i });
 
     userEvent.click(backButton);
 
     expect(
-      screen.queryByRole('button', {
+      screen.queryByRole("button", {
         name: /nested folder test/i,
       })
     ).not.toBeInTheDocument();
     expect(
-      await screen.findByRole('button', {
+      await screen.findByRole("button", {
         name: /folder test/i,
       })
     ).toBeInTheDocument();
   });
 
-  it('removes folders when project is not active', async () => {
+  it("removes folders when project is not active", async () => {
     // Add new project
-    const addProjectButton = screen.getByRole('button', {
-      name: 'add-project',
+    const addProjectButton = screen.getByRole("button", {
+      name: "add-project",
     });
 
     userEvent.click(addProjectButton);
 
-    const projectTitleInput = screen.getByRole('textbox', {
+    const projectTitleInput = screen.getByRole("textbox", {
       name: /project-name-input/i,
     });
 
-    userEvent.type(projectTitleInput, 'project test{enter}', {
+    userEvent.type(projectTitleInput, "project test{enter}", {
       skipClick: true,
     });
 
     expect(await screen.findByText(/project test/i)).toBeInTheDocument();
 
     // Select the project
-    const projectButton = await screen.findByRole('button', {
+    const projectButton = await screen.findByRole("button", {
       name: /project test/i,
     });
 
     userEvent.click(projectButton);
 
     // Add new folder inside the project
-    const addFolderButton = screen.getByRole('button', {
+    const addFolderButton = screen.getByRole("button", {
       name: /add-folder/i,
     });
 
@@ -145,7 +145,7 @@ describe('<SaveModal />', () => {
 
     const folderTitleInput = screen.getByTestId(/folder-btn-input/i);
 
-    userEvent.type(folderTitleInput, 'folder test{enter}', { skipClick: true });
+    userEvent.type(folderTitleInput, "folder test{enter}", { skipClick: true });
 
     expect(await screen.findByText(/folder test/i)).toBeInTheDocument();
 
@@ -156,50 +156,50 @@ describe('<SaveModal />', () => {
     expect(screen.queryByText(/folder test/i)).not.toBeInTheDocument();
   });
 
-  it('prevents adding a project without a name', async () => {
+  it("prevents adding a project without a name", async () => {
     // Add new project without a name
-    const addProjectButton = screen.getByRole('button', {
-      name: 'add-project',
+    const addProjectButton = screen.getByRole("button", {
+      name: "add-project",
     });
 
     userEvent.click(addProjectButton);
 
-    const projectTitleInput = screen.getByRole('textbox', {
+    const projectTitleInput = screen.getByRole("textbox", {
       name: /project-name-input/i,
     });
 
-    userEvent.type(projectTitleInput, '{enter}', {
+    userEvent.type(projectTitleInput, "{enter}", {
       skipClick: true,
     });
 
     // Check for error
-    expect(await screen.findByText('Name is required')).toBeInTheDocument();
+    expect(await screen.findByText("Name is required")).toBeInTheDocument();
   });
 
-  it('prevents adding a folder without a name', async () => {
+  it("prevents adding a folder without a name", async () => {
     // Add new project
-    const addProjectButton = screen.getByRole('button', {
-      name: 'add-project',
+    const addProjectButton = screen.getByRole("button", {
+      name: "add-project",
     });
 
     userEvent.click(addProjectButton);
 
-    const projectTitleInput = screen.getByRole('textbox', {
+    const projectTitleInput = screen.getByRole("textbox", {
       name: /project-name-input/i,
     });
 
-    userEvent.type(projectTitleInput, 'project test{enter}', {
+    userEvent.type(projectTitleInput, "project test{enter}", {
       skipClick: true,
     });
 
-    const projectButton = await screen.findByRole('button', {
+    const projectButton = await screen.findByRole("button", {
       name: /project test/i,
     });
 
     userEvent.click(projectButton);
 
     // Add new folder inside the project without a name
-    const addFolderButton = screen.getByRole('button', {
+    const addFolderButton = screen.getByRole("button", {
       name: /add-folder/i,
     });
 
@@ -207,9 +207,9 @@ describe('<SaveModal />', () => {
 
     const folderTitleInput = screen.getByTestId(/folder-btn-input/i);
 
-    userEvent.type(folderTitleInput, '{enter}', { skipClick: true });
+    userEvent.type(folderTitleInput, "{enter}", { skipClick: true });
 
     // Check for error
-    expect(await screen.findByText('Name is required')).toBeInTheDocument();
+    expect(await screen.findByText("Name is required")).toBeInTheDocument();
   });
 });

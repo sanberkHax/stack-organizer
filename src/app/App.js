@@ -1,33 +1,33 @@
-import { Public } from '../pages/Public/Public';
-import { Private } from '../pages/Private/Private';
-import { Footer } from '../components/Footer';
-import { useSelector } from 'react-redux';
-import { onAuthStateChanged } from 'firebase/auth';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { auth, database, writeUsersData } from '../services/firebase';
-import { logInCurrentUser } from '../slices/authSlice';
+import { Public } from "../pages/Public/Public";
+import { Private } from "../pages/Private/Private";
+import { Footer } from "../components/Footer";
+import { useSelector } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { auth, database, writeUsersData } from "../services/firebase";
+import { logInCurrentUser } from "../slices/authSlice";
 import {
   projectsFetched,
   projectsRemoved,
   projectsLoadingUpdated,
-} from '../slices/projectsSlice';
+} from "../slices/projectsSlice";
 import {
   foldersFetched,
   foldersRemoved,
   foldersLoadingUpdated,
-} from '../slices/foldersSlice';
+} from "../slices/foldersSlice";
 import {
   questionsFetched,
   questionsRemoved,
   questionsLoadingUpdated,
-} from '../slices/questionsSlice';
+} from "../slices/questionsSlice";
 import {
   answersFetched,
   answersRemoved,
   answersLoadingUpdated,
-} from '../slices/answersSlice';
-import { ref, get, child } from 'firebase/database';
+} from "../slices/answersSlice";
+import { ref, get, child } from "firebase/database";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);

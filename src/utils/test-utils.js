@@ -1,15 +1,15 @@
-import React from 'react';
-import { render as rtlRender } from '@testing-library/react';
-import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import authReducer from '../slices/authSlice';
-import searchReducer from '../slices/searchSlice';
-import projectsReducer from '../slices/projectsSlice';
-import foldersReducer from '../slices/foldersSlice';
-import questionsReducer from '../slices/questionsSlice';
-import answersReducer from '../slices/answersSlice';
-import { ToastContainer } from 'react-toastify';
+import React from "react";
+import { render as rtlRender } from "@testing-library/react";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+import { MemoryRouter } from "react-router-dom";
+import authReducer from "../slices/authSlice";
+import searchReducer from "../slices/searchSlice";
+import projectsReducer from "../slices/projectsSlice";
+import foldersReducer from "../slices/foldersSlice";
+import questionsReducer from "../slices/questionsSlice";
+import answersReducer from "../slices/answersSlice";
+import { ToastContainer } from "react-toastify";
 
 function render(
   ui,
@@ -41,6 +41,6 @@ function render(
 }
 
 // re-export everything
-export * from '@testing-library/react';
+export * from "@testing-library/react";
 // override render method
 export { render };

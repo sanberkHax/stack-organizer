@@ -1,23 +1,23 @@
-import { Formik, Form, Field } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
-import { useState, useRef } from 'react';
-import { motion } from 'framer-motion/dist/framer-motion';
+import { Formik, Form, Field } from "formik";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useRef } from "react";
+import { motion } from "framer-motion/dist/framer-motion";
 
 import {
   previousFoldersAdded,
   currentFoldersUpdated,
-} from '../../../../slices/foldersSlice';
-import { Icon } from '../../../../components/Icon';
-import { ConfirmationModal } from '../../../../components/ConfirmationModal';
-import { Backdrop } from '../../../../components/Backdrop';
-import { EditButton } from '../../../../components/Buttons/EditButton';
-import { DeleteButton } from '../../../../components/Buttons/DeleteButton';
+} from "../../../../slices/foldersSlice";
+import { Icon } from "../../../../components/Icon";
+import { ConfirmationModal } from "../../../../components/ConfirmationModal";
+import { Backdrop } from "../../../../components/Backdrop";
+import { EditButton } from "../../../../components/Buttons/EditButton";
+import { DeleteButton } from "../../../../components/Buttons/DeleteButton";
 import {
   questionRemoved,
   questionUpdated,
   selectAllQuestions,
-} from '../../../../slices/questionsSlice';
-import { toast } from 'react-toastify';
+} from "../../../../slices/questionsSlice";
+import { toast } from "react-toastify";
 
 export const QuestionFile = ({
   name,
@@ -97,7 +97,7 @@ export const QuestionFile = ({
         })
       );
       toast.error(`Name is invalid`);
-    } else if (questionName === '') {
+    } else if (questionName === "") {
       dispatch(
         questionUpdated({
           id: editableQuestion.id,
@@ -153,7 +153,7 @@ export const QuestionFile = ({
         >
           <Icon name="question" />
           {!name ? (
-            <Formik initialValues={{ name: '' }} onSubmit={addNameHandler}>
+            <Formik initialValues={{ name: "" }} onSubmit={addNameHandler}>
               {({ values }) => {
                 return (
                   <Form className="question-file__form">

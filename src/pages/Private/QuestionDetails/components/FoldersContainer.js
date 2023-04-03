@@ -1,6 +1,6 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
-import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+import { useEffect, useState } from "react";
 
 import {
   selectAllFolders,
@@ -10,12 +10,12 @@ import {
   previousFoldersRemoved,
   parentFolderSet,
   foldersErrorUpdated,
-} from '../../../../slices/foldersSlice';
-import { selectAllProjects } from '../../../../slices/projectsSlice';
-import { writeFoldersData } from '../../../../services/firebase';
-import { FolderButton } from '../../../../components/Buttons/FolderButton';
-import { BackButton } from '../../../../components/Buttons/BackButton';
-import { AddButton } from '../../../../components/Buttons/AddButton';
+} from "../../../../slices/foldersSlice";
+import { selectAllProjects } from "../../../../slices/projectsSlice";
+import { writeFoldersData } from "../../../../services/firebase";
+import { FolderButton } from "../../../../components/Buttons/FolderButton";
+import { BackButton } from "../../../../components/Buttons/BackButton";
+import { AddButton } from "../../../../components/Buttons/AddButton";
 
 export const FoldersContainer = ({
   setSelectedFolder,

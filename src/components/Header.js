@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { SearchBar } from './SearchBar';
-import { HamburgerMenu } from './HamburgerMenu';
-import { useDispatch } from 'react-redux';
-import { logOut } from '../slices/authSlice';
-import { Link, useNavigate } from 'react-router-dom';
-import { BackButton } from './Buttons/BackButton';
-import { LogoutButton } from './Buttons/LogoutButton';
-import { OrganizeButton } from './Buttons/OrganizeButton';
-import { Icon } from './Icon';
+import { useState } from "react";
+import { SearchBar } from "./SearchBar";
+import { HamburgerMenu } from "./HamburgerMenu";
+import { useDispatch } from "react-redux";
+import { logOut } from "../slices/authSlice";
+import { Link, useNavigate } from "react-router-dom";
+import { BackButton } from "./Buttons/BackButton";
+import { LogoutButton } from "./Buttons/LogoutButton";
+import { OrganizeButton } from "./Buttons/OrganizeButton";
+import { Icon } from "./Icon";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export const Header = () => {
 
   const logOutHandler = () => {
     dispatch(logOut());
-    navigate('/');
+    navigate("/");
   };
 
   // Show search bar when clicked on search icon
@@ -57,7 +57,7 @@ export const Header = () => {
       <nav className="header__nav">
         <ul className="header__buttons">
           <li>
-            <OrganizeButton onClick={() => navigate('organize')} />
+            <OrganizeButton onClick={() => navigate("organize")} />
           </li>
           <li>
             <LogoutButton onClick={logOutHandler} />

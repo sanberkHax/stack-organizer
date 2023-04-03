@@ -1,19 +1,19 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
-import { Comment } from '../Search/components/Comment';
-import { Answer } from './components/Answer';
-import { SaveModal } from './components/SaveModal';
-import { Backdrop } from '../../../components/Backdrop';
-import { SaveAsButton } from '../../../components/Buttons/SaveAsButton';
-import { StackOverflowButton } from '../../../components/Buttons/StackOverflowButton';
-import { CommentsButton } from '../../../components/Buttons/CommentsButton';
-import { BackButton } from '../../../components/Buttons/BackButton';
-import { toLocaleDate } from '../../../utils/toLocaleDate';
-import { DualRing } from 'react-awesome-spinners';
-import { useEffect } from 'react';
-import { getQuestion } from '../../../slices/searchSlice';
-import parse from 'html-react-parser';
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { Comment } from "../Search/components/Comment";
+import { Answer } from "./components/Answer";
+import { SaveModal } from "./components/SaveModal";
+import { Backdrop } from "../../../components/Backdrop";
+import { SaveAsButton } from "../../../components/Buttons/SaveAsButton";
+import { StackOverflowButton } from "../../../components/Buttons/StackOverflowButton";
+import { CommentsButton } from "../../../components/Buttons/CommentsButton";
+import { BackButton } from "../../../components/Buttons/BackButton";
+import { toLocaleDate } from "../../../utils/toLocaleDate";
+import { DualRing } from "react-awesome-spinners";
+import { useEffect } from "react";
+import { getQuestion } from "../../../slices/searchSlice";
+import parse from "html-react-parser";
 
 export const QuestionDetails = () => {
   const navigate = useNavigate();

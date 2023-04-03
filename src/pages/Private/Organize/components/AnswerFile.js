@@ -1,23 +1,23 @@
-import { Formik, Form, Field } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
-import { useState, useRef } from 'react';
-import { motion } from 'framer-motion/dist/framer-motion';
+import { Formik, Form, Field } from "formik";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useRef } from "react";
+import { motion } from "framer-motion/dist/framer-motion";
 
 import {
   previousFoldersAdded,
   currentFoldersUpdated,
-} from '../../../../slices/foldersSlice';
-import { ConfirmationModal } from '../../../../components/ConfirmationModal';
-import { Backdrop } from '../../../../components/Backdrop';
-import { Icon } from '../../../../components/Icon';
-import { EditButton } from '../../../../components/Buttons/EditButton';
-import { DeleteButton } from '../../../../components/Buttons/DeleteButton';
+} from "../../../../slices/foldersSlice";
+import { ConfirmationModal } from "../../../../components/ConfirmationModal";
+import { Backdrop } from "../../../../components/Backdrop";
+import { Icon } from "../../../../components/Icon";
+import { EditButton } from "../../../../components/Buttons/EditButton";
+import { DeleteButton } from "../../../../components/Buttons/DeleteButton";
 import {
   selectAllAnswers,
   answerRemoved,
   answerUpdated,
-} from '../../../../slices/answersSlice';
-import { toast } from 'react-toastify';
+} from "../../../../slices/answersSlice";
+import { toast } from "react-toastify";
 
 export const AnswerFile = ({
   name,
@@ -87,7 +87,7 @@ export const AnswerFile = ({
       dispatch(
         answerUpdated({ id: editableAnswer.id, name: editableAnswer.name })
       );
-    } else if (answerName === '') {
+    } else if (answerName === "") {
       dispatch(
         answerUpdated({ id: editableAnswer.id, name: editableAnswer.name })
       );
@@ -132,7 +132,7 @@ export const AnswerFile = ({
         >
           <Icon name="answer" />
           {!name ? (
-            <Formik initialValues={{ name: '' }} onSubmit={addNameHandler}>
+            <Formik initialValues={{ name: "" }} onSubmit={addNameHandler}>
               {({ values }) => {
                 return (
                   <Form className="question-file__form">

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { selectAllFolders } from '../slices/foldersSlice';
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectAllFolders } from "../slices/foldersSlice";
 
 export const useProjectFolders = (selectedProject) => {
   const [projectFolders, setProjectFolders] = useState();

@@ -1,27 +1,27 @@
-import { LogInForm } from './LogInForm';
-import { DualRing } from 'react-awesome-spinners';
-import { useSelector, useDispatch } from 'react-redux';
+import { LogInForm } from "./LogInForm";
+import { DualRing } from "react-awesome-spinners";
+import { useSelector, useDispatch } from "react-redux";
 import {
   resetError,
   signUp,
   logIn,
   guestLogIn,
-} from '../../../slices/authSlice';
-import { SignUpForm } from './SignUpForm';
-import { useState } from 'react';
+} from "../../../slices/authSlice";
+import { SignUpForm } from "./SignUpForm";
+import { useState } from "react";
 
 export const Auth = () => {
   const loading = useSelector((state) => state.auth.loading);
   const error = useSelector((state) => state.auth.error);
   const dispatch = useDispatch();
 
-  const [currentSection, setCurrentSection] = useState('logIn');
+  const [currentSection, setCurrentSection] = useState("logIn");
 
   const switchSection = () => {
-    if (currentSection === 'logIn') {
-      setCurrentSection('signUp');
+    if (currentSection === "logIn") {
+      setCurrentSection("signUp");
     } else {
-      setCurrentSection('logIn');
+      setCurrentSection("logIn");
     }
   };
 
@@ -39,13 +39,13 @@ export const Auth = () => {
     dispatch(guestLogIn());
   };
 
-  const heading = currentSection === 'logIn' ? 'Log In' : 'Sign Up';
+  const heading = currentSection === "logIn" ? "Log In" : "Sign Up";
   const switchText =
-    currentSection === 'logIn'
+    currentSection === "logIn"
       ? `Don't have an account?`
-      : 'Already have an account?';
+      : "Already have an account?";
 
-  const switchButton = currentSection === 'logIn' ? 'Sign Up' : 'Log In';
+  const switchButton = currentSection === "logIn" ? "Sign Up" : "Log In";
 
   return (
     <section className="auth-section">
@@ -55,7 +55,7 @@ export const Auth = () => {
         <h1 className="heading-primary">{heading}</h1>
       )}
       {error && <p className="error">{error}</p>}
-      {currentSection === 'logIn' ? (
+      {currentSection === "logIn" ? (
         <LogInForm onSubmit={logInHandler} />
       ) : (
         <SignUpForm onSubmit={signUpHandler} />

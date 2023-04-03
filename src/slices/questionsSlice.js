@@ -1,4 +1,4 @@
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 
 const questionsAdapter = createEntityAdapter();
 
@@ -8,7 +8,7 @@ const initialState = questionsAdapter.getInitialState({
 });
 
 export const questionsSlice = createSlice({
-  name: 'questions',
+  name: "questions",
   initialState,
   reducers: {
     questionRemoved: questionsAdapter.removeOne,

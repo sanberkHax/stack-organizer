@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
-import { DualRing } from 'react-awesome-spinners';
-import { Question } from './components/Question';
-import { getSearchResults } from '../../../slices/searchSlice';
-import { BackButton } from '../../../components/Buttons/BackButton';
-import { NextButton } from '../../../components/Buttons/NextButton';
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { DualRing } from "react-awesome-spinners";
+import { Question } from "./components/Question";
+import { getSearchResults } from "../../../slices/searchSlice";
+import { BackButton } from "../../../components/Buttons/BackButton";
+import { NextButton } from "../../../components/Buttons/NextButton";
 
 export const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,8 +19,8 @@ export const Search = () => {
   const dispatch = useDispatch();
 
   // Get the search keyword from URL
-  const keyword = searchParams.get('q');
-  const pageParam = searchParams.get('p');
+  const keyword = searchParams.get("q");
+  const pageParam = searchParams.get("p");
 
   useEffect(() => {
     dispatch(getSearchResults({ searchBar: keyword, page: pageParam }));

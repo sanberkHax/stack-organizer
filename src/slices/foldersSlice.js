@@ -1,4 +1,4 @@
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 const foldersAdapter = createEntityAdapter();
 
 const initialState = foldersAdapter.getInitialState({
@@ -11,7 +11,7 @@ const initialState = foldersAdapter.getInitialState({
 });
 
 export const foldersSlice = createSlice({
-  name: 'folders',
+  name: "folders",
   initialState,
   reducers: {
     folderRemoved(state, action) {
@@ -21,7 +21,7 @@ export const foldersSlice = createSlice({
 
       // Find and remove all children of folder
       const removeAllChildren = (folder) => {
-        if (folder.hasOwnProperty('children')) {
+        if (Object.prototype.hasOwnProperty.call(folder, "children")) {
           folder.children.forEach((f) => {
             const removedChild = foldersArray.find((s) => s.id === f);
 

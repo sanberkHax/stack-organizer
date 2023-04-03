@@ -1,6 +1,6 @@
-import { DetailsButton } from '../../../../components/Buttons/DetailsButton';
-import { useNavigate } from 'react-router-dom';
-import parse from 'html-react-parser';
+import { DetailsButton } from "../../../../components/Buttons/DetailsButton";
+import { useNavigate } from "react-router-dom";
+import parse from "html-react-parser";
 
 export const QuestionInfo = ({ selectedQuestion }) => {
   const { id, title, body } = selectedQuestion.data;

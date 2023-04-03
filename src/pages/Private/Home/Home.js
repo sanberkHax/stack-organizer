@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { ReactComponent as StackOrganizerLogo } from '../../../assets/stack-organizer-logo.svg';
-import { SearchBar } from '../../../components/SearchBar';
-import { Backdrop } from '../../../components/Backdrop';
-import { motion } from 'framer-motion/dist/framer-motion';
-import { Icon } from '../../../components/Icon';
+import { useState } from "react";
+import { ReactComponent as StackOrganizerLogo } from "../../../assets/stack-organizer-logo.svg";
+import { SearchBar } from "../../../components/SearchBar";
+import { Backdrop } from "../../../components/Backdrop";
+import { motion } from "framer-motion/dist/framer-motion";
+import { Icon } from "../../../components/Icon";
 
 export const Home = () => {
   const [helpModal, setHelpModal] = useState();
@@ -27,7 +27,7 @@ export const Home = () => {
               How To Use
             </h2>
             <ul>
-              <li>Search your question through Stack Overflow</li>
+              <li>Search your question through Stack Overflow OR paste </li>
               <li>Go the details page of the question you searched for</li>
               <li>
                 Either save an answer that is helpful, or save the question

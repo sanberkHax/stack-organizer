@@ -1,27 +1,27 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { Formik, Form, Field } from 'formik';
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion/dist/framer-motion';
+import { useSelector, useDispatch } from "react-redux";
+import { Formik, Form, Field } from "formik";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion/dist/framer-motion";
 
 import {
   selectAllProjects,
   projectUpdated,
   projectRemoved,
   projectReset,
-} from '../../../../slices/projectsSlice';
+} from "../../../../slices/projectsSlice";
 import {
   folderUpdated,
   foldersReset,
   currentFoldersUpdated,
   selectAllFolders,
   foldersRemoved,
-} from '../../../../slices/foldersSlice';
-import { ConfirmationModal } from '../../../../components/ConfirmationModal';
-import { Backdrop } from '../../../../components/Backdrop';
-import { DeleteButton } from '../../../../components/Buttons/DeleteButton';
-import { EditButton } from '../../../../components/Buttons/EditButton';
-import { Icon } from '../../../../components/Icon';
-import { toast } from 'react-toastify';
+} from "../../../../slices/foldersSlice";
+import { ConfirmationModal } from "../../../../components/ConfirmationModal";
+import { Backdrop } from "../../../../components/Backdrop";
+import { DeleteButton } from "../../../../components/Buttons/DeleteButton";
+import { EditButton } from "../../../../components/Buttons/EditButton";
+import { Icon } from "../../../../components/Icon";
+import { toast } from "react-toastify";
 
 export const Project = ({
   name,
@@ -122,7 +122,7 @@ export const Project = ({
         dispatch(projectRemoved(projectId));
       }
       toast.error(`Name is required`);
-    } else if (projectName === '') {
+    } else if (projectName === "") {
       if (editableProject) {
         dispatch(projectUpdated({ id: projectId, name: editableProject.name }));
         toast.error(`Name is required`);
@@ -163,7 +163,7 @@ export const Project = ({
         <div onClick={clickHandler} className="project__details">
           <Icon name="project" />
           {!name ? (
-            <Formik initialValues={{ name: '' }} onSubmit={addNameHandler}>
+            <Formik initialValues={{ name: "" }} onSubmit={addNameHandler}>
               {({ values }) => {
                 return (
                   <Form className="project__form">

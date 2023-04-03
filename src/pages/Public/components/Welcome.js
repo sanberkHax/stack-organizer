@@ -1,5 +1,5 @@
-import stackOrganizerLogo from '../../../assets/stack-organizer-logo.svg';
-import illustration from '../../../assets/illustration.svg';
+import stackOrganizerLogo from "../../../assets/stack-organizer-logo.svg";
+import illustration from "../../../assets/illustration.svg";
 
 export const Welcome = () => {
   return (

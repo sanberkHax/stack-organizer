@@ -1,24 +1,24 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { motion } from 'framer-motion/dist/framer-motion';
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { motion } from "framer-motion/dist/framer-motion";
 
 import {
   selectAllFolders,
   parentFolderSet,
-} from '../../../../slices/foldersSlice';
+} from "../../../../slices/foldersSlice";
 import {
   writeFoldersData,
   writeQuestionsData,
-} from '../../../../services/firebase';
-import { Folder } from './Folder';
-import { QuestionFile } from './QuestionFile';
+} from "../../../../services/firebase";
+import { Folder } from "./Folder";
+import { QuestionFile } from "./QuestionFile";
 import {
   questionsRemoved,
   selectAllQuestions,
-} from '../../../../slices/questionsSlice';
-import { selectAllProjects } from '../../../../slices/projectsSlice';
-import { selectAllAnswers } from '../../../../slices/answersSlice';
-import { AnswerFile } from './AnswerFile';
+} from "../../../../slices/questionsSlice";
+import { selectAllProjects } from "../../../../slices/projectsSlice";
+import { selectAllAnswers } from "../../../../slices/answersSlice";
+import { AnswerFile } from "./AnswerFile";
 
 export const FileBrowser = ({
   setSelectedAnswer,
@@ -107,7 +107,7 @@ export const FileBrowser = ({
             <motion.p
               initial={{ opacity: 0, y: -100 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ type: 'spring', duration: 0.5 }}
+              transition={{ type: "spring", duration: 0.5 }}
               className="organize__error"
             >
               {foldersError}
@@ -117,7 +117,7 @@ export const FileBrowser = ({
             <motion.p
               initial={{ opacity: 0, y: -100 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ type: 'spring', duration: 0.5 }}
+              transition={{ type: "spring", duration: 0.5 }}
               className="organize__error"
             >
               {questionsError}
@@ -127,7 +127,7 @@ export const FileBrowser = ({
             <motion.p
               initial={{ opacity: 0, y: -100 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ type: 'spring', duration: 0.5 }}
+              transition={{ type: "spring", duration: 0.5 }}
               className="organize__error"
             >
               {answersError}
@@ -142,7 +142,7 @@ export const FileBrowser = ({
               selectedProject={selectedProject}
               selectedFolder={selectedFolder}
               name={f.name}
-              className={f.isActive ? 'folder--active' : 'folder'}
+              className={f.isActive ? "folder--active" : "folder"}
               setCurrentFileArray={setCurrentFileArray}
             />
           ))}
